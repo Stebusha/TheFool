@@ -92,7 +92,7 @@
           <mxGeometry y="294" width="230" height="26" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-38" value="&lt;b&gt;Deck&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-785" y="-1160" width="240" height="190" as="geometry" />
+          <mxGeometry x="-785" y="-1160" width="240" height="216" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-39" value="- cards: List&amp;lt;Card&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
           <mxGeometry y="26" width="240" height="26" as="geometry" />
@@ -103,17 +103,20 @@
         <mxCell id="u0cuv5xGiNIbPDt_39iv-40" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
           <mxGeometry y="78" width="240" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="u0cuv5xGiNIbPDt_39iv-41" value="+ Shuffle(List&amp;lt;Card&amp;gt; cards): List&amp;lt;Card&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
+        <mxCell id="u0cuv5xGiNIbPDt_39iv-41" value="+ Shuffle(List&amp;lt;Card&amp;gt; cards): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
           <mxGeometry y="86" width="240" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="XW7uV3UIntbRirsTcnwH-25" value="+ DrawCard():Card" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
+        <mxCell id="tphsWdSEAuGzGcMl0M73-16" value="+ DealCardsToPlayers():void&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="u0cuv5xGiNIbPDt_39iv-38">
           <mxGeometry y="112" width="240" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="u0cuv5xGiNIbPDt_39iv-43" value="+ Trump(get;set;):Suit&lt;span style=&quot;background-color: initial;&quot;&gt;Type&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
+        <mxCell id="XW7uV3UIntbRirsTcnwH-25" value="+ DrawCards(int count):List &amp;lt;Card&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
           <mxGeometry y="138" width="240" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="u0cuv5xGiNIbPDt_39iv-70" value="+ CardsAmount(get; set;):int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
+        <mxCell id="u0cuv5xGiNIbPDt_39iv-43" value="+ Trump(List&amp;lt;Card&amp;gt;):Suit&lt;span style=&quot;background-color: initial;&quot;&gt;Type&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
           <mxGeometry y="164" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="u0cuv5xGiNIbPDt_39iv-70" value="+ CardsAmount(get; set;):int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-38" vertex="1">
+          <mxGeometry y="190" width="240" height="26" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-45" value="ScoreTable" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-630" y="-560" width="330" height="140" as="geometry" />
@@ -167,7 +170,7 @@
           <mxGeometry y="242" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-58" value="Card" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-520" y="-1160" width="350" height="196" as="geometry" />
+          <mxGeometry x="-520" y="-1160" width="350" height="224" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-59" value="- suit: SuitType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
           <mxGeometry y="26" width="350" height="26" as="geometry" />
@@ -184,11 +187,14 @@
         <mxCell id="u0cuv5xGiNIbPDt_39iv-61" value="+ Card (SuitType _suit, RankType&amp;nbsp;_rank, bool _isTrump)&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
           <mxGeometry y="112" width="350" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="u0cuv5xGiNIbPDt_39iv-87" value="+ GetCard():Card" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
+        <mxCell id="u0cuv5xGiNIbPDt_39iv-87" value="+ GetCardSuit():SuitType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
           <mxGeometry y="140" width="350" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="uTUZKhjC_i32pkB5EiFj-1" value="+ IsTrump(get: set;)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
+        <mxCell id="tphsWdSEAuGzGcMl0M73-14" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;+ GetCardRank():RankType&lt;/span&gt;&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="u0cuv5xGiNIbPDt_39iv-58">
           <mxGeometry y="168" width="350" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="uTUZKhjC_i32pkB5EiFj-1" value="+ IsTrump(get: set;)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="u0cuv5xGiNIbPDt_39iv-58" vertex="1">
+          <mxGeometry y="196" width="350" height="28" as="geometry" />
         </mxCell>
         <mxCell id="u0cuv5xGiNIbPDt_39iv-76" value="AIPlayer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-170" y="-610" width="450" height="320" as="geometry" />
