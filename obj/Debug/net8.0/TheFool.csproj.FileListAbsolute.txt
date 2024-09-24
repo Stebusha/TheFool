@@ -1,0 +1,15 @@
+C:\Users\МиненковаНА\Projects\TheFool\bin\Debug\net8.0\TheFool.exe
+C:\Users\МиненковаНА\Projects\TheFool\bin\Debug\net8.0\TheFool.deps.json
+C:\Users\МиненковаНА\Projects\TheFool\bin\Debug\net8.0\TheFool.runtimeconfig.json
+C:\Users\МиненковаНА\Projects\TheFool\bin\Debug\net8.0\TheFool.dll
+C:\Users\МиненковаНА\Projects\TheFool\bin\Debug\net8.0\TheFool.pdb
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.AssemblyInfoInputs.cache
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.AssemblyInfo.cs
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.csproj.CoreCompileInputs.cache
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.sourcelink.json
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.dll
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\refint\TheFool.dll
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.pdb
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\TheFool.genruntimeconfig.cache
+C:\Users\МиненковаНА\Projects\TheFool\obj\Debug\net8.0\ref\TheFool.dll

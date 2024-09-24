@@ -9,7 +9,7 @@ public class AINoobPlayer:AIPlayer{
         Name = "Bot-Noob";
     }
     PlayerHand playerHand;
-    private void MakeDecision(int minValue){
+    private void MakeDecision(){
         GameRiver gameRiver = new GameRiver();
         Attack(playerHand.cards.ElementAt(0),gameRiver);
     }
