@@ -6,7 +6,7 @@ namespace TheFool
 
         //private string path = "C:/Users/МиненковаНА/Projects/TheFool/Scores/scores.txt";
 
-        public void Show(List<string> winners, List<int> scores){
+        public void Show(){
             // асинхронное чтение
             //using (StreamReader reader = new StreamReader(path))
             //{
@@ -18,7 +18,7 @@ namespace TheFool
             //}
         }
 
-        public void WriteToFile(List<string> winners, List<int> scores){
+        public void WriteToFile(){
             // полная перезапись файла 
             //using (StreamWriter writer = new StreamWriter(path, false))
             //{

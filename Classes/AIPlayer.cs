@@ -1,12 +1,12 @@
 namespace TheFool;
-public class AIPlayer{
+public class AIPlayer:IPlayer{
     
     PlayerHand playerHand;
     private int turnNumber = -1;
     private bool isAttacking = false;
     private bool isDefending = false;
     private float handValue = -1f;
-    public string Name{get;protected set;}
+    public string Name{get; set;}
     public AIPlayer(){
         Name = "Bot-Hard";
     }
