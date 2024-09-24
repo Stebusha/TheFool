@@ -1,15 +1,24 @@
+using System.Diagnostics.Contracts;
+
 namespace TheFool;
 public class Player:IPlayer {
-    private string name = 'Player';
+    
     private int turnNumber=-1;
     private bool isAttacking=false;
     private bool isDefending=false;
 
-    private PlayerHand playerHand;
+    public PlayerHand playerHand = new PlayerHand();
+
+    public Player(){
+        Console.WriteLine("Введите имя: ");
+        Name = Console.ReadLine();
+
+    }
 
     public string Name{get;set;}
     public void RefillHand(Deck deck){
-        playerHand.cards = deck.DrawCards(playerHand.numberOfCardsRemaining);
+        deck.DrawCards(6-playerHand.numberOfCardsRemaining);
+        playerHand.Sort();
     }
 
     public void Attack(Card attackingCard, GameRiver gameRiver){

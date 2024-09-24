@@ -1,15 +1,14 @@
+namespace TheFool;
     public class Card{
-        public readonly SuitType suit;
-        public readonly RankType rank;
+        public string Suit{get; set;} 
+        public string Rank{get;set;}       
         public Card(){}
-        public Card (SuitType _suit, RankType _rank){
-            suit = _suit;
-            rank = _rank;
+        public Card (string _suit, string _rank){
+            Suit = _suit;
+            Rank = _rank;
         }
-        public SuitType GetCardSuit() {
-            return suit;
-        }
-        public RankType GetCardRank(){
-            return rank;
-        }
+    public override string ToString()
+    {
+        return $"{Rank} of {Suit}";
     }
+}

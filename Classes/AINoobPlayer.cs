@@ -1,22 +1,17 @@
 namespace TheFool;
 public class AINoobPlayer:AIPlayer{
-    private string name = 'Bot-Noob';
+    
     private int turnNumber = -1;
     private bool isAttacking = false;
-    private bool isDefending= false;
-    private int minValue = 0;
-    public string Name{get;private set;}
-    public void RefillHand(Deck deck){
-        playerHand.cards = deck.DrawCards(playerHand.numberOfCardsRemaining);
-    }
+    private bool isDefending = false;
 
-    public void Attack(Card attackingCard, GameRiver gameRiver)[
-
-    ]
-    public void Defend(Card defendingCard, GameRiver gameRiver){
-
+    public AINoobPlayer(){
+        Name = "Bot-Noob";
     }
-    protected virtual void MakeDecision(int minValue){
-        
+    PlayerHand playerHand;
+    private void MakeDecision(int minValue){
+        GameRiver gameRiver = new GameRiver();
+        Attack(playerHand.cards.ElementAt(0),gameRiver);
     }
+  
 }

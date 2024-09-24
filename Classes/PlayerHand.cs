@@ -1,25 +1,31 @@
 namespace TheFool
 {
     public class PlayerHand{
-        private List<Card> cards = new List<Card>();
-        private int numberOfCardsRemaining = 0;
+        public List<Card> cards = new List<Card>();
+        public int numberOfCardsRemaining = 0;
 
 
         public void AddCardToHand(Card card){
-
+            
         }
         public void AddCardsToHand(List<Card> cards){
 
         }
         public void RemoveCardFromHand(Card card){
-
+            cards.Remove(card);
+            numberOfCardsRemaining++;
         }
         public Card ChooseCardFromHand(int number){
-
+            Card chosenCard = new Card();
+            chosenCard = cards.ElementAt(number);
+            return chosenCard;
         }
 
-        private void Sort(List<Card> cards){
-            
+        
+
+        public void Sort(){
+            cards.OrderBy(c=>c.Suit).ToList();
         }
-    }
+    }    
+
 }
