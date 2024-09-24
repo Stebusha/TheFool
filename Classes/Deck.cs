@@ -8,9 +8,9 @@ namespace TheFool
         private List<Card> cards;
         private string[] suits = {"Clubs","Diams", "Spades", "Hearts"};
         private string[] ranks = {"6","7", "8", "9", "10", "J","Q", "K", "A"}; 
-        private string trumpSuit = "Clubs";
+        private SuitType trumpSuit = SuitType.Clubs;
 
-        public string GetTrumpSuit() {
+        public SuitType GetTrumpSuit() {
             return trumpSuit;
         }
 
