@@ -11,7 +11,7 @@ public class AINoobPlayer:AIPlayer{
     PlayerHand playerHand;
     private void MakeDecision(){
         GameRiver gameRiver = new GameRiver();
-        Attack( );
+        Attack(0,gameRiver);
     }
   
 }

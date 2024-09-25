@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace TheFool
 {
@@ -27,6 +28,7 @@ namespace TheFool
             players = new List<IPlayer>();
             for(int i = 0;i<playerCount; i++){
                 Player player = new Player();
+                player.TurnNumber = i+1;
                 player.RefillHand(deck);
                 players.Add(player);
             }
@@ -34,17 +36,27 @@ namespace TheFool
                 Random random = new Random();
                 if(random.Next(0,2)==0){
                     AIPlayer aIPlayer = new AIPlayer();
+                    aIPlayer.TurnNumber=i+2;
                     aIPlayer.RefillHand(deck);
                     players.Add(aIPlayer);
                 }
                 else{
                     AINoobPlayer aINoob = new AINoobPlayer();
+                    aINoob.TurnNumber = i+3;
                     aINoob.RefillHand(deck);
                     players.Add(aINoob);
                 }
                 
             }
             
+           
+                for(int i =0; i<players.Count; i++){
+                    if(players[i].TurnNumber==i+1){
+                        
+
+                    }
+                }
+
 
             //deck.DealCardsToPlayers(players);
             Console.WriteLine(deck.CardsAmount);

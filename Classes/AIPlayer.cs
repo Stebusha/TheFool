@@ -7,6 +7,7 @@ public class AIPlayer:IPlayer{
     private bool isDefending = false;
     private float handValue = -1f;
     public string Name{get; set;}
+    public int TurnNumber{get;set;}
     public AIPlayer(){
         Name = "Bot-Hard";
     }
@@ -19,10 +20,10 @@ public class AIPlayer:IPlayer{
         //}
     }
 
-    public void Attack( ){
+    public void Attack(int index, GameRiver gameRiver){
 
     }
-    public void Defend(Card defendingCard, GameRiver gameRiver){
+    public void Defend(int index, GameRiver gameRiver){
 
     }
 
