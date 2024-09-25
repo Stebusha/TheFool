@@ -51,18 +51,5 @@ namespace TheFool
             cards.Add(trumpCard);
             trumpSuit = trumpCard.Suit;
         }
-
-        public void DealCardsToPlayers(List<Player> players){
-            foreach(var p in players){
-                p.playerHand.cards= DrawCards(6);
-                p.playerHand.Sort();
-                Console.WriteLine("Cards:");
-                foreach(var c in p.playerHand.cards)
-                    Console.WriteLine(c);
-            }
-            //for(int p = 0;p<players.Count;p++){
-            //    players[p].playerHand.cards = DrawCards(6);
-            //}
-        }
     }
 }

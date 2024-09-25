@@ -1,4 +1,3 @@
-using System.Diagnostics.Contracts;
 
 namespace TheFool;
 public class Player:IPlayer {
@@ -16,9 +15,14 @@ public class Player:IPlayer {
     }
 
     public string Name{get;set;}
-    public void RefillHand(Deck deck){
-        deck.DrawCards(6-playerHand.numberOfCardsRemaining);
+    public void RefillHand(Deck deck){      
+        playerHand.cards = deck.DrawCards(6-playerHand.numberOfCardsRemaining);
         playerHand.Sort();
+        Console.WriteLine("Cards:");
+        foreach(var c in playerHand.cards){
+            Console.WriteLine(c);
+        }
+            
     }
 
     public void Attack(Card attackingCard, GameRiver gameRiver){

@@ -1,7 +1,7 @@
 namespace TheFool;
 public class AIPlayer:IPlayer{
     
-    PlayerHand playerHand;
+    PlayerHand playerHand = new PlayerHand();
     private int turnNumber = -1;
     private bool isAttacking = false;
     private bool isDefending = false;
@@ -11,8 +11,12 @@ public class AIPlayer:IPlayer{
         Name = "Bot-Hard";
     }
     public void RefillHand(Deck deck){
-                deck.DrawCards(6-playerHand.numberOfCardsRemaining);
+        playerHand.cards = deck.DrawCards(6-playerHand.numberOfCardsRemaining);
         playerHand.Sort();
+        //Console.WriteLine("Cards:");
+        //foreach(var c in playerHand.cards){
+        //    Console.WriteLine(c);
+        //}
     }
 
     public void Attack(Card attackingCard, GameRiver gameRiver){

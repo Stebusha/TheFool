@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace TheFool
 {
     public class GameController{
-        private List<Player> players;
+        private List<IPlayer> players;
         private ScoreTable scoreTable = new ScoreTable();
 
         private Deck deck;
@@ -22,13 +22,29 @@ namespace TheFool
             deck.Shuffle();
             deck.Trump();
             Console.WriteLine(deck.GetTrumpSuit());
-            players = new List<Player>();
-            for(int i = 0;i<playerCount+AIPlayerCount; i++){
+            players = new List<IPlayer>();
+            for(int i = 0;i<playerCount; i++){
                 Player player = new Player();
+                player.RefillHand(deck);
                 players.Add(player);
             }
-            deck.DealCardsToPlayers(players);
-            //Console.WriteLine(deck.CardsAmount);
+            for(int i = 0;i<AIPlayerCount; i++){
+                Random random = new Random();
+                if(random.Next(0,2)==0){
+                    AIPlayer aIPlayer = new AIPlayer();
+                    aIPlayer.RefillHand(deck);
+                    players.Add(aIPlayer);
+                }
+                else{
+                    AINoobPlayer aINoob = new AINoobPlayer();
+                    aINoob.RefillHand(deck);
+                    players.Add(aINoob);
+                }
+                
+            }
+
+            //deck.DealCardsToPlayers(players);
+            Console.WriteLine(deck.CardsAmount);
             
         }
 
