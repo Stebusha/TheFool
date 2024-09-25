@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Security.Principal;
 
 namespace TheFool
 {
@@ -65,7 +66,8 @@ namespace TheFool
 
         public void Win(){
             finished = true;
-            scoreTable.WriteToFile();
+            int score = 1;
+            scoreTable.WriteToFile(players[0].Name, score);
             scoreTable.Show();
         }
 
