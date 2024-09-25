@@ -1,7 +1,6 @@
 namespace TheFool;
 public class AINoobPlayer:AIPlayer{
     
-    private int turnNumber = -1;
     private bool isAttacking = false;
     private bool isDefending = false;
 
