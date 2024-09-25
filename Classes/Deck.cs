@@ -6,9 +6,9 @@ namespace TheFool
 {
     public class Deck{
         private List<Card> cards;
-        private string[] suits = {"Clubs","Diams", "Spades", "Hearts"};
-        private string[] ranks = {"6","7", "8", "9", "10", "J","Q", "K", "A"}; 
-        private SuitType trumpSuit = SuitType.Clubs;
+        private SuitType[] suits = {SuitType.Clubs,SuitType.Diams,SuitType.Hearts, SuitType.Spades};
+        private RankType[] ranks = {RankType.Six, RankType.Seven, RankType.Eight,RankType.Nine,RankType.Ten,RankType.Jack,RankType.Queen,RankType.King,RankType.Ace}; 
+        public static SuitType trumpSuit = SuitType.Clubs;
 
         public SuitType GetTrumpSuit() {
             return trumpSuit;

@@ -10,8 +10,8 @@ public class Player:IPlayer {
     public PlayerHand playerHand = new PlayerHand();
 
     public Player(){
-        Console.WriteLine("Введите имя: ");
-        Name = Console.ReadLine();
+        //Console.WriteLine("Введите имя: ");
+        //Name = Console.ReadLine();
 
     }
 

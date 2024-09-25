@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 
 namespace TheFool
 {
@@ -19,10 +18,10 @@ namespace TheFool
         public void Game(int playerCount,int AIPlayerCount){
             deck = new Deck();
             Console.WriteLine(deck.CardsAmount);
-            //Console.WriteLine(deck.GetTrumpSuit());
+            Console.WriteLine(deck.GetTrumpSuit());
             deck.Shuffle();
             deck.Trump();
-            //Console.WriteLine(deck.GetTrumpSuit());
+            Console.WriteLine(deck.GetTrumpSuit());
             players = new List<Player>();
             for(int i = 0;i<playerCount+AIPlayerCount; i++){
                 Player player = new Player();
@@ -33,7 +32,11 @@ namespace TheFool
             
         }
 
-        public void Win(){}
+        public void Win(){
+            finished = true;
+            scoreTable.WriteToFile();
+            scoreTable.Show();
+        }
 
 
     }
