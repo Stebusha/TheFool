@@ -19,7 +19,7 @@ public class AIPlayer:IPlayer{
         //}
     }
 
-    public void Attack(Card attackingCard, GameRiver gameRiver){
+    public void Attack( ){
 
     }
     public void Defend(Card defendingCard, GameRiver gameRiver){

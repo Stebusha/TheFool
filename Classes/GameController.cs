@@ -8,6 +8,8 @@ namespace TheFool
         private List<IPlayer> players;
         private ScoreTable scoreTable = new ScoreTable();
 
+        private GameRiver gameRiver = new GameRiver();
+
         private Deck deck;
         private bool finished = false;
 
@@ -42,6 +44,7 @@ namespace TheFool
                 }
                 
             }
+            
 
             //deck.DealCardsToPlayers(players);
             Console.WriteLine(deck.CardsAmount);

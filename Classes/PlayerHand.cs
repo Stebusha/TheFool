@@ -3,6 +3,10 @@ namespace TheFool
     public class PlayerHand{
         public List<Card> cards = new List<Card>();
         public int numberOfCardsRemaining = 0;
+
+        public Card GetCard(int index){
+            return cards.ElementAt(index);
+        }
         public void AddCardToHand(Card card){
             cards.Add(card);
             numberOfCardsRemaining++;
