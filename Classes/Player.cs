@@ -22,7 +22,7 @@ public class Player:IPlayer {
         return playerHand.cards;
     }
     public void RefillHand(Deck deck){      
-        playerHand.cards = deck.DrawCards(6-playerHand.numberOfCardsRemaining);
+        playerHand.cards = deck.DrawCards(6-playerHand.NumberOfCardsRemainingRemaining);
         playerHand.Sort();
         // Console.WriteLine("Cards:");
         // foreach(var c in playerHand.cards){
@@ -67,7 +67,6 @@ public class Player:IPlayer {
         Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
-            Debug.WriteLine(ToString(attackingCards));
             Console.WriteLine(ToString(attackingCards));
             Console.WriteLine("Выберите порядковый номер карты, которой хотите походить: ");
             int index = Convert.ToInt32(Console.ReadLine())-1;            
@@ -76,8 +75,9 @@ public class Player:IPlayer {
             Console.WriteLine(attackingCard.ToString());
             gameTable.AddCardToTable(attackingCard);
             playerHand.RemoveCardFromHand(attackingCard);
+            attackingCards.Remove(attackingCard);
         }
-        else if(playerHand.numberOfCardsRemaining==0){
+        else if(playerHand.NumberOfCardsRemainingRemaining==0){
             Attacking = false;
         }
     }
@@ -123,7 +123,7 @@ public class Player:IPlayer {
             Console.WriteLine(ToString(defendingCards));
             Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
             int index = Convert.ToInt32(Console.ReadLine())-1;           
-
+            
             Card defendingCard =defendingCards[index];
             Console.WriteLine("Вы отбились картой: " +defendingCard.ToString());
             gameTable.AddCardToTable(defendingCard);
@@ -131,11 +131,9 @@ public class Player:IPlayer {
             defendingCards.RemoveAt(index);
             
         } 
-        else if(playerHand.numberOfCardsRemaining==0){
+        else if(playerHand.NumberOfCardsRemainingRemaining==0){
             Defending = false;
             SuccesfulDefended = true;
-            
-
         }      
     }
     

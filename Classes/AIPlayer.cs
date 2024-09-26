@@ -15,7 +15,7 @@ public class AIPlayer:IPlayer{
         return playerHand.cards;
     }
     public void RefillHand(Deck deck){
-        playerHand.cards = deck.DrawCards(6-playerHand.numberOfCardsRemaining);
+        playerHand.cards = deck.DrawCards(6-playerHand.NumberOfCardsRemainingRemaining);
         playerHand.Sort();
         //Console.WriteLine("Cards:");
         //foreach(var c in playerHand.cards){
@@ -25,7 +25,7 @@ public class AIPlayer:IPlayer{
     public void Attack(Table gameTable){
         Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
-            
+
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards!=null){
                 int index = MakeDecision();
@@ -39,7 +39,7 @@ public class AIPlayer:IPlayer{
             }
             
         }
-        else if(playerHand.numberOfCardsRemaining==0){
+        else if(playerHand.NumberOfCardsRemainingRemaining==0){
             Attacking = false;
         }
     }
@@ -93,7 +93,13 @@ public class AIPlayer:IPlayer{
             if(defended.Count >= gameTable.Length()/2){
                 return true;
             }    
-            return false;
+            SuccesfulDefended = false;
+            // for(int c=0;c<gameTable.Length();c++){
+            //     playerHand.AddCardToHand(gameTable.GetCard(c));
+            //     playerHand.Sort();
+            // }
+            // Console.WriteLine(ToString(playerHand.cards));
+            return SuccesfulDefended;
         }
     }
 
@@ -108,22 +114,40 @@ public class AIPlayer:IPlayer{
                 
             }
             Card defendingCard =defendingList[0];
+            Console.WriteLine("Бот отбился картой: "+defendingCard);
             defendingList.RemoveAt(0);
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
-
+            SuccesfulDefended = true;
         }
-        else if(playerHand.numberOfCardsRemaining==0){
-            Defending = false;
-        } 
-        else{
+        else {
+            SuccesfulDefended = false;
             for(int i=0;i<gameTable.Length();i++){
                 playerHand.cards.Add(gameTable.GetCard(i));
-                playerHand.Sort();
             }
+            playerHand.Sort();
+            Console.WriteLine("Бот взял карты");
+            Console.WriteLine(ToString(playerHand.cards));
         }
+        
+        // else{
+        //     for(int i=0;i<gameTable.Length();i++){
+        //         playerHand.cards.Add(gameTable.GetCard(i));
+        //         playerHand.Sort();
+        //     }
+        // }
     }
 
+    public string ToString(List<Card> cards)
+    {
+        string cardDrawnString = "";
+        cardDrawnString = "\nКарты игрока "+ Name+"\n";
+        for(int i = 0;i<cards.Count;i++){
+            Card tempCard = cards[i];
+            cardDrawnString+=tempCard.ToString()+"\t";
+        } 
+        return cardDrawnString;
+    }
     private List<int> CardValue(List<Card> inHand, string trumpSuit){
         List<int> valueCost = new List<int>();
         for(int i=-400;i<=400;i++){

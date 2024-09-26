@@ -126,23 +126,21 @@ namespace TheFool
             while(!Finished){
                 TurnStarted= true;
                 while(TurnStarted){
-                    players[turns].Attack(gameTable);
-                    List<Card> attackingCards = players[turns].GetCardsForAttack(gameTable);
-                    players[turns+1].SuccesfulDefended = false;
-                    players[turns+1].Defend(attackingCards,gameTable);
+                    players[turns%2].Attack(gameTable);
+                    List<Card> attackingCards = players[turns%2].GetCardsForAttack(gameTable);
+                    players[(turns+1)%2].SuccesfulDefended = false;
+                    players[(turns+1)%2].Defend(attackingCards,gameTable);
+
                     if(attackingCards==null){
-                        players[turns+1].SuccesfulDefended = true;
+                        players[(turns+1)%2].SuccesfulDefended = true;
                     }
-                    if(players[turns+1].SuccesfulDefended){
-                        if(turns>players.Count-1){
-                        turns = turns%playerCount-1;
-                        }
-                        else{
-                            turns++;
-                        }
+                    if(players[(turns+1)%2].SuccesfulDefended){
                         TurnStarted = false;
-                        players[turns].RefillHand(deck);
-                        players[turns+1].RefillHand(deck);
+                    }
+                    gameTable.ClearTable();
+
+                    if(TurnStarted==false){
+                        turns++;
                     }
                 } 
             }
