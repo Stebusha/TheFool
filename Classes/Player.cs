@@ -83,7 +83,8 @@ public class Player:IPlayer {
     }
     private bool CanBeDefended(List<Card> attackingCards, Table gameTable){
         if (gameTable.Length()<1){
-            return false;
+            SuccesfulDefended = false;
+            return SuccesfulDefended;
         }
         else{
             List<bool> defended = new List<bool>();
@@ -97,7 +98,8 @@ public class Player:IPlayer {
             if(defended.Count >= gameTable.Length()/2){
                 return true;
             }    
-            return false;
+            SuccesfulDefended = false;
+            return SuccesfulDefended;
         }
     }
     private List<Card> GetCardsforDefense(Table gameTable){
@@ -132,8 +134,9 @@ public class Player:IPlayer {
         else if(playerHand.numberOfCardsRemaining==0){
             Defending = false;
             SuccesfulDefended = true;
-        }      
+            
 
+        }      
     }
     
     public string ToString(List<Card> cards)

@@ -121,19 +121,35 @@ namespace TheFool
                         break;
                 }          
             }
-            players= players.OrderBy(p=>p.TurnNumber).ToList();
+            players = players.OrderBy(p=>p.TurnNumber).ToList();
             int turns = 0;
             while(!Finished){
-                TurnStarted = true;
-                players[turns].Attack(gameTable);
-                players[turns+1].Defend(players[turns].GetCardsForAttack(gameTable),gameTable);
-                if(players[turns+1].SuccesfulDefended){
-                    turns++;
-                }
-                if(turns>players.Count-1){
-                        turns = turns%playerCount;
+                TurnStarted= true;
+                while(TurnStarted){
+                    players[turns].Attack(gameTable);
+                    List<Card> attackingCards = players[turns].GetCardsForAttack(gameTable);
+                    players[turns+1].SuccesfulDefended = false;
+                    players[turns+1].Defend(attackingCards,gameTable);
+                    if(attackingCards==null){
+                        players[turns+1].SuccesfulDefended = true;
+                    }
+                    if(players[turns+1].SuccesfulDefended){
+                        if(turns>players.Count-1){
+                        turns = turns%playerCount-1;
+                        }
+                        else{
+                            turns++;
+                        }
+                        TurnStarted = false;
+                        players[turns].RefillHand(deck);
+                        players[turns+1].RefillHand(deck);
+                    }
                 } 
             }
+                
+      
+                
+            
             // foreach(var p in players){
             //     Console.WriteLine(p.TurnNumber.ToString());
             // }

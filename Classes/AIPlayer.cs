@@ -25,12 +25,19 @@ public class AIPlayer:IPlayer{
     public void Attack(Table gameTable){
         Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
+            
             List<Card> attackingCards = GetCardsForAttack(gameTable);
-            int index = MakeDecision();
-            Card attackingCard = attackingCards[0];
-            Console.WriteLine("Бот походил картой: "+ attackingCard.ToString());
-            gameTable.AddCardToTable(attackingCard);
-            playerHand.RemoveCardFromHand(attackingCard);
+            if(attackingCards!=null){
+                int index = MakeDecision();
+                Card attackingCard = attackingCards[0];
+                Console.WriteLine("Бот походил картой: "+ attackingCard.ToString());
+                gameTable.AddCardToTable(attackingCard);
+                playerHand.RemoveCardFromHand(attackingCard);
+            }
+            else{
+                Attacking = false;
+            }
+            
         }
         else if(playerHand.numberOfCardsRemaining==0){
             Attacking = false;
