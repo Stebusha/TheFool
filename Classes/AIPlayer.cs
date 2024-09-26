@@ -25,10 +25,10 @@ public class AIPlayer:IPlayer{
     public void Attack(Table gameTable){
         Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
-            int index = MakeDecision(playerHand.cards,handValue);
-            Card attackingCard = playerHand.ChooseCardFromHand(index);
-            attackingCard = playerHand.ChooseCardFromHand(index);
-            Console.WriteLine(attackingCard.ToString());
+            List<Card> attackingCards = GetCardsForAttack(gameTable);
+            int index = MakeDecision();
+            Card attackingCard = attackingCards[0];
+            Console.WriteLine("Бот походил картой: "+ attackingCard.ToString());
             gameTable.AddCardToTable(attackingCard);
             playerHand.RemoveCardFromHand(attackingCard);
         }
@@ -138,9 +138,8 @@ public class AIPlayer:IPlayer{
         return handValue;
     }
 
-    protected virtual int MakeDecision(List<Card> inHand, float handValue){
-        int index = 0;
-        return index;
+    protected virtual int MakeDecision(){
+        return 0;
     }
 
 }

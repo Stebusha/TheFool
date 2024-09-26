@@ -89,7 +89,7 @@ public class Player:IPlayer {
             List<bool> defended = new List<bool>();
             for(int i=1;i<gameTable.Length();i+=2){
                 foreach(var card in attackingCards){
-                    if(card<gameTable.GetCard(i)){
+                    if(card>gameTable.GetCard(i)){
                         defended.Add(true);
                     }   
                 }
@@ -106,6 +106,7 @@ public class Player:IPlayer {
             for(int i=0;i<gameTable.Length();i+=2){
                 foreach(var card in playerHand.cards){
                     if(card>gameTable.GetCard(i)){
+                        Console.WriteLine(card.ToString()+ " - "+(card>gameTable.GetCard(i)).ToString());
                         defenseCards.Add(card);
                     }   
                 }
@@ -120,17 +121,18 @@ public class Player:IPlayer {
             Console.WriteLine(ToString(defendingCards));
             Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
             int index = Convert.ToInt32(Console.ReadLine())-1;           
-            Console.WriteLine(index);
+
             Card defendingCard =defendingCards[index];
+            Console.WriteLine("Вы отбились картой: " +defendingCard.ToString());
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
             defendingCards.RemoveAt(index);
-
-        }
+            
+        } 
         else if(playerHand.numberOfCardsRemaining==0){
             Defending = false;
-        }
-        
+            SuccesfulDefended = true;
+        }      
 
     }
     
@@ -139,7 +141,7 @@ public class Player:IPlayer {
         string cardDrawnString = "";
         cardDrawnString = "\nКарты игрока "+ Name+"\n";
         for(int i = 0;i<cards.Count;i++){
-            Card tempCard = playerHand.GetCard(i);
+            Card tempCard = cards[i];
             cardDrawnString+=tempCard.ToString()+"\t";
         } 
         return cardDrawnString;

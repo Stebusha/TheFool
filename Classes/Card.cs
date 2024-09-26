@@ -21,7 +21,7 @@ namespace TheFool;
     }
 
     public static bool operator>(Card card1, Card card2){
-        if(card1.Suit==card2.Suit&&card1.Suit!=Deck.trumpSuit){
+        if(card1.Suit==card2.Suit){
             return card1.Rank>card2.Rank;
         }
         else if(card1.Suit==Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit){
@@ -30,31 +30,75 @@ namespace TheFool;
         else if(card1.Suit!=Deck.trumpSuit&&card2.Suit==Deck.trumpSuit){
             return false;
         }
+        else if(card1.Suit!=card2.Suit&&card1.Suit!=Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit)
+        {
+            return false;
+        }
         else{
             return card1.Rank>card2.Rank;
         }
         
     }
     public static bool operator <(Card card1, Card card2){
-        return !(card1>=card2);
+        if(card1.Suit==card2.Suit){
+            return card1.Rank<card2.Rank;
+        }
+        else if(card1.Suit==Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit){
+            return false;
+        }
+        else if(card1.Suit!=Deck.trumpSuit&&card2.Suit==Deck.trumpSuit){
+            return true;
+        }
+        else if(card1.Suit!=card2.Suit&&card1.Suit!=Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit)
+        {
+            return false;
+        }
+        else{
+            return card1.Rank<card2.Rank;
+        }
     }
 
     public static bool operator>=(Card card1, Card card2){
         if(card1.Suit==card2.Suit&&card1.Rank==card2.Rank){
             return true;
         }
-        else if (card1.Suit==card2.Suit){
-            return card1.Rank>card2.Rank;
-        }
-        else if(card1.Suit==Deck.trumpSuit){
+        
+        else if(card1.Suit==Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit){
             return true;
         }
-        else {
+        else if(card2.Suit==Deck.trumpSuit&&card1.Suit!=Deck.trumpSuit){
             return false;
+        }
+        else if(card1.Suit!=card2.Suit){
+            return false;
+        }
+        else if (card1.Suit==card2.Suit&&card1.Suit==Deck.trumpSuit){
+            return card1.Rank>card2.Rank;
+        }
+        else{
+            return card1.Rank>card2.Rank;
         }
     }
     public static bool operator <=(Card card1,Card card2){
-        return !(card1>card2);
+        if(card1.Suit==card2.Suit&&card1.Rank==card2.Rank){
+            return true;
+        }
+        
+        else if(card1.Suit==Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit){
+            return false;
+        }
+        else if(card2.Suit==Deck.trumpSuit&&card1.Suit!=Deck.trumpSuit){
+            return true;
+        }
+        else if(card1.Suit!=card2.Suit){
+            return false;
+        }
+        else if (card1.Suit==card2.Suit&&card1.Suit==Deck.trumpSuit){
+            return card1.Rank<card2.Rank;
+        }
+        else{
+            return card1.Rank<card2.Rank;
+        }
     }
 
     // override object.Equals

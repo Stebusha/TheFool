@@ -6,5 +6,6 @@ class Program
     {
         GameController game = new GameController();
         game.Game(1,1);
+        //game.TestComparison(new Card(SuitType.Diams,RankType.Jack),new Card(SuitType.Diams,RankType.Queen));
     }
 }

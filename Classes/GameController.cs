@@ -172,7 +172,9 @@ namespace TheFool
             scoreTable.WriteToFile(players[0].Name, score);
             scoreTable.Show();
         }
-
+        public void TestComparison(Card card1,Card card2){
+            Console.WriteLine(card1<card2);
+        }
 
     }
         
