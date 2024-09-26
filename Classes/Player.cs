@@ -16,25 +16,36 @@ public class Player:IPlayer {
     }
     public int TurnNumber{get;set;}
     public string Name{get;set;}
-    public void RefillHand(Deck deck){      
+    public List<Card> GetCards(){
+        return playerHand.cards;
+    }
+       public void RefillHand(Deck deck){      
         playerHand.cards = deck.DrawCards(6-playerHand.numberOfCardsRemaining);
         playerHand.Sort();
-        Console.WriteLine("Cards:");
-        foreach(var c in playerHand.cards){
-            Console.WriteLine(c);
-        }
+        // Console.WriteLine("Cards:");
+        // foreach(var c in playerHand.cards){
+        //     Console.WriteLine(c);
+        // }
         Console.WriteLine(ToString(playerHand.cards,TurnNumber));
             
     }
 
-    public void Attack(int index, GameRiver gameRiver){
-        isAttacking = true;
+    public void Attack(Table gameTable){
+        isAttacking = CanBeAttacking(playerHand.cards,gameTable);
         if(isAttacking){
+            Console.WriteLine("Выберите порядковый номер карты, которой хотите походить: ");
+            int index = Convert.ToInt32(Console.ReadLine())-1;            
+            Console.WriteLine(index);
             Card attackingCard = playerHand.ChooseCardFromHand(index);
-            gameRiver.AddCardToRiver(attackingCard);
+            attackingCard = playerHand.ChooseCardFromHand(index);
+            Console.WriteLine(attackingCard.ToString());
+            gameTable.AddCardToTable(attackingCard);
             playerHand.RemoveCardFromHand(attackingCard);
         }
-        isAttacking = false;
+        else if(playerHand.numberOfCardsRemaining==0){
+            isAttacking = false;
+        }
+
         // isAttacking = true;
         // if(isAttacking){
         //     Card attackingCard = new Card();
@@ -50,20 +61,55 @@ public class Player:IPlayer {
             
         // }
     }
+    private bool CanBeAttacking(List<Card> cards, Table gameTable){
+        if (gameTable.Length() ==0){
+            return true;
+        }
+        else{
+            foreach(var card in cards){
+                for(int i=0;i<gameTable.Length();i++){
+                    if(card.Rank==gameTable.GetCard(i).Rank){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+    private bool CanBeDefended(List<Card> cards, Table gameTable){
+        if (gameTable.Length()==0){
+            return false;
+        }
+        else{
+            List<bool> defended = new List<bool>();
+            for(int i=0;i<gameTable.Length();i+=2){
+                foreach(var card in cards){
+                    if(card>gameTable.GetCard(i)){
+                        defended.Add(true);
+                    }
+                    
+                }
+            }
+            if(defended.Count == gameTable.Length()/2){
+                return true;
+            }    
+            return false;
+        }
+    }
 
-    public void Defend(int index, GameRiver gameRiver){
-        isDefending = true;
+    public void Defend(Table gameTable){
+        isDefending = CanBeDefended(playerHand.cards,gameTable);
         if(isDefending){
+            Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
+            int index = Convert.ToInt32(Console.ReadLine())-1;            
+            Console.WriteLine(index);
             Card defendingCard =playerHand.ChooseCardFromHand(index);
-            gameRiver.AddCardToRiver(defendingCard);
-            if(gameRiver.GameRiverComparison()==true){
-                isDefending = false;
-                playerHand.RemoveCardFromHand(defendingCard);
-            }
-            else {
-                gameRiver.RemoveCardFromRiver(defendingCard);
-            }
+            gameTable.AddCardToTable(defendingCard);
+            playerHand.RemoveCardFromHand(defendingCard);
 
+        }
+        else if(playerHand.numberOfCardsRemaining==0){
+            isDefending = false;
         }
         // List<Card> defendingList = new List<Card>();
         // bool succesfulDefended = false;

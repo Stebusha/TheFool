@@ -9,8 +9,8 @@ public class AINoobPlayer:AIPlayer{
     }
     PlayerHand playerHand;
     private void MakeDecision(){
-        GameRiver gameRiver = new GameRiver();
-        Attack(0,gameRiver);
+        Table gameTable = new Table();
+        Attack(gameTable);
     }
   
 }

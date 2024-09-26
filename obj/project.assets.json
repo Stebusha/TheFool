@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\МиненковаНА\\.nuget\\packages\\": {}
+    "C:\\Users\\Stebusha\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\МиненковаНА\\Projects\\TheFool\\TheFool.csproj",
+      "projectUniqueName": "D:\\Git\\TheFool\\TheFool.csproj",
       "projectName": "TheFool",
-      "projectPath": "C:\\Users\\МиненковаНА\\Projects\\TheFool\\TheFool.csproj",
-      "packagesPath": "C:\\Users\\МиненковаНА\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\МиненковаНА\\Projects\\TheFool\\obj\\",
+      "projectPath": "D:\\Git\\TheFool\\TheFool.csproj",
+      "packagesPath": "C:\\Users\\Stebusha\\.nuget\\packages\\",
+      "outputPath": "D:\\Git\\TheFool\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\МиненковаНА\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stebusha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -67,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

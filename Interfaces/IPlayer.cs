@@ -5,6 +5,8 @@ public interface IPlayer{
     public int TurnNumber{get;set;}
     public void RefillHand(Deck deck);
 
-    public void Attack(int index, GameRiver gameRiver);
-    public void Defend(int index, GameRiver gameRiver);
+    public List<Card> GetCards();
+
+    public void Attack(Table gameTable);
+    public void Defend(Table gameTable);
 }
