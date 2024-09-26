@@ -120,16 +120,25 @@ public class Player:IPlayer {
         Defending = CanBeDefended(attackingCards,gameTable);
         if(Defending){
             List<Card> defendingCards = GetCardsforDefense(gameTable);
-            Console.WriteLine(ToString(defendingCards));
-            Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
-            int index = Convert.ToInt32(Console.ReadLine())-1;           
-            
-            Card defendingCard =defendingCards[index];
-            Console.WriteLine("Вы отбились картой: " +defendingCard.ToString());
-            gameTable.AddCardToTable(defendingCard);
-            playerHand.RemoveCardFromHand(defendingCard);
-            defendingCards.RemoveAt(index);
-            
+            if(defendingCards.Count==0){
+                for(int i=0;i<gameTable.Length();i++){
+                    playerHand.cards.Add(gameTable.GetCard(i));
+                    playerHand.Sort();
+                }
+                Console.WriteLine("Вы взяли карты :" +ToString(playerHand.cards));
+                SuccesfulDefended=false;
+            }
+            else{
+                Console.WriteLine(ToString(defendingCards));
+                Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
+                int index = Convert.ToInt32(Console.ReadLine())-1;           
+
+                Card defendingCard =defendingCards[index];
+                Console.WriteLine("Вы отбились картой: " +defendingCard.ToString());
+                gameTable.AddCardToTable(defendingCard);
+                playerHand.RemoveCardFromHand(defendingCard);
+                defendingCards.RemoveAt(index);
+            }
         } 
         else if(playerHand.NumberOfCardsRemainingRemaining==0){
             Defending = false;
