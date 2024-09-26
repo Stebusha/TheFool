@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection.Metadata;
-using System.Security.Principal;
 
 namespace TheFool
 {
@@ -20,6 +17,8 @@ namespace TheFool
         public int PlayerCount { get; set; }
         public int BotPlayerCount { get; set; }
 
+        public bool TurnStarted{get;private set;}
+
         public void Game(int playerCount,int AIPlayerCount){
             deck = new Deck();
             Console.WriteLine(deck.CardsAmount);
@@ -28,23 +27,36 @@ namespace TheFool
             deck.Trump();
             Console.WriteLine(deck.GetTrumpSuit());
             players = new List<IPlayer>();
-            for(int i = 0;i<playerCount; i++){
+            if(playerCount+AIPlayerCount==2){
                 Player player = new Player();
                 player.RefillHand(deck);
                 players.Add(player);
+                AIPlayer aIPlayer = new AIPlayer();
+                aIPlayer.RefillHand(deck);
+                players.Add(aIPlayer);
+                
             }
-            for(int i = 0;i<AIPlayerCount; i++){
-                Random random = new Random();
-                if(random.Next(0,2)==0){
-                    AIPlayer aIPlayer = new AIPlayer();
-                    aIPlayer.RefillHand(deck);
-                    players.Add(aIPlayer);
+            else{
+                for(int i = 0;i<playerCount; i++){
+                Player player = new Player();
+                player.RefillHand(deck);
+                players.Add(player);
+                }
+                for(int i = 0;i<AIPlayerCount; i++){
+                    Random random = new Random();
+                    if(random.Next(0,2)==0){
+                        AIPlayer aIPlayer = new AIPlayer();
+                        aIPlayer.RefillHand(deck);
+                        players.Add(aIPlayer);
                 }
                 else{
                     AINoobPlayer aINoob = new AINoobPlayer();
                     aINoob.RefillHand(deck);
                     players.Add(aINoob);
                 }
+
+            }
+            
                 
             }
             List<Card> firstTrumps = new List<Card>();
@@ -82,7 +94,9 @@ namespace TheFool
                         break;
                 }
 
-            }else{
+            }
+            else
+            {
                 switch(first){
                     case 0:
                         for(int i=1;i<players.Count;i++){
@@ -105,17 +119,28 @@ namespace TheFool
                             players[i].TurnNumber = i+2;
                         }
                         break;
-                }
-          
+                }          
             }
-            
+            players= players.OrderBy(p=>p.TurnNumber).ToList();
+            int turns = 0;
+            while(!Finished){
+                TurnStarted = true;
+                players[turns].Attack(gameTable);
+                players[turns+1].Defend(players[turns].GetCardsForAttack(gameTable),gameTable);
+                if(players[turns+1].SuccesfulDefended){
+                    turns++;
+                }
+                if(turns>players.Count-1){
+                        turns = turns%playerCount;
+                } 
+            }
             // foreach(var p in players){
             //     Console.WriteLine(p.TurnNumber.ToString());
             // }
             
 
             //deck.DealCardsToPlayers(players);
-            Console.WriteLine(deck.CardsAmount);
+            //Console.WriteLine(deck.CardsAmount);
             
         }
 
@@ -140,7 +165,9 @@ namespace TheFool
             return number;
         }
         public void Win(){
-            finished = true;
+            if(deck.CardsAmount==0&&players.Count==1){
+                Finished = true;
+            }
             int score = 1;
             scoreTable.WriteToFile(players[0].Name, score);
             scoreTable.Show();

@@ -2,13 +2,14 @@ namespace TheFool;
 public class AIPlayer:IPlayer{
     
     PlayerHand playerHand = new PlayerHand();
-    private bool isAttacking = false;
-    private bool isDefending = false;
+    public bool Attacking{get; set;}
+    public bool Defending{get; set;}
+    public bool SuccesfulDefended{get; set;}
     private float handValue = -1f;
     public string Name{get; set;}
     public int TurnNumber{get;set;}
     public AIPlayer(){
-        Name = "Bot-Hard";
+        Name = "Bot";
     }
     public List<Card> GetCards(){
         return playerHand.cards;
@@ -22,8 +23,8 @@ public class AIPlayer:IPlayer{
         //}
     }
     public void Attack(Table gameTable){
-        isAttacking = CanBeAttacking(playerHand.cards,gameTable);
-        if(isAttacking){
+        Attacking = CanBeAttacking(playerHand.cards,gameTable);
+        if(Attacking){
             int index = MakeDecision(playerHand.cards,handValue);
             Card attackingCard = playerHand.ChooseCardFromHand(index);
             attackingCard = playerHand.ChooseCardFromHand(index);
@@ -32,12 +33,30 @@ public class AIPlayer:IPlayer{
             playerHand.RemoveCardFromHand(attackingCard);
         }
         else if(playerHand.numberOfCardsRemaining==0){
-            isAttacking = false;
+            Attacking = false;
         }
+    }
+    public List<Card> GetCardsForAttack(Table gameTable){
+        List <Card> cardsForAttack = new List<Card>();
+        if(CanBeAttacking(playerHand.cards,gameTable)){
+            if(gameTable.Length()==0){
+                return playerHand.cards;
+            }
+            else{
+                foreach(var card in playerHand.cards){
+                    for(int i=0;i<gameTable.Length();i++){
+                        if(card.Rank==gameTable.GetCard(i).Rank){
+                            cardsForAttack.Add(card);
+                        }
+                    }
+                }
+            }            
+        }
+        return cardsForAttack;
     }
 
     private bool CanBeAttacking(List<Card> cards, Table gameTable){
-        if (gameTable.Length() ==0){
+        if (gameTable.Length() == 0){
             return true;
         }
         else{
@@ -61,20 +80,19 @@ public class AIPlayer:IPlayer{
                 foreach(var card in cards){
                     if(card>gameTable.GetCard(i)){
                         defended.Add(true);
-                    }
-                    
+                    }                
                 }
             }
-            if(defended.Count == gameTable.Length()/2){
+            if(defended.Count >= gameTable.Length()/2){
                 return true;
             }    
             return false;
         }
     }
 
-    public void Defend(Table gameTable){
-        isDefending = CanBeDefended(playerHand.cards,gameTable);
-        if(isDefending){
+    public void Defend(List<Card> attackingCards, Table gameTable){
+        Defending = CanBeDefended(playerHand.cards,gameTable);
+        if(Defending){
             List<Card> defendingList = new List<Card>();
             foreach(var card in playerHand.cards){
                 if(card>gameTable.GetCard(0)){
@@ -89,7 +107,7 @@ public class AIPlayer:IPlayer{
 
         }
         else if(playerHand.numberOfCardsRemaining==0){
-            isDefending = false;
+            Defending = false;
         } 
         else{
             for(int i=0;i<gameTable.Length();i++){
