@@ -132,6 +132,10 @@ public class AIPlayer:IPlayer{
                 //SuccesfulDefended = true;
                 Defending = false;
             } 
+            else if(attackingCards.Count==0){
+                Defending = false;
+                SuccesfulDefended = true;
+            }
             else if(!SuccesfulDefended){
                 TakeAllCards(gameTable);
                 Defending = false;
