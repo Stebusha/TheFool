@@ -20,48 +20,31 @@ namespace TheFool
         public bool TurnStarted{get;private set;}
 
         private void Turn(int turn){
-            TurnStarted= true;
-            
+            TurnStarted = true;
             Console.WriteLine("Начало хода: ");
             turn = turn%2;
+            players[turn].Taken = false;
+            players[(turn+1)%2].Taken = false;
             List<Card> attackingCards = new List<Card>();
             players[(turn+1)%2].SuccesfulDefended = false;
             while(TurnStarted){
-                //players[turn].Attack(gameTable);
-                
-                //players[(turn+1)%2].Defend(attackingCards,gameTable);
                 while(!players[(turn+1)%2].SuccesfulDefended){
+                    if(players[(turn+1)%2].Taken|players[turn].Taken){
+                        TurnStarted=false;
+                        Console.WriteLine(players[(turn+1)%2].Taken.ToString(),players[turn].Taken.ToString());
+                        //players[(turn+1)%2].Taken=false;
+                        //players[turn].Taken=false;
+                        break;        
+                    }
                     players[turn].Attack(gameTable);
                     attackingCards = players[turn].GetCardsForAttack(gameTable);
                     //players[(turn+1)%2].SuccesfulDefended = false;
                     players[(turn+1)%2].Defend(attackingCards,gameTable);
-                // if(players[(turn+1)%2].SuccesfulDefended){
-                //     players[turn].Attack(gameTable);
-                //     attackingCards = players[turn].GetCardsForAttack(gameTable);
-                //     if(attackingCards==null){
-                //     players[(turn+1)%2].SuccesfulDefended = true;
-                //     TurnStarted = false;
-                // }
-                
-                // }
-                // if(players[(turns+1)%2].SuccesfulDefended){
-                //     TurnStarted = false;
-                // }
-                // else{
-
-                //     //players[(turns+1)%2].TakeAllCards(gameTable);
-                //     TurnStarted = false;
-                // }
                 } 
                 if(attackingCards.Count==0){
-                        players[(turn+1)%2].SuccesfulDefended = true;
-                        TurnStarted = false;
-                }
-                
-            }
-            if(players[(turn+1)%2].Taken){
-                TurnStarted=false;
-                players[(turn+1)%2].Taken=false;
+                    players[(turn+1)%2].SuccesfulDefended = true;
+                    TurnStarted = false;
+                }  
             }
             gameTable.ClearTable();
             Console.WriteLine("Конец хода");
@@ -171,23 +154,17 @@ namespace TheFool
             while(!Finished){
                 Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
                 Turn(turns);
-                turns++;
                 players[turns].RefillHand(deck);
                 players[(turns+1)%2].RefillHand(deck);
                 Console.WriteLine("Игроки взяли карты");
-            }
+                if(!players[(turns+1)%2].Taken&&!players[turns].Taken){
+                    turns++;
+                    players[(turns+1)%2].Taken=false;
+                    players[turns].Taken=false;
+                }
                 
-      
-                
-            
-            // foreach(var p in players){
-            //     Console.WriteLine(p.TurnNumber.ToString());
-            // }
-            
-
-            //deck.DealCardsToPlayers(players);
-            //Console.WriteLine(deck.CardsAmount);
-            
+                Win();
+            }   
         }
 
         public Card GetFirstTrump(List<Card> cards){
@@ -213,10 +190,10 @@ namespace TheFool
         public void Win(){
             if(deck.CardsAmount==0&&players.Count==1){
                 Finished = true;
+                int score = 1;
+                scoreTable.WriteToFile(players[0].Name, score);
+                scoreTable.Show();
             }
-            int score = 1;
-            scoreTable.WriteToFile(players[0].Name, score);
-            scoreTable.Show();
         }
         
         public void TestListOperation(List<Card> l1,List<Card> l2){

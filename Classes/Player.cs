@@ -90,9 +90,9 @@ public class Player:IPlayer {
                 playerHand.NumberOfCardsRemainingRemaining--;
                 attackingCards.Remove(attackingCard);
             }
-            // else{
-            //     Attacking = false;
-            // }
+            else{
+                attackingCards.Clear();
+            }
             
         }
         else if(playerHand.cards.Count==0){
