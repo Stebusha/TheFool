@@ -162,11 +162,12 @@ public class Player:IPlayer {
                 TakeAllCards(gameTable);
                 Defending = false;
                 gameTable.ClearTable();
-                Taken = true;
+                
             }      
         }     
     }
     public void TakeAllCards(Table gameTable){
+        Taken = true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         // for(int i=0;i<gameTable.Length();i++){
         //             playerHand.cards.Add(gameTable.GetCard(i));

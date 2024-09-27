@@ -57,9 +57,11 @@ namespace TheFool
                         players[(turn+1)%2].SuccesfulDefended = true;
                         TurnStarted = false;
                 }
-                if(players[turn].Taken||players[(turn+1)%2].Taken){
-                    TurnStarted=false;
-                }
+                
+            }
+            if(players[(turn+1)%2].Taken){
+                TurnStarted=false;
+                players[(turn+1)%2].Taken=false;
             }
             gameTable.ClearTable();
             Console.WriteLine("Конец хода");

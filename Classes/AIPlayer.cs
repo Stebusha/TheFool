@@ -115,40 +115,29 @@ public class AIPlayer:IPlayer{
     }
 
     public void Defend(List<Card> attackingCards, Table gameTable){
-        
-            Defending = CanBeDefended(playerHand.cards,gameTable);
-                if(Defending){
-                    List<Card> defendingList = new List<Card>();
-                    foreach(var card in playerHand.cards){
-                        if(card>gameTable.GetCard(0)){
-                            defendingList.Add(card);
-                        }
-                    }
-                    if(defendingList.Count!=0){
-                        Card defendingCard = defendingList[0];
-                        Console.WriteLine("Бот отбился картой: "+defendingCard);
-                        defendingList.RemoveAt(0);
-                        gameTable.AddCardToTable(defendingCard);
-                        playerHand.RemoveCardFromHand(defendingCard);
-                        //SuccesfulDefended = true;
-                        Defending = false;
-                    } 
-                    else if(!SuccesfulDefended){
-                        TakeAllCards(gameTable);
-                        Defending = false;
-                        gameTable.ClearTable();
-                        Taken = true;
-                    }
-            }   
-        
-        // else{
-        //     for(int i=0;i<gameTable.Length();i++){
-        //         playerHand.cards.Add(gameTable.GetCard(i));
-        //         playerHand.Sort();
-        //     }
-        // }
-        
-      
+        Defending = CanBeDefended(playerHand.cards,gameTable);
+        if(Defending){
+            List<Card> defendingList = new List<Card>();
+            foreach(var card in playerHand.cards){
+                if(card>gameTable.GetCard(0)){
+                    defendingList.Add(card);
+                }
+            }
+            if(defendingList.Count!=0){
+                Card defendingCard = defendingList[0];
+                Console.WriteLine("Бот отбился картой: "+defendingCard);
+                defendingList.RemoveAt(0);
+                gameTable.AddCardToTable(defendingCard);
+                playerHand.RemoveCardFromHand(defendingCard);
+                //SuccesfulDefended = true;
+                Defending = false;
+            } 
+            else if(!SuccesfulDefended){
+                TakeAllCards(gameTable);
+                Defending = false;
+                gameTable.ClearTable();
+            }
+        }           
     }
 
     public void TakeAllCards(Table gameTable){
@@ -156,6 +145,7 @@ public class AIPlayer:IPlayer{
         //     playerHand.cards.Add(gameTable.GetCard(i));           
         // }
         // playerHand.Sort();
+        Taken =true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         // for(int i=0;i<gameTable.Length();i++){
         //             playerHand.cards.Add(gameTable.GetCard(i));
