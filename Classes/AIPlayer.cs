@@ -101,13 +101,7 @@ public class AIPlayer:IPlayer{
             if(defended.Count >= gameTable.Length()/2){
                 return true;
             }    
-            SuccesfulDefended = false;
-            // for(int c=0;c<gameTable.Length();c++){
-            //     playerHand.AddCardToHand(gameTable.GetCard(c));
-            //     playerHand.Sort();
-            // }
-            // Console.WriteLine(ToString(playerHand.cards));
-            return SuccesfulDefended;
+            return false;
         }
     }
 
@@ -142,23 +136,14 @@ public class AIPlayer:IPlayer{
     }
 
     public void TakeAllCards(Table gameTable){
-        // for(int i=0;i<gameTable.Length();i++){
-        //     playerHand.cards.Add(gameTable.GetCard(i));           
-        // }
-        // playerHand.Sort();
         Taken =true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
-        // for(int i=0;i<gameTable.Length();i++){
-        //             playerHand.cards.Add(gameTable.GetCard(i));
-        //             playerHand.Sort();
-        //         }
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
         if(playerHand.cards.Count!=0){
             Console.WriteLine("Бот взял карты :" +ToString(playerHand.cards));
             SuccesfulDefended=false;
-        }
-        
+        } 
     }
     public string ToString(List<Card> cards)
     {

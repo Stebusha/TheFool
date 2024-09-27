@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace TheFool;
 public class Player:IPlayer {
     
@@ -89,12 +87,9 @@ public class Player:IPlayer {
                 playerHand.RemoveCardFromHand(attackingCard);
                 playerHand.NumberOfCardsRemainingRemaining--;
                 attackingCards.Remove(attackingCard);
-            }
-            else{
                 Attacking = false;
             }
             //attackingCards.Clear();
-            
         }
         else if(playerHand.cards.Count==0){
             Attacking = false;

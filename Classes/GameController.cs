@@ -59,12 +59,15 @@ namespace TheFool
             Console.WriteLine(deck.GetTrumpSuit());
             players = new List<IPlayer>();
             if(playerCount+AIPlayerCount==2){
-                Player player = new Player();
-                player.RefillHand(deck);
-                players.Add(player);
+                // Player player = new Player();
+                // player.RefillHand(deck);
+                // players.Add(player);
                 AIPlayer aIPlayer = new AIPlayer();
                 aIPlayer.RefillHand(deck);
                 players.Add(aIPlayer);
+                 AIPlayer aIPlayer1 = new AIPlayer();
+                aIPlayer1.RefillHand(deck);
+                players.Add(aIPlayer1);
                 
             }
             else{
