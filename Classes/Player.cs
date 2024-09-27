@@ -17,6 +17,8 @@ public class Player:IPlayer {
 
     }
     public int TurnNumber{get;set;}
+
+    public bool Taken{get; set;}
     public string Name{get;set;}
     public List<Card> GetCards(){
         return playerHand.cards;
@@ -159,6 +161,8 @@ public class Player:IPlayer {
             else if(!SuccesfulDefended){
                 TakeAllCards(gameTable);
                 Defending = false;
+                gameTable.ClearTable();
+                Taken = true;
             }      
         }     
     }

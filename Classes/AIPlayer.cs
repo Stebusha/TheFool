@@ -1,3 +1,6 @@
+using System.Dynamic;
+using System.Reflection.Metadata;
+
 namespace TheFool;
 public class AIPlayer:IPlayer{
     
@@ -8,6 +11,8 @@ public class AIPlayer:IPlayer{
     private float handValue = -1f;
     public string Name{get; set;}
     public int TurnNumber{get;set;}
+
+    public bool Taken{get;set;}
     public AIPlayer(){
         Name = "Bot";
     }
@@ -110,7 +115,7 @@ public class AIPlayer:IPlayer{
     }
 
     public void Defend(List<Card> attackingCards, Table gameTable){
-        if(!SuccesfulDefended){
+        
             Defending = CanBeDefended(playerHand.cards,gameTable);
                 if(Defending){
                     List<Card> defendingList = new List<Card>();
@@ -125,22 +130,16 @@ public class AIPlayer:IPlayer{
                         defendingList.RemoveAt(0);
                         gameTable.AddCardToTable(defendingCard);
                         playerHand.RemoveCardFromHand(defendingCard);
-                        SuccesfulDefended = true;
+                        //SuccesfulDefended = true;
                         Defending = false;
+                    } 
+                    else if(!SuccesfulDefended){
+                        TakeAllCards(gameTable);
+                        Defending = false;
+                        gameTable.ClearTable();
+                        Taken = true;
                     }
-                    else {
-                    SuccesfulDefended = false;
-                    TakeAllCards(gameTable);
-                    Defending = false;
-                // for(int i=0;i<gameTable.Length();i++){
-                //     playerHand.cards.Add(gameTable.GetCard(i));
-                // }
-                // playerHand.Sort();
-                // Console.WriteLine("Бот взял карты");
-                // Console.WriteLine(ToString(playerHand.cards));
-                    }
-                }
-                
+            }   
         
         // else{
         //     for(int i=0;i<gameTable.Length();i++){
@@ -148,7 +147,7 @@ public class AIPlayer:IPlayer{
         //         playerHand.Sort();
         //     }
         // }
-        }
+        
       
     }
 

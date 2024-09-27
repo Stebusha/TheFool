@@ -6,6 +6,8 @@ public interface IPlayer{
     public bool Attacking{get; set;}
     public bool Defending{get; set;}
     public bool SuccesfulDefended{get; set;}
+
+    public bool Taken{get; set;}
     public void RefillHand(Deck deck);
 
     public List<Card> GetCards();
