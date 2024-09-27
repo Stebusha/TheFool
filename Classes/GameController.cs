@@ -19,6 +19,49 @@ namespace TheFool
 
         public bool TurnStarted{get;private set;}
 
+        private void Turn(int turn){
+            TurnStarted= true;
+            
+            Console.WriteLine("Начало хода: ");
+            turn = turn%2;
+            List<Card> attackingCards = new List<Card>();
+            players[(turn+1)%2].SuccesfulDefended = false;
+            while(TurnStarted){
+                //players[turn].Attack(gameTable);
+                
+                //players[(turn+1)%2].Defend(attackingCards,gameTable);
+                while(!players[(turn+1)%2].SuccesfulDefended){
+                    players[turn].Attack(gameTable);
+                    attackingCards = players[turn].GetCardsForAttack(gameTable);
+                    //players[(turn+1)%2].SuccesfulDefended = false;
+                    players[(turn+1)%2].Defend(attackingCards,gameTable);
+                // if(players[(turn+1)%2].SuccesfulDefended){
+                //     players[turn].Attack(gameTable);
+                //     attackingCards = players[turn].GetCardsForAttack(gameTable);
+                //     if(attackingCards==null){
+                //     players[(turn+1)%2].SuccesfulDefended = true;
+                //     TurnStarted = false;
+                // }
+                
+                // }
+                // if(players[(turns+1)%2].SuccesfulDefended){
+                //     TurnStarted = false;
+                // }
+                // else{
+
+                //     //players[(turns+1)%2].TakeAllCards(gameTable);
+                //     TurnStarted = false;
+                // }
+                } 
+                if(attackingCards.Count==0){
+                        players[(turn+1)%2].SuccesfulDefended = true;
+                        TurnStarted = false;
+                }
+            }
+            gameTable.ClearTable();
+            Console.WriteLine("Конец хода");
+        }
+
         public void Game(int playerCount,int AIPlayerCount){
             deck = new Deck();
             Console.WriteLine(deck.CardsAmount);
@@ -48,16 +91,13 @@ namespace TheFool
                         AIPlayer aIPlayer = new AIPlayer();
                         aIPlayer.RefillHand(deck);
                         players.Add(aIPlayer);
-                }
-                else{
-                    AINoobPlayer aINoob = new AINoobPlayer();
-                    aINoob.RefillHand(deck);
-                    players.Add(aINoob);
-                }
-
-            }
-            
-                
+                    }
+                    else{
+                        AINoobPlayer aINoob = new AINoobPlayer();
+                        aINoob.RefillHand(deck);
+                        players.Add(aINoob);
+                    }
+                }   
             }
             List<Card> firstTrumps = new List<Card>();
             foreach(var p in players){
@@ -124,25 +164,12 @@ namespace TheFool
             players = players.OrderBy(p=>p.TurnNumber).ToList();
             int turns = 0;
             while(!Finished){
-                TurnStarted= true;
-                while(TurnStarted){
-                    players[turns%2].Attack(gameTable);
-                    List<Card> attackingCards = players[turns%2].GetCardsForAttack(gameTable);
-                    players[(turns+1)%2].SuccesfulDefended = false;
-                    players[(turns+1)%2].Defend(attackingCards,gameTable);
-
-                    if(attackingCards==null){
-                        players[(turns+1)%2].SuccesfulDefended = true;
-                    }
-                    if(players[(turns+1)%2].SuccesfulDefended){
-                        TurnStarted = false;
-                    }
-                    gameTable.ClearTable();
-
-                    if(TurnStarted==false){
-                        turns++;
-                    }
-                } 
+                Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
+                Turn(turns);
+                turns++;
+                players[turns].RefillHand(deck);
+                players[(turns+1)%2].RefillHand(deck);
+                Console.WriteLine("Игроки взяли карты");
             }
                 
       
@@ -185,6 +212,14 @@ namespace TheFool
             int score = 1;
             scoreTable.WriteToFile(players[0].Name, score);
             scoreTable.Show();
+        }
+        
+        public void TestListOperation(List<Card> l1,List<Card> l2){
+            l1.AddRange(l2);
+            foreach(var l in l1){
+                Console.Write(l+"\t");
+            }
+            
         }
         public void TestComparison(Card card1,Card card2){
             Console.WriteLine(card1<card2);

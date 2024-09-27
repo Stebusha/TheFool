@@ -15,8 +15,14 @@ public class AIPlayer:IPlayer{
         return playerHand.cards;
     }
     public void RefillHand(Deck deck){
-        playerHand.cards = deck.DrawCards(6-playerHand.NumberOfCardsRemainingRemaining);
-        playerHand.Sort();
+        if(playerHand.cards.Count==0){
+            playerHand.cards = deck.DrawCards(6);
+            playerHand.Sort();
+        }
+        else if(playerHand.cards.Count<6){
+            playerHand.cards.AddRange(deck.DrawCards(6-playerHand.cards.Count));
+            playerHand.Sort();
+        }
         //Console.WriteLine("Cards:");
         //foreach(var c in playerHand.cards){
         //    Console.WriteLine(c);
@@ -27,7 +33,7 @@ public class AIPlayer:IPlayer{
         if(Attacking){
 
             List<Card> attackingCards = GetCardsForAttack(gameTable);
-            if(attackingCards!=null){
+            if(attackingCards.Count!=0){
                 int index = MakeDecision();
                 Card attackingCard = attackingCards[0];
                 Console.WriteLine("Бот походил картой: "+ attackingCard.ToString());
@@ -104,31 +110,37 @@ public class AIPlayer:IPlayer{
     }
 
     public void Defend(List<Card> attackingCards, Table gameTable){
-        Defending = CanBeDefended(playerHand.cards,gameTable);
-        if(Defending){
-            List<Card> defendingList = new List<Card>();
-            foreach(var card in playerHand.cards){
-                if(card>gameTable.GetCard(0)){
-                    defendingList.Add(card);
+        if(!SuccesfulDefended){
+            Defending = CanBeDefended(playerHand.cards,gameTable);
+                if(Defending){
+                    List<Card> defendingList = new List<Card>();
+                    foreach(var card in playerHand.cards){
+                        if(card>gameTable.GetCard(0)){
+                            defendingList.Add(card);
+                        }
+                    }
+                    if(defendingList.Count!=0){
+                        Card defendingCard = defendingList[0];
+                        Console.WriteLine("Бот отбился картой: "+defendingCard);
+                        defendingList.RemoveAt(0);
+                        gameTable.AddCardToTable(defendingCard);
+                        playerHand.RemoveCardFromHand(defendingCard);
+                        SuccesfulDefended = true;
+                        Defending = false;
+                    }
+                    else {
+                    SuccesfulDefended = false;
+                    TakeAllCards(gameTable);
+                    Defending = false;
+                // for(int i=0;i<gameTable.Length();i++){
+                //     playerHand.cards.Add(gameTable.GetCard(i));
+                // }
+                // playerHand.Sort();
+                // Console.WriteLine("Бот взял карты");
+                // Console.WriteLine(ToString(playerHand.cards));
+                    }
                 }
                 
-            }
-            Card defendingCard =defendingList[0];
-            Console.WriteLine("Бот отбился картой: "+defendingCard);
-            defendingList.RemoveAt(0);
-            gameTable.AddCardToTable(defendingCard);
-            playerHand.RemoveCardFromHand(defendingCard);
-            SuccesfulDefended = true;
-        }
-        else {
-            SuccesfulDefended = false;
-            for(int i=0;i<gameTable.Length();i++){
-                playerHand.cards.Add(gameTable.GetCard(i));
-            }
-            playerHand.Sort();
-            Console.WriteLine("Бот взял карты");
-            Console.WriteLine(ToString(playerHand.cards));
-        }
         
         // else{
         //     for(int i=0;i<gameTable.Length();i++){
@@ -136,8 +148,28 @@ public class AIPlayer:IPlayer{
         //         playerHand.Sort();
         //     }
         // }
+        }
+      
     }
 
+    public void TakeAllCards(Table gameTable){
+        // for(int i=0;i<gameTable.Length();i++){
+        //     playerHand.cards.Add(gameTable.GetCard(i));           
+        // }
+        // playerHand.Sort();
+        List<Card> onTableCards = gameTable.TakeCardsFromTable();
+        // for(int i=0;i<gameTable.Length();i++){
+        //             playerHand.cards.Add(gameTable.GetCard(i));
+        //             playerHand.Sort();
+        //         }
+        playerHand.cards.AddRange(onTableCards);
+        playerHand.Sort();
+        if(playerHand.cards.Count!=0){
+            Console.WriteLine("Бот взял карты :" +ToString(playerHand.cards));
+            SuccesfulDefended=false;
+        }
+        
+    }
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = "";

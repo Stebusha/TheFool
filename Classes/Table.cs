@@ -11,6 +11,10 @@ namespace TheFool
         public int Length(){
             return onTable.Count;
         }
+
+        public List<Card> TakeCardsFromTable(){
+            return  onTable;
+        }
         public void AddCardToTable(Card card){
             onTable.Add(card);
             tableCardRemaining++;
