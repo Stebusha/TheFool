@@ -1,6 +1,3 @@
-using System.Dynamic;
-using System.Reflection.Metadata;
-
 namespace TheFool;
 public class AIPlayer:IPlayer{
     

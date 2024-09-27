@@ -64,7 +64,6 @@ public class Player:IPlayer {
             return cardsForAttack;
         }
         else if(CanBeAttacking(playerHand.cards,gameTable)){ 
-            cardsForAttack.Clear();
             foreach(var card in playerHand.cards){
                 for(int i=0;i<gameTable.Length();i++){
                     if(card.Rank==gameTable.GetCard(i).Rank){
