@@ -42,9 +42,10 @@ namespace TheFool
                             Console.WriteLine(players[(turn+1)%players.Count].Taken.ToString(),players[turn%players.Count].Taken.ToString());
                             break;       
                         }
+                        attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
                         players[turn%players.Count].Attack(gameTable);
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
-                            attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
+                            
                             Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
@@ -69,11 +70,12 @@ namespace TheFool
                             break;       
                         }
                         if(players[(turn+1)%players.Count].GetCards().Count!=0){
+                            attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
                             players[turn%players.Count].Attack(gameTable);
                             
                         }
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
-                            attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
+                            
                             Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
