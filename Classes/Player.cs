@@ -95,7 +95,7 @@ public class Player:IPlayer {
             Attacking = false;
         }
     }
-    private bool CanBeDefended(List<Card> attackingCards, Table gameTable){
+    private bool CanBeDefended(Card attackingCard, Table gameTable){
         if (gameTable.Length()<1){
             SuccesfulDefended = false;
             playerHand.NumberOfCardsRemainingRemaining = playerHand.cards.Count;
@@ -104,7 +104,7 @@ public class Player:IPlayer {
         else{
             List<bool> defended = new List<bool>();
             for(int i=1;i<gameTable.Length();i+=2){
-                foreach(var card in attackingCards){
+                foreach(var card in playerHand.cards){
                     if(card>gameTable.GetCard(i)){
                         defended.Add(true);
                     }   
@@ -131,8 +131,8 @@ public class Player:IPlayer {
         }
         return defenseCards;    
     }
-    public void Defend(List<Card> attackingCards, Table gameTable){
-        Defending = CanBeDefended(attackingCards,gameTable);
+    public void Defend(Card attackingCard, Table gameTable){
+        Defending = CanBeDefended(attackingCard,gameTable);
         if(Defending){
             List<Card> defendingCards = GetCardsforDefense(gameTable);
             if(defendingCards.Count!=0){

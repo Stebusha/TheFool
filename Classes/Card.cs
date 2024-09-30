@@ -35,7 +35,7 @@ namespace TheFool;
             return false;
         }
         else{
-            return card1.Rank>card2.Rank;
+            return false;
         }
         
     }
@@ -54,7 +54,7 @@ namespace TheFool;
             return false;
         }
         else{
-            return card1.Rank<card2.Rank;
+            return false;
         }
     }
 
@@ -76,7 +76,7 @@ namespace TheFool;
             return card1.Rank>card2.Rank;
         }
         else{
-            return card1.Rank>card2.Rank;
+            return false;
         }
     }
     public static bool operator <=(Card card1,Card card2){
@@ -97,7 +97,7 @@ namespace TheFool;
             return card1.Rank<card2.Rank;
         }
         else{
-            return card1.Rank<card2.Rank;
+            return false;
         }
     }
 

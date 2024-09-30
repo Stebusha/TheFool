@@ -8,7 +8,7 @@ namespace TheFool
         private List<Card> cards;
         private SuitType[] suits = {SuitType.Clubs,SuitType.Diams,SuitType.Hearts, SuitType.Spades};
         private RankType[] ranks = {RankType.Six, RankType.Seven, RankType.Eight,RankType.Nine,RankType.Ten,RankType.Jack,RankType.Queen,RankType.King,RankType.Ace}; 
-        public static SuitType trumpSuit = SuitType.Clubs;
+        public static SuitType trumpSuit;
         public int CardsAmount{get; set;}
 
         public SuitType GetTrumpSuit() {
@@ -34,10 +34,17 @@ namespace TheFool
 
         public List<Card> DrawCards(int count){
             List<Card> drawnCards = new List<Card>();
-
-            for(int i=0;i<count;i++){
-                drawnCards.Add(cards.ElementAt(0));
-                cards.RemoveAt(0);
+            if(CardsAmount!=0&&CardsAmount>=count){
+                for(int i=0;i<count;i++){
+                    drawnCards.Add(cards.ElementAt(0));
+                    cards.RemoveAt(0);
+                }
+            }
+            else if(CardsAmount!=0&&CardsAmount<count){
+                for(int i=0;i<CardsAmount;i++){
+                    drawnCards.Add(cards.ElementAt(0));
+                    cards.RemoveAt(0);
+                }
             }
             CardsAmount = cards.Count;
             return drawnCards;

@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+
 namespace TheFool;
 public class AIPlayer:IPlayer{
     
@@ -17,18 +20,18 @@ public class AIPlayer:IPlayer{
         return playerHand.cards;
     }
     public void RefillHand(Deck deck){
-        if(playerHand.cards.Count==0&&deck.CardsAmount>=6){
+        if(playerHand.cards.Count==0/*&&deck.CardsAmount>=6*/){
             playerHand.cards = deck.DrawCards(6);
             playerHand.Sort();
         }
-        else if(playerHand.cards.Count<6&&deck.CardsAmount>=5){
+        else if(playerHand.cards.Count<6/*&&deck.CardsAmount>=5*/){
             playerHand.cards.AddRange(deck.DrawCards(6-playerHand.cards.Count));
             playerHand.Sort();
         }
-        else{
-            playerHand.cards.AddRange(deck.DrawCards(deck.CardsAmount-playerHand.cards.Count));
-            playerHand.Sort();
-        }
+        // else{
+        //     playerHand.cards.AddRange(deck.DrawCards(deck.CardsAmount-playerHand.cards.Count));
+        //     playerHand.Sort();
+        // }
         //Console.WriteLine("Cards:");
         //foreach(var c in playerHand.cards){
         //    Console.WriteLine(c);
@@ -37,7 +40,6 @@ public class AIPlayer:IPlayer{
     public void Attack(Table gameTable){
         Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
-
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards.Count!=0){
                 int index = MakeDecision();
@@ -45,15 +47,15 @@ public class AIPlayer:IPlayer{
                 Console.WriteLine($"{Name} походил картой: "+ attackingCard.ToString());
                 gameTable.AddCardToTable(attackingCard);
                 playerHand.RemoveCardFromHand(attackingCard);
-            }
-            else{
                 Attacking = false;
-            }
-            
+            }    
         }
-        else if(playerHand.NumberOfCardsRemainingRemaining==0){
-            Attacking = false;
+        else{
+            Console.WriteLine("Нечего подкидывать");
         }
+        // else if(playerHand.NumberOfCardsRemainingRemaining==0){
+        //     Attacking = false;
+        // }
     }
     public List<Card> GetCardsForAttack(Table gameTable){
         List <Card> cardsForAttack = new List<Card>();
@@ -89,6 +91,45 @@ public class AIPlayer:IPlayer{
             return false;
         }
     }
+
+    private bool CanBeBeaten(Card attackingCard,Table gameTable){
+        if(gameTable.Length()==0){
+            return false;
+        }
+        else{
+            foreach(var card in playerHand.cards){
+                if(card>attackingCard){
+                    return true;  
+                }
+            }
+            return false;
+        }
+       
+    }
+    public void Beaten(Card attackingCard, Table gameTable){
+        bool beaten = CanBeBeaten(attackingCard,gameTable);
+        Card defendingCard = GetCardToDefend(attackingCard);
+        if(beaten){
+            Console.WriteLine($"{Name} отбился картой: "+defendingCard);
+            gameTable.AddCardToTable(defendingCard);
+            playerHand.RemoveCardFromHand(defendingCard);
+            SuccesfulDefended = true;
+        }
+        else{
+            Console.WriteLine("Нечем отбиться");
+            TakeAllCards(gameTable);
+        }
+    }
+    private Card GetCardToDefend(Card attackingCard){
+        Card cardToDefend = new Card();
+        foreach(var card in playerHand.cards){
+            if(card>attackingCard){
+                cardToDefend = card;
+                break;
+            }
+        }
+        return cardToDefend;
+    }
     private bool CanBeDefended(List<Card> cards, Table gameTable){
         if (gameTable.Length()==0){
             return false;
@@ -109,34 +150,45 @@ public class AIPlayer:IPlayer{
         }
     }
 
-    public void Defend(List<Card> attackingCards, Table gameTable){
-        Defending = CanBeDefended(playerHand.cards,gameTable);
-        if(Defending){
-            List<Card> defendingList = new List<Card>();
-            foreach(var card in playerHand.cards){
-                if(card>gameTable.GetCard(0)){
-                    defendingList.Add(card);
-                }
-            }
-            if(defendingList.Count!=0){
-                Card defendingCard = defendingList[0];
-                Console.WriteLine($"{Name} отбился картой: "+defendingCard);
-                defendingList.RemoveAt(0);
-                gameTable.AddCardToTable(defendingCard);
-                playerHand.RemoveCardFromHand(defendingCard);
-                //SuccesfulDefended = true;
-                Defending = false;
-            } 
-            else if(attackingCards.Count==0){
-                Defending = false;
-                SuccesfulDefended = true;
-            }
-            else if(!SuccesfulDefended){
-                TakeAllCards(gameTable);
-                Defending = false;
-                gameTable.ClearTable();
-            }
-        }           
+    public void Defend(Card attackingCard, Table gameTable){
+        bool beaten = CanBeBeaten(attackingCard,gameTable);
+        Card defendingCard = GetCardToDefend(attackingCard);
+        if(beaten){
+            Console.WriteLine($"{Name} отбился картой: "+defendingCard);
+            gameTable.AddCardToTable(defendingCard);
+            playerHand.RemoveCardFromHand(defendingCard);
+            SuccesfulDefended = true;
+        }
+        else{
+            Console.WriteLine("Нечем отбиться");
+            TakeAllCards(gameTable);
+        }
+        // Defending = CanBeDefended(playerHand.cards,gameTable);
+        // if(Defending){
+        //     List<Card> defendingList = new List<Card>();
+        //     foreach(var card in playerHand.cards){
+        //         if(card>gameTable.GetCard(0)){
+        //             defendingList.Add(card);
+        //         }
+        //     }
+        //     if(defendingList.Count!=0){
+        //         Card defendingCard = defendingList[0];
+        //         Console.WriteLine($"{Name} отбился картой: "+defendingCard);
+        //         defendingList.RemoveAt(0);
+        //         gameTable.AddCardToTable(defendingCard);
+        //         playerHand.RemoveCardFromHand(defendingCard);
+        //         SuccesfulDefended = true;
+        //         Defending = false;
+        //     } 
+        //     else if(!Defending){
+        //         SuccesfulDefended = true;
+        //     }
+        //     else if(!SuccesfulDefended){
+        //         TakeAllCards(gameTable);
+        //         Defending = false;
+        //         gameTable.ClearTable();
+        //     }
+        // }           
     }
 
     public void TakeAllCards(Table gameTable){
@@ -144,9 +196,9 @@ public class AIPlayer:IPlayer{
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
+        SuccesfulDefended=false;
         if(playerHand.cards.Count!=0){
-            Console.WriteLine("Бот взял карты :" +ToString(playerHand.cards));
-            SuccesfulDefended=false;
+            Console.WriteLine($"{Name} взял карты :" +ToString(playerHand.cards));
         } 
     }
     public string ToString(List<Card> cards)

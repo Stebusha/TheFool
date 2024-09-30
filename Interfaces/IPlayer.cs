@@ -14,7 +14,7 @@ public interface IPlayer{
     public List<Card> GetCardsForAttack(Table gameTable);
 
     public void Attack(Table gameTable);
-    public void Defend(List<Card> attackingCards,Table gameTable);
+    public void Defend(Card attackingCard,Table gameTable);
 
     public void TakeAllCards(Table gameTable);
 }
