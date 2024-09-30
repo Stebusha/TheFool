@@ -38,7 +38,7 @@ public class AIPlayer:IPlayer{
             if(attackingCards.Count!=0){
                 int index = MakeDecision();
                 Card attackingCard = attackingCards[0];
-                Console.WriteLine("Бот походил картой: "+ attackingCard.ToString());
+                Console.WriteLine($"{Name} походил картой: "+ attackingCard.ToString());
                 gameTable.AddCardToTable(attackingCard);
                 playerHand.RemoveCardFromHand(attackingCard);
             }
@@ -116,7 +116,7 @@ public class AIPlayer:IPlayer{
             }
             if(defendingList.Count!=0){
                 Card defendingCard = defendingList[0];
-                Console.WriteLine("Бот отбился картой: "+defendingCard);
+                Console.WriteLine($"{Name} отбился картой: "+defendingCard);
                 defendingList.RemoveAt(0);
                 gameTable.AddCardToTable(defendingCard);
                 playerHand.RemoveCardFromHand(defendingCard);
