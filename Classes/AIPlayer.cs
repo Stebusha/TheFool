@@ -17,12 +17,16 @@ public class AIPlayer:IPlayer{
         return playerHand.cards;
     }
     public void RefillHand(Deck deck){
-        if(playerHand.cards.Count==0){
+        if(playerHand.cards.Count==0&&deck.CardsAmount>=6){
             playerHand.cards = deck.DrawCards(6);
             playerHand.Sort();
         }
-        else if(playerHand.cards.Count<6){
+        else if(playerHand.cards.Count<6&&deck.CardsAmount>=5){
             playerHand.cards.AddRange(deck.DrawCards(6-playerHand.cards.Count));
+            playerHand.Sort();
+        }
+        else{
+            playerHand.cards.AddRange(deck.DrawCards(deck.CardsAmount-playerHand.cards.Count));
             playerHand.Sort();
         }
         //Console.WriteLine("Cards:");

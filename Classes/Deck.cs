@@ -9,6 +9,7 @@ namespace TheFool
         private SuitType[] suits = {SuitType.Clubs,SuitType.Diams,SuitType.Hearts, SuitType.Spades};
         private RankType[] ranks = {RankType.Six, RankType.Seven, RankType.Eight,RankType.Nine,RankType.Ten,RankType.Jack,RankType.Queen,RankType.King,RankType.Ace}; 
         public static SuitType trumpSuit = SuitType.Clubs;
+        public int CardsAmount{get; set;}
 
         public SuitType GetTrumpSuit() {
             return trumpSuit;
@@ -41,8 +42,6 @@ namespace TheFool
             CardsAmount = cards.Count;
             return drawnCards;
         }
-
-        public int CardsAmount{get; set;}
 
         public void Trump(){
             Card trumpCard;
