@@ -45,6 +45,7 @@ namespace TheFool
                         players[turn%players.Count].Attack(gameTable);
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
                             attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
+                            Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else{
@@ -69,9 +70,11 @@ namespace TheFool
                         }
                         if(players[(turn+1)%players.Count].GetCards().Count!=0){
                             players[turn%players.Count].Attack(gameTable);
+                            
                         }
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
                             attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
+                            Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else if(gameTable.Length()!=12){

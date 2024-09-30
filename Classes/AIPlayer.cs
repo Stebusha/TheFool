@@ -46,6 +46,7 @@ public class AIPlayer:IPlayer{
                 Card attackingCard = attackingCards[0];
                 Console.WriteLine($"{Name} походил картой: "+ attackingCard.ToString());
                 gameTable.AddCardToTable(attackingCard);
+                //bug, first card delete before defend, comparison with next card -> bug defend 
                 playerHand.RemoveCardFromHand(attackingCard);
                 Attacking = false;
             }    
