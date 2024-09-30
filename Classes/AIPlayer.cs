@@ -124,6 +124,7 @@ public class AIPlayer:IPlayer{
         Card cardToDefend = new Card();
         foreach(var card in playerHand.cards){
             if(card>attackingCard){
+                Console.WriteLine(card.ToString()+ " > "+ attackingCard.ToString());
                 cardToDefend = card;
                 break;
             }

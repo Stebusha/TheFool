@@ -30,7 +30,7 @@ namespace TheFool;
         else if(card1.Suit!=Deck.trumpSuit&&card2.Suit==Deck.trumpSuit){
             return false;
         }
-        else if(card1.Suit!=card2.Suit&&card1.Suit!=Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit)
+        else if(card1.Suit!=Deck.trumpSuit&&card2.Suit!=Deck.trumpSuit)
         {
             return false;
         }
