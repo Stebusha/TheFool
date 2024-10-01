@@ -36,14 +36,14 @@ namespace TheFool
                         if(players[(turn+1)%players.Count].Taken|players[turn%players.Count].Taken){
                             TurnFinished=true;
                             FirtsTurn=false;
-                            Console.WriteLine(players[(turn+1)%players.Count].Taken.ToString(),players[turn%players.Count].Taken.ToString());
+                            //Console.WriteLine(players[(turn+1)%players.Count].Taken.ToString(),players[turn%players.Count].Taken.ToString());
                             break;       
                         }
                         attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
                         players[turn%players.Count].Attack(gameTable);
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
                             
-                            Console.WriteLine(attackingCard.ToString());
+                            //Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else{
@@ -54,7 +54,7 @@ namespace TheFool
                         }
                     }
                     if(!TurnFinished){                      
-                        TurnFinished = false;
+                        TurnFinished = true;
                     }
                 }
                 else{
@@ -62,15 +62,20 @@ namespace TheFool
                     for(int i=0;i<MAX_CARDS_TO_ATTACK;i++){
                         if(players[(turn+1)%players.Count].Taken|players[turn%players.Count].Taken){
                             TurnFinished=true;
-                            Console.WriteLine(players[(turn+1)%players.Count].Taken.ToString(),players[turn%players.Count].Taken.ToString());
+                            //Console.WriteLine(players[(turn+1)%players.Count].Taken.ToString(),players[turn%players.Count].Taken.ToString());
                             break;       
                         }
+                       
                         if(players[(turn+1)%players.Count].GetCards().Count!=0){
                             attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
                             players[turn%players.Count].Attack(gameTable);
                         }
+                        else{                      
+                            TurnFinished = true;
+                            break;
+                        }
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
-                            Console.WriteLine(attackingCard.ToString());
+                            //Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else if(gameTable.Length()!=12&&players[(turn+1)%players.Count].GetCards().Count!=0){
@@ -78,9 +83,9 @@ namespace TheFool
                             TurnFinished = true;
                             break;
                         }
-                        else {                      
-                            TurnFinished = false;
-                        }
+                        // else{                      
+                        //     TurnFinished = true;
+                        // }
                     }   
                 }   
             }
@@ -239,18 +244,26 @@ namespace TheFool
                 if(players[0].GetCards().Count==0&&players[1].GetCards().Count==0){
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Ничья.");
+                    // int score = 1;
+                    // scoreTable.WriteToFile(players[0].Name, score);
+                    // scoreTable.WriteToFile(players[1].Name, score);
+                    // scoreTable.Show();  
                 }
                 else if (players[1].GetCards().Count==0){
                     Finished = true;
-                    Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}.");          
+                    Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}."); 
+                    // int score = 1;
+                    // scoreTable.WriteToFile(players[1].Name, score);
+                    // scoreTable.Show();         
                 }
                 else if(players[0].GetCards().Count==0){
                     Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[0].Name}.");
                     Finished = true;
+                    // int score = 1;
+                    // scoreTable.WriteToFile(players[0].Name, score);
+                    // scoreTable.Show();
                 }
-                // int score = 1;
-                // scoreTable.WriteToFile(players[0].Name, score);
-                // scoreTable.Show();
+                
             }
         }
         public void TestComparison(Card card1,Card card2){

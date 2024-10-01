@@ -121,7 +121,7 @@ public class AIPlayer:IPlayer{
         playerHand.Sort();
         SuccesfulDefended=false;
         if(playerHand.cards.Count!=0){
-            Console.WriteLine($"{Name} взял карты :" +ToString(playerHand.cards));
+            Console.WriteLine($"{Name} взял карты\n");
         } 
     }
     public string ToString(List<Card> cards)
