@@ -77,6 +77,7 @@ public class Player:IPlayer {
                 }
             }            
         }
+        cardsForAttack = cardsForAttack.Distinct().ToList();
         return cardsForAttack;
     }
     // public void Attack(Table gameTable){

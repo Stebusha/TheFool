@@ -48,26 +48,22 @@ public class AIPlayer:IPlayer{
                 foreach(var card in playerHand.cards){
                     for(int i=0;i<gameTable.Length();i++){
                         if(card.Rank==gameTable.GetCard(i).Rank){
-                            foreach(var c in cardsForAttack){
-                                if(c == card){
-                                    break;
-                                }
-                                else{
-                                    cardsForAttack.Add(card);
-                                }
-                            }
+                            cardsForAttack.Add(card);
+
                         }
                     }
                 }
-            }            
+            }
+                        
         }
+        cardsForAttack = cardsForAttack.Distinct().ToList();
         return cardsForAttack;
     }
     public void Attack(Table gameTable){
         bool Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
-            Console.WriteLine(ToString(attackingCards));
+            //Console.WriteLine(ToString(attackingCards));
             if(attackingCards.Count!=0){
                 int index = MakeDecision();
                 Card attackingCard = attackingCards[index];
