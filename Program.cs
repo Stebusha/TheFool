@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.Clear();
+        //Console.Clear();
         GameController game = new GameController();
         
         game.Game(1,1);

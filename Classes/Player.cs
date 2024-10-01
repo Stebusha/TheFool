@@ -26,7 +26,7 @@ public class Player:IPlayer {
             playerHand.cards.AddRange(deck.DrawCards(6-playerHand.cards.Count));
             playerHand.Sort();
         }
-        Console.WriteLine(ToString(playerHand.cards)); 
+        //Console.WriteLine(ToString(playerHand.cards)); 
     }
     private bool CanBeAttacking(List<Card> cards, Table gameTable){
         if (gameTable.Length() == 0){
@@ -206,7 +206,7 @@ public class Player:IPlayer {
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = "";
-        cardDrawnString = "\nКарты игрока "+ Name+"\n";
+        cardDrawnString = "\nКарты игрока "+ Name+" \n";
         for(int i = 0;i<cards.Count;i++){
             Card tempCard = cards[i];
             cardDrawnString+=tempCard.ToString()+"\t";

@@ -5,15 +5,14 @@ using System.Collections.Generic;
 namespace TheFool
 {
     public class GameController{
-        private List<IPlayer> players;
+        private List<IPlayer> players = new List<IPlayer>();
         private ScoreTable scoreTable = new ScoreTable();
 
         private Table gameTable = new Table();
 
         private const int MAX_CARDS_TO_ATTACK = 6;
 
-        private Deck deck;
-        private bool finished = false;
+        private Deck deck = new Deck();
 
         public bool Finished { get; private set; }
         public int PlayerCount { get; set; }
@@ -24,15 +23,13 @@ namespace TheFool
   
         private void Turn(int turn){
             TurnFinished = false;
-            
-            //turn = turn%players.Count;
             players[turn%players.Count].Taken = false;
             players[(turn+1)%players.Count].Taken = false;
             Card attackingCard = new Card();
             players[(turn+1)%players.Count].SuccesfulDefended = false;
             while(!TurnFinished){
                 if(FirtsTurn){
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine("Начало партии");
                     Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
                     for(int i=0;i<MAX_CARDS_TO_ATTACK-1;i++){
@@ -50,7 +47,6 @@ namespace TheFool
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else{
-                            //players[(turn+1)%players.Count].SuccesfulDefended = true;
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                             TurnFinished = true;
                             FirtsTurn=false;
@@ -72,32 +68,28 @@ namespace TheFool
                         if(players[(turn+1)%players.Count].GetCards().Count!=0){
                             attackingCard = players[turn%players.Count].GetCardsForAttack(gameTable).ElementAt(0);
                             players[turn%players.Count].Attack(gameTable);
-                            
                         }
                         if(players[turn%players.Count].GetCardsForAttack(gameTable).Count!=0){
-                            
                             Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
                         else if(gameTable.Length()!=12&&players[(turn+1)%players.Count].GetCards().Count!=0){
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
-                            //players[(turn+1)%players.Count].SuccesfulDefended = true;
                             TurnFinished = true;
                             break;
                         }
                         else {                      
                             TurnFinished = false;
                         }
-                }
-            }   
+                    }   
+                }   
             }
             gameTable.ClearTable();
             Console.WriteLine("Конец хода");
             Console.ReadLine();
         }
-
         public void Game(int playerCount,int AIPlayerCount){
-            Console.Clear();
+            //Console.Clear();
             deck = new Deck();
             FirtsTurn = true;
             Finished = false;
@@ -108,35 +100,37 @@ namespace TheFool
             Console.WriteLine(deck.GetTrumpSuit());
             players = new List<IPlayer>();
             if(playerCount+AIPlayerCount==2){
-                //  
-                AIPlayer aIPlayer = new AIPlayer();
-                aIPlayer.RefillHand(deck);
-                players.Add(aIPlayer);
-                players[0].Name = "Бот 1";
-                AIPlayer aIPlayer1 = new AIPlayer();
-                aIPlayer1.RefillHand(deck);
-                players.Add(aIPlayer1);
-                players[1].Name = "Бот 2";
-                
-            }
-            else{
-                for(int i = 0;i<playerCount; i++){
+                // AIPlayer aIPlayer = new AIPlayer();
+                // aIPlayer.RefillHand(deck);
+                // players.Add(aIPlayer);
+                // players[0].Name = "Бот 1";
                 Player player = new Player();
                 player.RefillHand(deck);
                 players.Add(player);
+                AIPlayer aIPlayer1 = new AIPlayer();
+                aIPlayer1.RefillHand(deck);
+                players.Add(aIPlayer1);    
+                players[1].Name = "Бот 2";           
+            }
+            else{
+                for(int i = 0;i<playerCount; i++){
+                    Player player = new Player();
+                    player.RefillHand(deck);
+                    players.Add(player);
                 }
                 for(int i = 0;i<AIPlayerCount; i++){
-                    Random random = new Random();
-                    if(random.Next(0,2)==0){
-                        AIPlayer aIPlayer = new AIPlayer();
-                        aIPlayer.RefillHand(deck);
-                        players.Add(aIPlayer);
-                    }
-                    else{
-                        AINoobPlayer aINoob = new AINoobPlayer();
-                        aINoob.RefillHand(deck);
-                        players.Add(aINoob);
-                    }
+                    //Random random = new Random();
+                    // if(random.Next(0,2)==0){
+                    AIPlayer aIPlayer = new AIPlayer();
+                    aIPlayer.RefillHand(deck);
+                    players.Add(aIPlayer);
+                    players[i].Name = $"Бот {i+1}";
+                    // }
+                    // else{
+                    //     AINoobPlayer aINoob = new AINoobPlayer();
+                    //     aINoob.RefillHand(deck);
+                    //     players.Add(aINoob);
+                    // }
                 }   
             }
             List<Card> firstTrumps = new List<Card>();
@@ -173,7 +167,6 @@ namespace TheFool
                         players[1].TurnNumber = players.Count;
                         break;
                 }
-
             }
             else
             {
@@ -214,7 +207,6 @@ namespace TheFool
                     players[(turns+1)%players.Count].RefillHand(deck);
                     Console.WriteLine("Игроки взяли карты");
                 }
-                
                 if(!players[(turns+1)%players.Count].Taken&&!players[turns%players.Count].Taken){
                     turns++;
                     players[(turns+1)%players.Count].Taken=false;
@@ -223,7 +215,6 @@ namespace TheFool
                 Win();
             }   
         }
-
         public Card GetFirstTrump(List<Card> cards){
             Card firstTrumpCard = new Card();
             foreach (var c in cards){
@@ -234,7 +225,6 @@ namespace TheFool
             }
             return firstTrumpCard;
         }
-
         public int firstTurnNumbers(List<Card> firstTrumpCards){
             int number = 0;
             for(int i=1;i<firstTrumpCards.Count;i++){
@@ -262,14 +252,6 @@ namespace TheFool
                 // scoreTable.WriteToFile(players[0].Name, score);
                 // scoreTable.Show();
             }
-        }
-        
-        public void TestListOperation(List<Card> l1,List<Card> l2){
-            l1.AddRange(l2);
-            foreach(var l in l1){
-                Console.Write(l+"\t");
-            }
-            
         }
         public void TestComparison(Card card1,Card card2){
             Console.WriteLine(card1>card2);
