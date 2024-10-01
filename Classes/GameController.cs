@@ -79,41 +79,17 @@ namespace TheFool
                             Console.WriteLine(attackingCard.ToString());
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                         }
-                        else if(gameTable.Length()!=12){
+                        else if(gameTable.Length()!=12&&players[(turn+1)%players.Count].GetCards().Count!=0){
                             players[(turn+1)%players.Count].Defend(attackingCard,gameTable);
                             //players[(turn+1)%players.Count].SuccesfulDefended = true;
                             TurnFinished = true;
                             break;
                         }
-                        else if(!TurnFinished){                      
+                        else {                      
                             TurnFinished = false;
                         }
-                    // }
-                    // if(!TurnFinished){                      
-                    //     TurnFinished = false;
-                    // }
                 }
-            }
-                
-                
-                // while(!players[(turn+1)%2].SuccesfulDefended){
-                //     if(players[(turn+1)%2].Taken|players[turn].Taken){
-                //         TurnFinished=true;
-                //         Console.WriteLine(players[(turn+1)%2].Taken.ToString(),players[turn].Taken.ToString());
-                //         //players[(turn+1)%2].Taken=false;
-                //         //players[turn].Taken=false;
-                //         break;        
-                //     }
-                //     players[turn].Attack(gameTable);
-                //     attackingCards = players[turn].GetCardsForAttack(gameTable);
-                //     //players[(turn+1)%2].SuccesfulDefended = false;
-                //     players[(turn+1)%2].Defend(attackingCards,gameTable);
-                // } 
-                // if(attackingCards.Count==0){
-                //     players[(turn+1)%2].SuccesfulDefended = true;
-                //     TurnFinished = true;
-                // }  
-            
+            }   
             }
             gameTable.ClearTable();
             Console.WriteLine("Конец хода");
