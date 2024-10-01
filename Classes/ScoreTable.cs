@@ -8,15 +8,15 @@ namespace TheFool
 
         public void Show(){
 
-        if(!File.Exists(path)){
-            Console.WriteLine("Рекордов нет.");
-            return;
-        }
-        Console.WriteLine("Таблица рекордов: ");
-        foreach(var line in File.ReadLines(path)){
-            string[] parts = line.Split('-');
-            Console.WriteLine(parts[0].Trim()+" - "+parts[1].Trim());
-        }
+            if(!File.Exists(path)){
+                Console.WriteLine("Рекордов нет.");
+                return;
+            }
+            Console.WriteLine("Таблица рекордов: ");
+            foreach(var line in File.ReadLines(path)){
+                string[] parts = line.Split('-');
+                Console.WriteLine(parts[0].Trim()+" - "+parts[1].Trim());
+            }
             // асинхронное чтение
             //using (StreamReader reader = new StreamReader(path))
             //{

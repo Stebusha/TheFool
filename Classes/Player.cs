@@ -1,6 +1,6 @@
 namespace TheFool;
 public class Player:IPlayer {
-    public bool SuccesfulDefended{get; set;}
+    // public bool SuccesfulDefended{get; set;}
 
     public bool TurnStarted{get;set;}
 
@@ -156,7 +156,7 @@ public class Player:IPlayer {
             //Console.WriteLine($"{Name} отбился картой: "+defendingCard);
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
-            SuccesfulDefended = true;
+            // SuccesfulDefended = true;
         }
         else{
             Console.WriteLine("Нечем отбиться");
@@ -169,7 +169,7 @@ public class Player:IPlayer {
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
         Console.WriteLine("Вы взяли карты :" +ToString(playerHand.cards));
-        SuccesfulDefended=false;
+        // SuccesfulDefended=false;
     }
     public string ToString(List<Card> cards)
     {

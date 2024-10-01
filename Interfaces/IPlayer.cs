@@ -3,7 +3,7 @@ namespace TheFool;
 public interface IPlayer{
     public string Name{get;set;}
     public int TurnNumber{get;set;}
-    public bool SuccesfulDefended{get; set;}
+    // public bool SuccesfulDefended{get; set;}
 
     public bool Taken{get; set;}
     public void RefillHand(Deck deck);

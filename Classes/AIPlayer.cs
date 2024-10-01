@@ -2,7 +2,7 @@ namespace TheFool;
 public class AIPlayer:IPlayer{
     
     PlayerHand playerHand = new PlayerHand();
-    public bool SuccesfulDefended{get; set;}
+    // public bool SuccesfulDefended{get; set;}
     private float handValue = -1f;
     public string Name{get; set;}
     public int TurnNumber{get;set;}
@@ -106,7 +106,7 @@ public class AIPlayer:IPlayer{
             Console.WriteLine($"{Name} отбился картой: "+defendingCard);
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
-            SuccesfulDefended = true;
+            // SuccesfulDefended = true;
         }
         else{
             Console.WriteLine("Нечем отбиться");
@@ -119,7 +119,7 @@ public class AIPlayer:IPlayer{
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
-        SuccesfulDefended=false;
+        // SuccesfulDefended=false;
         if(playerHand.cards.Count!=0){
             Console.WriteLine($"{Name} взял карты\n");
         } 

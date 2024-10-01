@@ -14,7 +14,6 @@ namespace TheFool
         public SuitType GetTrumpSuit() {
             return trumpSuit;
         }
-
         public Deck(){
             CardsAmount = 36;
             cards = new List<Card>(CardsAmount);
@@ -25,8 +24,7 @@ namespace TheFool
                 }
 
             }
-        }
-        
+        }  
         public void Shuffle(){
             Random _random = new Random();
             cards.Sort((a,b) => _random.Next(-2,2));

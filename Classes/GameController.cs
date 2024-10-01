@@ -26,7 +26,7 @@ namespace TheFool
             players[turn%players.Count].Taken = false;
             players[(turn+1)%players.Count].Taken = false;
             Card attackingCard = new Card();
-            players[(turn+1)%players.Count].SuccesfulDefended = false;
+            // players[(turn+1)%players.Count].SuccesfulDefended = false;
             while(!TurnFinished){
                 if(FirtsTurn){
                     //Console.Clear();
@@ -98,20 +98,17 @@ namespace TheFool
             deck = new Deck();
             FirtsTurn = true;
             Finished = false;
-            Console.WriteLine(deck.CardsAmount);
-            Console.WriteLine(deck.GetTrumpSuit());
             deck.Shuffle();
             deck.Trump();
-            Console.WriteLine(deck.GetTrumpSuit());
             players = new List<IPlayer>();
             if(playerCount+AIPlayerCount==2){
-                // AIPlayer aIPlayer = new AIPlayer();
-                // aIPlayer.RefillHand(deck);
-                // players.Add(aIPlayer);
-                // players[0].Name = "Бот 1";
-                Player player = new Player();
-                player.RefillHand(deck);
-                players.Add(player);
+                AIPlayer aIPlayer = new AIPlayer();
+                aIPlayer.RefillHand(deck);
+                players.Add(aIPlayer);
+                players[0].Name = "Бот 1";
+                // Player player = new Player();
+                // player.RefillHand(deck);
+                // players.Add(player);
                 AIPlayer aIPlayer1 = new AIPlayer();
                 aIPlayer1.RefillHand(deck);
                 players.Add(aIPlayer1);    
@@ -143,7 +140,7 @@ namespace TheFool
                firstTrumps.Add(GetFirstTrump(p.GetCards()));
             }
             int first = firstTurnNumbers(firstTrumps);
-            Console.WriteLine(first.ToString());
+            Console.WriteLine($"Первым ходит игрок {players[first].Name}");
             players[first].TurnNumber=1;
             // foreach(var p in players){
             //     Console.WriteLine(p.TurnNumber.ToString());
@@ -203,7 +200,7 @@ namespace TheFool
             int turns = 0;
             while(!Finished){
                 Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
-                Console.WriteLine(deck.CardsAmount);
+                Console.WriteLine($"Карт в колоде: {deck.CardsAmount}");
                 Console.WriteLine($"Количество карт игрока {players[0].Name} : {players[0].GetCards().Count}");
                 Console.WriteLine($"Количество карт игрока {players[1].Name} : {players[1].GetCards().Count}");
                 Turn(turns);
