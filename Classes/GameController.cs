@@ -7,20 +7,14 @@ namespace TheFool
     public class GameController{
         private List<IPlayer> players = new List<IPlayer>();
         private ScoreTable scoreTable = new ScoreTable();
-
         private Table gameTable = new Table();
-
         private const int MAX_CARDS_TO_ATTACK = 6;
-
         private Deck deck = new Deck();
-
         public bool Finished { get; private set; }
         public int PlayerCount { get; set; }
         public int BotPlayerCount { get; set; }
-
         public bool TurnFinished { get; private set; }
         public static bool FirtsTurn { get; private set; }
-  
         private void Turn(int turn){
             TurnFinished = false;
             players[turn%players.Count].Taken = false;
@@ -83,9 +77,6 @@ namespace TheFool
                             TurnFinished = true;
                             break;
                         }
-                        // else{                      
-                        //     TurnFinished = true;
-                        // }
                     }   
                 }   
             }
@@ -262,9 +253,6 @@ namespace TheFool
                 }
                 
             }
-        }
-        public void TestComparison(Card card1,Card card2){
-            Console.WriteLine(card1>card2);
         }
     }      
 }

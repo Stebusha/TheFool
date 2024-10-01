@@ -19,7 +19,6 @@ namespace TheFool
             onTable.Add(card);
             tableCardRemaining++;
         }
-
         public void RemoveCardFromTable(Card card){
             onTable.Remove(card);
             tableCardRemaining = onTable.Count;

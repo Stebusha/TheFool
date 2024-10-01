@@ -1,8 +1,6 @@
 namespace TheFool;
 public class AIPlayer:IPlayer{
-    
     PlayerHand playerHand = new PlayerHand();
-    // public bool SuccesfulDefended{get; set;}
     private float handValue = -1f;
     public string Name{get; set;}
     public int TurnNumber{get;set;}
@@ -113,7 +111,6 @@ public class AIPlayer:IPlayer{
             TakeAllCards(gameTable);
         }
     }
-
     public void TakeAllCards(Table gameTable){
         Taken =true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
@@ -149,12 +146,10 @@ public class AIPlayer:IPlayer{
       
         return valueCost;
     }
-
     private float HandValue(List<Card> inHand, string trumpSuit, List<int> values){
         
         return handValue;
     }
-
     protected virtual int MakeDecision(){
         return 0;
     }

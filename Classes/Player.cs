@@ -1,11 +1,7 @@
 namespace TheFool;
 public class Player:IPlayer {
-    // public bool SuccesfulDefended{get; set;}
-
     public bool TurnStarted{get;set;}
-
     PlayerHand playerHand = new PlayerHand();
-
     public Player(){
         Console.WriteLine("Введите имя: ");
         Name = Console.ReadLine();
@@ -43,7 +39,6 @@ public class Player:IPlayer {
             return false;
         }
     }   
-
     public List<Card> GetCardsForAttack(Table gameTable){
         List <Card> cardsForAttack = new List<Card>();
         if(CanBeAttacking(playerHand.cards,gameTable)){

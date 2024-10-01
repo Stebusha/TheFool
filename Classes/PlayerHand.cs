@@ -2,26 +2,21 @@ namespace TheFool
 {
     public class PlayerHand{
         public List<Card> cards = new List<Card>();
-        public int NumberOfCardsRemainingRemaining{get;set;}
-
         public Card GetCard(int index){
             return cards.ElementAt(index);
         }
         public void AddCardToHand(Card card){
             cards.Add(card);
-            NumberOfCardsRemainingRemaining++;
             Sort();
         }
         public void AddCardsToHand(List<Card> cards){
             foreach(var card in cards){
                 cards.Add(card);
             }
-            NumberOfCardsRemainingRemaining = cards.Count;
             Sort();
         }
         public void RemoveCardFromHand(Card card){
             cards.Remove(card);
-            NumberOfCardsRemainingRemaining--;
             Sort();
         }
         public Card ChooseCardFromHand(int number){
@@ -31,8 +26,6 @@ namespace TheFool
             Sort();
             return chosenCard;
         }
-
-
         public void Sort(){
             cards = cards.OrderBy(c=>c.Rank).ToList();
             List<Card> trumpCards = new List<Card>();
@@ -64,8 +57,7 @@ namespace TheFool
             //Console.WriteLine("Sorted:");
             //foreach (var card in cards){
             //    Console.WriteLine(card);
-            //}
-            
+            //}  
         }
     }    
 
