@@ -10,6 +10,7 @@ public class Player:IPlayer {
     public int TurnNumber{get;set;}
     public bool Taken{get; set;}
     public string Name{get;set;}
+    public bool IsFool {get;set;}
     public List<Card> GetCards(){
         return playerHand.cards;
     }

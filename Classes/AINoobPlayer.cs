@@ -1,9 +1,5 @@
 namespace TheFool;
 public class AINoobPlayer:AIPlayer{
-    
-    private bool isAttacking = false;
-    private bool isDefending = false;
-
     public AINoobPlayer(){
         Name = "Bot-Noob";
     }

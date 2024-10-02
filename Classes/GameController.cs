@@ -130,6 +130,7 @@ namespace TheFool
             foreach(var p in players){
                firstTrumps.Add(GetFirstTrump(p.GetCards()));
             }
+            //players[0].IsFool=true;
             int first = firstTurnNumbers(firstTrumps);
             Console.WriteLine($"Первым ходит игрок {players[first].Name}");
             players[first].TurnNumber=1;
@@ -161,33 +162,36 @@ namespace TheFool
                         break;
                 }
             }
-            else
-            {
-                switch(first){
-                    case 0:
-                        for(int i=1;i<players.Count;i++){
-                            players[i].TurnNumber = i+1;
-                        }
-                        break;
-                    case 1:
-                        players[0].TurnNumber = players.Count;
-                        for(int i=2;i<players.Count;i++){
-                            players[i].TurnNumber = i;
-                        }
-                        break;
-                    case 2:
-                        players[0].TurnNumber = players.Count-1;
-                        players[1].TurnNumber = players.Count;
-                        players[3].TurnNumber = first;
-                        break;
-                    case 3:
-                        for(int i=0;i<players.Count-1;i++){
-                            players[i].TurnNumber = i+2;
-                        }
-                        break;
-                }          
-            }
+            // else
+            // {
+            //     switch(first){
+            //         case 0:
+            //             for(int i=1;i<players.Count;i++){
+            //                 players[i].TurnNumber = i+1;
+            //             }
+            //             break;
+            //         case 1:
+            //             players[0].TurnNumber = players.Count;
+            //             for(int i=2;i<players.Count;i++){
+            //                 players[i].TurnNumber = i;
+            //             }
+            //             break;
+            //         case 2:
+            //             players[0].TurnNumber = players.Count-1;
+            //             players[1].TurnNumber = players.Count;
+            //             players[3].TurnNumber = first;
+            //             break;
+            //         case 3:
+            //             for(int i=0;i<players.Count-1;i++){
+            //                 players[i].TurnNumber = i+2;
+            //             }
+            //             break;
+            //     }          
+            // }
             players = players.OrderBy(p=>p.TurnNumber).ToList();
+            foreach(var p in players){
+                p.IsFool=false;
+            }
             int turns = 0;
             while(!Finished){
                 Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
@@ -220,9 +224,18 @@ namespace TheFool
         }
         public int firstTurnNumbers(List<Card> firstTrumpCards){
             int number = 0;
-            for(int i=1;i<firstTrumpCards.Count;i++){
-                if(firstTrumpCards[i].Rank<firstTrumpCards[i-1].Rank){
-                    number++;
+            foreach(var player in players){
+                number++;
+                if(player.IsFool==true){
+                    return number%players.Count;
+                }
+                else if(number==players.Count){
+                    number=0;
+                    for(int i=1;i<firstTrumpCards.Count;i++){
+                        if(firstTrumpCards[i].Rank<firstTrumpCards[i-1].Rank){
+                            number++;
+                        }
+                    }   
                 }
             }
             return number;
@@ -232,24 +245,27 @@ namespace TheFool
                 if(players[0].GetCards().Count==0&&players[1].GetCards().Count==0){
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Ничья.");
-                    // int score = 1;
-                    // scoreTable.WriteToFile(players[0].Name, score);
-                    // scoreTable.WriteToFile(players[1].Name, score);
-                    // scoreTable.Show();  
+                    //int score = 1;
+                    scoreTable.DisplayScores();
+                    
                 }
                 else if (players[1].GetCards().Count==0){
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}."); 
-                    // int score = 1;
-                    // scoreTable.WriteToFile(players[1].Name, score);
-                    // scoreTable.Show();         
+                    players[0].IsFool = true;
+                    int score = 1;
+                    scoreTable.AddScore(players[1].Name,score);
+                    scoreTable.DisplayScores();
+       
                 }
                 else if(players[0].GetCards().Count==0){
                     Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[0].Name}.");
                     Finished = true;
-                    // int score = 1;
-                    // scoreTable.WriteToFile(players[0].Name, score);
-                    // scoreTable.Show();
+                    players[1].IsFool = true;
+                    int score = 1;
+                    scoreTable.AddScore(players[0].Name,score);
+                    scoreTable.DisplayScores();
+
                 }
                 
             }

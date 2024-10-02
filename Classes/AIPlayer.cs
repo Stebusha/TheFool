@@ -5,6 +5,7 @@ public class AIPlayer:IPlayer{
     public string Name{get; set;}
     public int TurnNumber{get;set;}
     public bool Taken{get;set;}
+    public bool IsFool {get;set;}
     public AIPlayer(){
         Name = "Bot";
     }
