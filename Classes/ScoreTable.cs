@@ -4,7 +4,7 @@ namespace TheFool
         
         private Dictionary<string,int> scores = new Dictionary<string, int>();
         private string path = "C:/Users/МиненковаНА/Projects/TheFool/Scores/scores.txt";
-        private void LoadScoreFromFile(){
+        private void LoadScoresFromFile(){
             if(File.Exists(path)){
                 using(StreamReader sr = new StreamReader(path))
                 {
@@ -17,7 +17,7 @@ namespace TheFool
             }
         }
         public ScoreTable(){
-            LoadScoreFromFile();
+            LoadScoresFromFile();
         }
         private void SaveScoresToFile(){
             using(StreamWriter sw = new StreamWriter(path))

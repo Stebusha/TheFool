@@ -13,8 +13,8 @@ namespace TheFool
         public bool Finished { get; private set; }
         public int PlayerCount { get; set; }
         public int BotPlayerCount { get; set; }
-        public bool TurnFinished { get; private set; }
-        public static bool FirtsTurn { get; private set; }
+        private bool TurnFinished { get; set; }
+        private bool FirtsTurn { get; set; }
         private void Turn(int turn){
             TurnFinished = false;
             players[turn%players.Count].Taken = false;

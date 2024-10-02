@@ -1,6 +1,5 @@
 namespace TheFool;
 public class Player:IPlayer {
-    public bool TurnStarted{get;set;}
     PlayerHand playerHand = new PlayerHand();
     public Player(){
         Console.WriteLine("Введите имя: ");
