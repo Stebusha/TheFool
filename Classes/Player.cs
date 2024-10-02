@@ -84,11 +84,7 @@ public class Player:IPlayer {
                     else{
                         Console.WriteLine("Некорректный ввод .Введите порядковый номер повторно: ");
                     }
-                }
-                
-                //int index = Convert.ToInt32(Console.ReadLine())-1;            
-                //Console.WriteLine(index);
-                
+                }       
             }
         }
     }
@@ -164,7 +160,6 @@ public class Player:IPlayer {
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
         Console.WriteLine("Вы взяли карты :" +ToString(playerHand.cards));
-        // SuccesfulDefended=false;
     }
     public string ToString(List<Card> cards)
     {

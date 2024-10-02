@@ -47,7 +47,7 @@ namespace TheFool
             if(IsNameExist(name)){
                 int value;
                 if(scores.TryGetValue(name, out value)){
-                    Console.WriteLine(value);
+                    //Console.WriteLine(value);
                     value++;
                     scores[name]=value;
                 }

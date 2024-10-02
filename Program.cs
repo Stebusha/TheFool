@@ -5,14 +5,17 @@ class Program
     static void Main(string[] args)
     {
         //Console.Clear();
-        GameController game = new GameController();
-        
-        game.Game(1,1);
-        // List<Card> l1= new List<Card>{new Card(SuitType.Diams,RankType.Jack),new Card(SuitType.Diams,RankType.Queen)};
-        // List<Card> l2= new List<Card>{new Card(SuitType.Spades,RankType.Jack),new Card(SuitType.Hearts,RankType.Queen)};
-        // game.TestListOperation(l1,l2);
-
-        //Deck.trumpSuit=SuitType.Spades;
-        //game.TestComparison(new Card(SuitType.Spades,RankType.King),new Card(SuitType.Hearts,RankType.Queen));
+        GameController game = new GameController();  
+        Console.WriteLine("Введите количество реальных игроков");
+        string players = Console.ReadLine();
+        Console.WriteLine("Введите количество ботов");
+        string aiplayers = Console.ReadLine();
+        if(int.TryParse(players, out var playerCount)&&int.TryParse(aiplayers, out var AIplayerCount)){
+            game.Game(playerCount,AIplayerCount);
+        }
+        else{
+            Console.WriteLine("Неккоретный ввод");
+        }
     }
+        
 }

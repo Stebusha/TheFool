@@ -5,26 +5,9 @@ namespace TheFool
         public Card GetCard(int index){
             return cards.ElementAt(index);
         }
-        public void AddCardToHand(Card card){
-            cards.Add(card);
-            Sort();
-        }
-        public void AddCardsToHand(List<Card> cards){
-            foreach(var card in cards){
-                cards.Add(card);
-            }
-            Sort();
-        }
         public void RemoveCardFromHand(Card card){
             cards.Remove(card);
             Sort();
-        }
-        public Card ChooseCardFromHand(int number){
-            Card chosenCard = new Card();
-            chosenCard = cards.ElementAt(number);
-            RemoveCardFromHand(chosenCard);
-            Sort();
-            return chosenCard;
         }
         public void Sort(){
             cards = cards.OrderBy(c=>c.Rank).ToList();
