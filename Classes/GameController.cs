@@ -93,13 +93,19 @@ namespace TheFool
             deck.Trump();
             players = new List<IPlayer>();
             if(playerCount+AIPlayerCount==2){
-                AIPlayer aIPlayer = new AIPlayer();
-                aIPlayer.RefillHand(deck);
-                players.Add(aIPlayer);
-                players[0].Name = "Бот 1";
-                // Player player = new Player();
-                // player.RefillHand(deck);
-                // players.Add(player);
+                // AIPlayer aIPlayer = new AIPlayer();
+                // aIPlayer.RefillHand(deck);
+                // players.Add(aIPlayer);
+                // players[0].Name = "Бот 1";
+                Player player = new Player();
+                if(scoreTable.IsNameExist(player.Name)){
+                    Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
+                    if(Console.ReadLine().ToLower()=="да"){
+                        player.Name = Console.ReadLine();
+                    }
+                }
+                player.RefillHand(deck);
+                players.Add(player);
                 AIPlayer aIPlayer1 = new AIPlayer();
                 aIPlayer1.RefillHand(deck);
                 players.Add(aIPlayer1);    
@@ -108,6 +114,12 @@ namespace TheFool
             else{
                 for(int i = 0;i<playerCount; i++){
                     Player player = new Player();
+                    if(scoreTable.IsNameExist(player.Name)){
+                        Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
+                        if(Console.ReadLine().ToLower()=="да"){
+                            player.Name = Console.ReadLine();
+                        }
+                    }
                     player.RefillHand(deck);
                     players.Add(player);
                 }

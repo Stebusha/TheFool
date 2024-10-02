@@ -30,13 +30,21 @@ namespace TheFool
         }
 
         public void DisplayScores(){
-            Console.WriteLine("Таблица рекордов:");
+            Console.WriteLine("\nТаблица рекордов:");
             foreach(var pair in scores){
                 Console.WriteLine("{0}: {1}", pair.Key,pair.Value);
             }
         }
-        public void AddScore(string name, int score){
+        public bool IsNameExist(string name){
             if(scores.ContainsKey(name)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        public void AddScore(string name, int score){
+            if(IsNameExist(name)){
                 int value;
                 if(scores.TryGetValue(name, out value)){
                     Console.WriteLine(value);
