@@ -13,6 +13,9 @@ namespace TheFool
         private bool Finished { get;  set; }
         private bool TurnFinished { get; set; }
         private bool FirtsTurn { get; set; }
+
+        public int PlayerCount{get;set;}
+        public int BotPlayerCount{get;set;}
         
         //turn logic
         private void Turn(int turn){
@@ -87,14 +90,16 @@ namespace TheFool
         }
         
         //launch game, set start info, set trump, player's turns, check the winning condition
-        public void Game(int playerCount,int AIPlayerCount){
+        public void Game(int playerCount,int AIPlayerCount, bool repeat){
             //Console.Clear();
             deck = new Deck();
             FirtsTurn = true;
             Finished = false;
             deck.Shuffle();
             deck.Trump();
-            players = new List<IPlayer>();
+            
+            if(!repeat){
+                players = new List<IPlayer>();
             if(playerCount+AIPlayerCount==2&&playerCount==0){
                 AIPlayer aIPlayer = new AIPlayer();
                 aIPlayer.RefillHand(deck);
@@ -146,6 +151,7 @@ namespace TheFool
                     //     players.Add(aINoob);
                     // }
                 }   
+            }
             }
             List<Card> firstTrumps = new List<Card>();
             foreach(var p in players){
@@ -286,14 +292,16 @@ namespace TheFool
                         for(int p=0; p<players.Count;p++){
                             if (players[p].GetCards().Count==0){
                                 Console.WriteLine($"Карты закончились. Игрок {players[p].Name} вышел.");
+                                players[p].IsFool = false;
                                 players.Remove(players[p]);
                             }
                         }
                     }
                     else{
-                        Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[0].Name}.");
+                        Console.WriteLine($"Колода закончилась. Конец партии. Проиграл игрок {players[0].Name}.");
                         Finished = true;
                         int score = 1;
+                        players[0].IsFool = true;
                         scoreTable.AddScore(players[0].Name,score);
                         scoreTable.DisplayScores();
                     }
