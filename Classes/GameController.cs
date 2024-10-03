@@ -15,7 +15,7 @@ namespace TheFool
         // private int BotPlayerCount { get; set; }
         private bool TurnFinished { get; set; }
         private bool FirtsTurn { get; set; }
-        private void Turn(int turn, int turnCounter){
+        private void Turn(int turn){
             TurnFinished = false;
             players[turn%players.Count].Taken = false;
             players[(turn+1)%players.Count].Taken = false;
@@ -52,7 +52,7 @@ namespace TheFool
                     }
                 }
                 else{
-                    Console.WriteLine($"Начало хода {turnCounter}: ");
+                    Console.WriteLine($"Начало хода: ");
                     for(int i=0;i<MAX_CARDS_TO_ATTACK;i++){
                         if(players[(turn+1)%players.Count].Taken|players[turn%players.Count].Taken){
                             TurnFinished=true;
@@ -83,11 +83,9 @@ namespace TheFool
             gameTable.ClearTable();
             Console.WriteLine("Конец хода");
             Console.ReadLine();
-            turnCounter++;
         }
         public void Game(int playerCount,int AIPlayerCount){
             //Console.Clear();
-            int turnCounter =0;
             deck = new Deck();
             FirtsTurn = true;
             Finished = false;
@@ -194,7 +192,7 @@ namespace TheFool
                 }
                 // Console.WriteLine($"Количество карт игрока {players[0].Name} : {players[0].GetCards().Count}");
                 // Console.WriteLine($"Количество карт игрока {players[1].Name} : {players[1].GetCards().Count}");
-                Turn(turns,turnCounter);
+                Turn(turns);
                 if(deck.CardsAmount!=0){
                     players[turns%players.Count].RefillHand(deck);
                     players[(turns+1)%players.Count].RefillHand(deck);
