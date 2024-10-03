@@ -19,6 +19,7 @@ namespace TheFool
                         string[] parts = line.Split(',');
                         scores.Add(parts[0],int.Parse(parts[1]));
                     }
+                    scores = scores.OrderByDescending(pair=>pair.Value).ToDictionary();
                 }
             }
         }
