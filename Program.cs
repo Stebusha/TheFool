@@ -22,6 +22,8 @@ class Program
         else{
             Console.WriteLine("Некорректный ввод");
         }
+
+        Console.ReadLine();
         
     }
         

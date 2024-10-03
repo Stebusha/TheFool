@@ -42,7 +42,7 @@ namespace TheFool
         public void DisplayScores(){
             Console.WriteLine("\nТаблица рекордов:");
             foreach(var pair in scores){
-                Console.WriteLine("{0}: {1}", pair.Key,pair.Value);
+                Console.WriteLine("{0}: \t{1}", pair.Key,pair.Value);
             }
         }
         
