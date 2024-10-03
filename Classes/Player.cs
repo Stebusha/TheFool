@@ -13,9 +13,13 @@ public class Player:IPlayer {
     public bool Taken{get; set;}
     public string Name{get;set;}
     public bool IsFool {get;set;}
+
+    //return cards in hand
     public List<Card> GetCards(){
         return playerHand.cards;
     }
+    
+    //draw cards from deck
     public void RefillHand(Deck deck){   
         if(playerHand.cards.Count==0){
             playerHand.cards = deck.DrawCards(6);
@@ -27,6 +31,8 @@ public class Player:IPlayer {
         }
         //Console.WriteLine(ToString(playerHand.cards)); 
     }
+    
+    //check exist cards for attack
     private bool CanBeAttacking(List<Card> cards, Table gameTable){
         if (gameTable.Length() == 0){
             return true;
@@ -42,6 +48,8 @@ public class Player:IPlayer {
             return false;
         }
     }   
+    
+    //return cards for attack
     public List<Card> GetCardsForAttack(Table gameTable){
         List <Card> cardsForAttack = new List<Card>();
         if(CanBeAttacking(playerHand.cards,gameTable)){
@@ -61,6 +69,8 @@ public class Player:IPlayer {
         cardsForAttack = cardsForAttack.Distinct().ToList();
         return cardsForAttack;
     }
+    
+    //attack chosen card
     public void Attack(Table gameTable){
         bool isAttacking = CanBeAttacking(playerHand.cards,gameTable);
         if(isAttacking){
@@ -91,6 +101,8 @@ public class Player:IPlayer {
             }
         }
     }
+    
+    //check attacking card can be beaten
     private bool CanBeBeaten(Card attackingCard,Table gameTable){
         if(gameTable.Length()==0){
             return false;
@@ -104,6 +116,8 @@ public class Player:IPlayer {
             return false;
         }  
     }
+    
+    //return cards for defense from attacking card
     private List<Card> GetCardsforDefense(Card attackingCard, Table gameTable){
         List<Card> defenseCards = new List<Card>();
         if (gameTable.Length()!=0){
@@ -116,6 +130,8 @@ public class Player:IPlayer {
         }
         return defenseCards;    
     }
+    
+    //return chosen card to defend
     private Card GetCardToDefend(Card attackingCard,Table gameTable){
         Card cardToDefend = new Card();
         List<Card> defendingCards = GetCardsforDefense(attackingCard,gameTable);
@@ -142,6 +158,8 @@ public class Player:IPlayer {
         }
         return cardToDefend;
     }
+    
+    //defend
     public void Defend(Card attackingCard, Table gameTable){
         bool beaten = CanBeBeaten(attackingCard,gameTable);
         Card defendingCard = GetCardToDefend(attackingCard,gameTable);
@@ -157,6 +175,8 @@ public class Player:IPlayer {
             TakeAllCards(gameTable);
         }
     }
+    
+    //taken all cards from the game table, set property Taken
     public void TakeAllCards(Table gameTable){
         Taken = true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
@@ -164,6 +184,8 @@ public class Player:IPlayer {
         playerHand.Sort();
         Console.WriteLine("Вы взяли карты :" +ToString(playerHand.cards));
     }
+    
+    //output cards for console
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = "";

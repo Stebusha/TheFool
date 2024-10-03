@@ -11,10 +11,10 @@ namespace TheFool
         private const int MAX_CARDS_TO_ATTACK = 6;
         private Deck deck = new Deck();
         private bool Finished { get;  set; }
-        // private int PlayerCount { get; set; }
-        // private int BotPlayerCount { get; set; }
         private bool TurnFinished { get; set; }
         private bool FirtsTurn { get; set; }
+        
+        //turn logic
         private void Turn(int turn){
             TurnFinished = false;
             players[turn%players.Count].Taken = false;
@@ -84,6 +84,8 @@ namespace TheFool
             Console.WriteLine("Конец хода");
             Console.ReadLine();
         }
+        
+        //launch game, set start info, set trump, player's turns, check the winning condition
         public void Game(int playerCount,int AIPlayerCount){
             //Console.Clear();
             deck = new Deck();
@@ -199,8 +201,7 @@ namespace TheFool
                     Console.WriteLine("Игроки взяли карты");
                 }
                 if(!players[(turns+1)%players.Count].Taken&&!players[turns%players.Count].Taken){
-                    turns++;
-                    
+                    turns++;   
                 }
                 else{
                     turns+=2;
@@ -210,6 +211,8 @@ namespace TheFool
                 Win();
             }   
         }
+        
+        //get first trump card in player's hand
         private Card GetFirstTrump(List<Card> cards){
             Card firstTrumpCard = new Card();
             foreach (var c in cards){
@@ -220,6 +223,8 @@ namespace TheFool
             }
             return firstTrumpCard;
         }
+        
+        //set first turn number of players use checking min trumps in players' hand or choosing next player after fool
         private int firstTurnNumbers(List<Card> firstTrumpCards){
             int number = 0;
             foreach(var player in players){
@@ -238,6 +243,8 @@ namespace TheFool
             }
             return number;
         }
+        
+        //check the winner, update and display score table
         private void Win(){
             if(deck.CardsAmount==0){
                 int lefts = 0;

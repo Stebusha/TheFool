@@ -1,23 +1,29 @@
+using System;
+
 namespace TheFool;
-    public class Card{
-        public SuitType Suit{get; set;} 
-        public RankType Rank{get;set;}       
-        public Card(){}
-        public Card (SuitType _suit, RankType _rank){
+public class Card{
+    public SuitType Suit{get; set;} 
+    public RankType Rank{get;set;}       
+    public Card(){}
+    public Card (SuitType _suit, RankType _rank){
             Suit = _suit;
             Rank = _rank;
         }
-        public override string ToString()
+    
+    //card output
+    public override string ToString()
     {
         return $"{Rank} of {Suit}";
     }
-        public static bool operator ==(Card card1, Card card2){
+    
+    //ovveride operators
+    public static bool operator ==(Card card1, Card card2){
         return (card1.Suit==card2.Suit &&card1.Rank==card2.Rank);
     }
-        public static bool operator !=(Card card1, Card card2){
+    public static bool operator !=(Card card1, Card card2){
         return !(card1==card2);
     }
-        public static bool operator>(Card card1, Card card2){
+    public static bool operator>(Card card1, Card card2){
         if(card1.Suit==card2.Suit){
             return card1.Rank>card2.Rank;
         }
@@ -36,7 +42,7 @@ namespace TheFool;
         }
         
     }
-        public static bool operator <(Card card1, Card card2){
+    public static bool operator <(Card card1, Card card2){
         if(card1.Suit==card2.Suit){
             return card1.Rank<card2.Rank;
         }
@@ -54,7 +60,7 @@ namespace TheFool;
             return false;
         }
     }
-        public static bool operator>=(Card card1, Card card2){
+    public static bool operator>=(Card card1, Card card2){
         if(card1.Suit==card2.Suit&&card1.Rank==card2.Rank){
             return true;
         }
@@ -75,7 +81,7 @@ namespace TheFool;
             return false;
         }
     }
-        public static bool operator <=(Card card1,Card card2){
+    public static bool operator <=(Card card1,Card card2){
         if(card1.Suit==card2.Suit&&card1.Rank==card2.Rank){
             return true;
         }
@@ -98,13 +104,13 @@ namespace TheFool;
     }
 
         // override object.Equals
-        public override bool Equals(object card)
+    public override bool Equals(object card)
     {
         return this == (Card)card;
     }
     
         // override object.GetHashCode
-        public override int GetHashCode()
+    public override int GetHashCode()
     {
         return 9 *(int)Suit+(int)Rank;
     }

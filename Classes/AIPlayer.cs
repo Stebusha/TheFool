@@ -12,9 +12,13 @@ public class AIPlayer:IPlayer{
     public AIPlayer(){
         Name = "Bot";
     }
+    
+    //return cards in hand
     public List<Card> GetCards(){
         return playerHand.cards;
     }
+
+    //draw cards from deck
     public void RefillHand(Deck deck){
         if(playerHand.cards.Count==0/*&&deck.CardsAmount>=6*/){
             playerHand.cards = deck.DrawCards(6);
@@ -25,6 +29,8 @@ public class AIPlayer:IPlayer{
             playerHand.Sort();
         }
     }
+    
+    //check exist cards for attack
     private bool CanBeAttacking(List<Card> cards, Table gameTable){
         if (gameTable.Length() == 0){
             return true;
@@ -40,6 +46,8 @@ public class AIPlayer:IPlayer{
             return false;
         }
     }
+    
+    //return cards for attack
     public List<Card> GetCardsForAttack(Table gameTable){
         List <Card> cardsForAttack = new List<Card>();
         if(CanBeAttacking(playerHand.cards,gameTable)){
@@ -61,6 +69,8 @@ public class AIPlayer:IPlayer{
         cardsForAttack = cardsForAttack.Distinct().ToList();
         return cardsForAttack;
     }
+    
+    //attack card based on decision
     public void Attack(Table gameTable){
         bool Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
@@ -77,6 +87,8 @@ public class AIPlayer:IPlayer{
             }    
         }
     }
+    
+     //check attacking card can be beaten
     private bool CanBeBeaten(Card attackingCard,Table gameTable){
         if(gameTable.Length()==0){
             return false;
@@ -90,6 +102,8 @@ public class AIPlayer:IPlayer{
             return false;
         }  
     }
+    
+    //return  card to defend based on decision
     private Card GetCardToDefend(Card attackingCard){
         Card cardToDefend = new Card();
         foreach(var card in playerHand.cards){
@@ -101,6 +115,8 @@ public class AIPlayer:IPlayer{
         }
         return cardToDefend;
     }
+    
+    //defend
     public void Defend(Card attackingCard, Table gameTable){
         bool beaten = CanBeBeaten(attackingCard,gameTable);
         Card defendingCard = GetCardToDefend(attackingCard);
@@ -115,6 +131,8 @@ public class AIPlayer:IPlayer{
             TakeAllCards(gameTable);
         }
     }
+    
+    //taken all cards from the game table, set property Taken
     public void TakeAllCards(Table gameTable){
         Taken =true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
@@ -125,6 +143,8 @@ public class AIPlayer:IPlayer{
             Console.WriteLine($"{Name} взял карты\n");
         } 
     }
+    
+    //output cards for console
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = "";
@@ -154,6 +174,10 @@ public class AIPlayer:IPlayer{
         
     //     return handValue;
     // }
+    
+
+    //made decision based on handvalue
+    //return min card
     protected virtual int MakeDecision(){
         return 0;
     }

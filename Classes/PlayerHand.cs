@@ -5,13 +5,19 @@ namespace TheFool
 {
     public class PlayerHand{
         public List<Card> cards = new List<Card>();
+        
+        //return card by index
         public Card GetCard(int index){
             return cards.ElementAt(index);
         }
+        
+        //remove card from hand
         public void RemoveCardFromHand(Card card){
             cards.Remove(card);
             Sort();
         }
+        
+        //sorted cards in hand by rank, trumps also sorted by rank in the end of hand
         public void Sort(){
             cards = cards.OrderBy(c=>c.Rank).ToList();
             List<Card> trumpCards = new List<Card>();

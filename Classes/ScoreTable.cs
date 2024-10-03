@@ -8,6 +8,8 @@ namespace TheFool
         
         private Dictionary<string,int> scores = new Dictionary<string, int>();
         private string path = "C:/Users/МиненковаНА/Projects/TheFool/Scores/scores.txt";
+        
+        //load score table from files
         private void LoadScoresFromFile(){
             if(File.Exists(path)){
                 using(StreamReader sr = new StreamReader(path))
@@ -23,6 +25,8 @@ namespace TheFool
         public ScoreTable(){
             LoadScoresFromFile();
         }
+        
+        //save scores to file
         private void SaveScoresToFile(){
             using(StreamWriter sw = new StreamWriter(path))
             {
@@ -33,12 +37,15 @@ namespace TheFool
             }
         }
 
+        //displwy score table in the console
         public void DisplayScores(){
             Console.WriteLine("\nТаблица рекордов:");
             foreach(var pair in scores){
                 Console.WriteLine("{0}: {1}", pair.Key,pair.Value);
             }
         }
+        
+        //check exist name in score table
         public bool IsNameExist(string name){
             if(scores.ContainsKey(name)){
                 return true;
@@ -47,6 +54,8 @@ namespace TheFool
                 return false;
             }
         }
+        
+        //add winner to score table, if name exist - update score of existing winner
         public void AddScore(string name, int score){
             if(IsNameExist(name)){
                 int value;
