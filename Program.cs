@@ -13,7 +13,7 @@ class Program
             string aiplayers = Console.ReadLine();
             if(int.TryParse(players, out var playerCount)&&int.TryParse(aiplayers, out var AIplayerCount)){
                 if(playerCount+AIplayerCount==2){
-                    game.Game(playerCount,AIplayerCount,repeatGame);
+                    game.Game(playerCount,AIplayerCount,false);
                     game.PlayerCount=playerCount;
                     game.BotPlayerCount=AIplayerCount;
                     // repeatGame = false;
@@ -31,7 +31,7 @@ class Program
             string repeat = Console.ReadLine();
             if(repeat=="да"&&repeat!="нет"){
                 Console.Clear();
-                game.Game(game.PlayerCount,game.BotPlayerCount,repeatGame);
+                game.Game(game.PlayerCount,game.BotPlayerCount,true);
                 repeatGame = false;
             }
             else{

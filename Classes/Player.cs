@@ -9,6 +9,11 @@ public class Player:IPlayer {
         Name = Console.ReadLine();
 
     }
+
+    public Player(string _name, bool _fool) {
+        Name = _name;
+        IsFool = _fool;
+    }
     public int TurnNumber{get;set;}
     public bool Taken{get; set;}
     public string Name{get;set;}
@@ -192,7 +197,7 @@ public class Player:IPlayer {
         cardDrawnString = "\nКарты игрока "+ Name+" \n";
         for(int i = 0;i<cards.Count;i++){
             Card tempCard = cards[i];
-            cardDrawnString+=tempCard.ToString()+"\t";
+            cardDrawnString+=tempCard.ToString()+"\t\t";
         } 
         return cardDrawnString;
     }
