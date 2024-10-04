@@ -341,13 +341,6 @@
         <mxCell id="tphsWdSEAuGzGcMl0M73-13" value="- MakeDecision(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="tphsWdSEAuGzGcMl0M73-10" vertex="1">
           <mxGeometry y="60" width="210" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="uD5jhdBLe7129n5WWqSE-17" value="Extends" style="endArrow=block;endSize=11;endFill=0;html=1;rounded=0;exitX=1.007;exitY=0.038;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="XW7uV3UIntbRirsTcnwH-2" target="tphsWdSEAuGzGcMl0M73-11" edge="1">
-          <mxGeometry x="-0.0699" y="10" width="160" relative="1" as="geometry">
-            <mxPoint y="-530" as="sourcePoint" />
-            <mxPoint x="160" y="-530" as="targetPoint" />
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="g_3MPtzC0vHh95wkXW5L-31" value="Player" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="10" y="-860" width="450" height="450" as="geometry" />
         </mxCell>
@@ -487,6 +480,13 @@
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="-700" y="-960" as="sourcePoint" />
             <mxPoint x="-540" y="-960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uD5jhdBLe7129n5WWqSE-17" value="Extends" style="endArrow=block;endSize=11;endFill=0;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="tphsWdSEAuGzGcMl0M73-11" edge="1">
+          <mxGeometry x="-0.0699" y="10" width="160" relative="1" as="geometry">
+            <mxPoint y="-530" as="sourcePoint" />
+            <mxPoint x="-20" y="-230" as="targetPoint" />
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
