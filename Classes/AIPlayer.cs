@@ -10,7 +10,6 @@ public class AIPlayer:IPlayer{
     public bool Taken{get;set;}
     public bool IsFool {get;set;}
     public AIPlayer(){}
-
     public AIPlayer(string _name, bool _fool){
         Name = _name;
         IsFool = _fool;
@@ -126,7 +125,7 @@ public class AIPlayer:IPlayer{
             playerHand.RemoveCardFromHand(defendingCard);
         }
         else{
-            Console.WriteLine("Нечем отбиться");
+            Console.WriteLine("\nНечем отбиться");
             TakeAllCards(gameTable);
         }
     }

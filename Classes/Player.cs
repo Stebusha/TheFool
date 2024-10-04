@@ -172,7 +172,7 @@ public class Player:IPlayer {
             playerHand.RemoveCardFromHand(defendingCard);
         }
         else{
-            Console.WriteLine("Нечем отбиться");
+            Console.WriteLine("\nНечем отбиться");
             TakeAllCards(gameTable);
         }
     }
@@ -190,10 +190,23 @@ public class Player:IPlayer {
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = "";
-        cardDrawnString = "\nКарты игрока "+ Name+" \n";
-        for(int i = 0;i<cards.Count;i++){
-            Card tempCard = cards[i];
-            cardDrawnString+=tempCard.ToString()+"\t\t";
+        cardDrawnString = $"\nКарты игрока {Name}: \n\n";
+        if(cards.Count>6){
+            for(int i = 0;i<6;i++){
+                Card tempCard = cards[i];
+                cardDrawnString+=tempCard.ToString()+"\t\t";
+            }
+            cardDrawnString+="\n\n";
+            for(int i=6;i<cards.Count;i++){
+                Card tempCard = cards[i];
+                cardDrawnString+=tempCard.ToString()+"\t\t";
+            }
+        }
+        else{
+            for(int i = 0;i<cards.Count;i++){
+                Card tempCard = cards[i];
+                cardDrawnString+=tempCard.ToString()+"\t\t";
+            }
         } 
         return cardDrawnString;
     }

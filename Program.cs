@@ -35,7 +35,7 @@ class Program
                 repeatGame = false;
             }
             else{
-                Console.WriteLine("Выход");
+                Console.WriteLine("\nВыход");
                 repeatGame = true;
                 Console.ReadLine();
             }
