@@ -62,7 +62,6 @@ public class AIPlayer:IPlayer{
                     for(int i=0;i<gameTable.Length();i++){
                         if(card.Rank==gameTable.GetCard(i).Rank){
                             cardsForAttack.Add(card);
-
                         }
                     }
                 }
@@ -78,11 +77,10 @@ public class AIPlayer:IPlayer{
         bool Attacking = CanBeAttacking(playerHand.cards,gameTable);
         if(Attacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
-            //Console.WriteLine(ToString(attackingCards));
             if(attackingCards.Count!=0){
                 int index = MakeDecision();
                 Card attackingCard = attackingCards[index];
-                Console.WriteLine($"{Name} походил картой: "+ attackingCard.ToString());
+                Console.WriteLine($"\n{Name} походил картой: "+ attackingCard.ToString());
                 gameTable.AddCardToTable(attackingCard);
                 //fixed
                 //first card delete before defend, comparison with next card -> bug defend 
@@ -111,7 +109,6 @@ public class AIPlayer:IPlayer{
         Card cardToDefend = new Card();
         foreach(var card in playerHand.cards){
             if(card>attackingCard){
-                //Console.WriteLine(card.ToString()+ " > "+ attackingCard.ToString());
                 cardToDefend = card;
                 break;
             }
@@ -127,7 +124,6 @@ public class AIPlayer:IPlayer{
             Console.WriteLine($"{Name} отбился картой: "+defendingCard);
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
-            // SuccesfulDefended = true;
         }
         else{
             Console.WriteLine("Нечем отбиться");
@@ -141,9 +137,8 @@ public class AIPlayer:IPlayer{
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
-        // SuccesfulDefended=false;
         if(playerHand.cards.Count!=0){
-            Console.WriteLine($"{Name} взял карты\n");
+            Console.WriteLine($"\n{Name} взял карты");
         } 
     }
     

@@ -33,8 +33,7 @@ public class Player:IPlayer {
         else if(playerHand.cards.Count<6){
             playerHand.cards.AddRange(deck.DrawCards(6-playerHand.cards.Count));
             playerHand.Sort();
-        }
-        //Console.WriteLine(ToString(playerHand.cards)); 
+        } 
     }
     
     //check exist cards for attack
@@ -82,7 +81,7 @@ public class Player:IPlayer {
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards.Count!=0){
                 Console.WriteLine(ToString(attackingCards));
-                Console.WriteLine("Выберите порядковый номер карты, которой хотите походить: ");
+                Console.WriteLine("\nВыберите порядковый номер карты, которой хотите походить: ");
                 bool settingNumber = false;
                 while(!settingNumber){
                     string number = Console.ReadLine();
@@ -90,7 +89,7 @@ public class Player:IPlayer {
                         if((index-1)>=0&&(index-1)<attackingCards.Count){
                             settingNumber=true;
                             Card attackingCard = attackingCards[index-1];
-                            Console.WriteLine($"Вы походили картой: {attackingCard}"/*attackingCard.ToString()*/);
+                            Console.WriteLine($"\nВы походили картой: {attackingCard}");
                             gameTable.AddCardToTable(attackingCard);
                             playerHand.RemoveCardFromHand(attackingCard);
                             attackingCards.Remove(attackingCard);
@@ -128,7 +127,6 @@ public class Player:IPlayer {
         if (gameTable.Length()!=0){
             foreach(var card in playerHand.cards){
                 if(card>attackingCard){
-                    //Console.WriteLine(card.ToString()+ " - "+(card>gameTable.GetCard(i)).ToString());
                     defenseCards.Add(card);
                 }   
             }
@@ -142,7 +140,7 @@ public class Player:IPlayer {
         List<Card> defendingCards = GetCardsforDefense(attackingCard,gameTable);
         if(defendingCards.Count!=0){
             Console.WriteLine(ToString(defendingCards));
-            Console.WriteLine("Выберите порядковый номер карты, которой хотите отбиться: ");
+            Console.WriteLine("\nВыберите порядковый номер карты, которой хотите отбиться: ");
             bool settingNumber = false;
             while(!settingNumber){
                 string number = Console.ReadLine();
@@ -169,11 +167,9 @@ public class Player:IPlayer {
         bool beaten = CanBeBeaten(attackingCard,gameTable);
         Card defendingCard = GetCardToDefend(attackingCard,gameTable);
         if(beaten){
-            Console.WriteLine($"Вы отбились картой: {defendingCard}" /*+defendingCard.ToString()*/);
-            //Console.WriteLine($"{Name} отбился картой: "+defendingCard);
+            Console.WriteLine($"\nВы отбились картой: {defendingCard}");
             gameTable.AddCardToTable(defendingCard);
             playerHand.RemoveCardFromHand(defendingCard);
-            // SuccesfulDefended = true;
         }
         else{
             Console.WriteLine("Нечем отбиться");
@@ -187,7 +183,7 @@ public class Player:IPlayer {
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
-        Console.WriteLine("Вы взяли карты :" +ToString(playerHand.cards));
+        Console.WriteLine("\nВы взяли карты :\n" +ToString(playerHand.cards));
     }
     
     //output cards for console

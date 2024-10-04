@@ -8,7 +8,7 @@ namespace TheFool
         private List<Card> cards;
         private SuitType[] suits = {SuitType.Clubs,SuitType.Diams,SuitType.Hearts, SuitType.Spades};
         private RankType[] ranks = {RankType.Six, RankType.Seven, RankType.Eight,RankType.Nine,RankType.Ten,RankType.Jack,RankType.Queen,RankType.King,RankType.Ace}; 
-        public static SuitType trumpSuit;
+        public static SuitType trumpSuit=SuitType.Clubs;
         public int CardsAmount{get; set;}
         
         //return trump suit
@@ -23,7 +23,6 @@ namespace TheFool
                     Card cardToCreate = new Card(suit,rank);
                     cards.Add(cardToCreate);
                 }
-
             }
         }  
         
