@@ -192,15 +192,19 @@ public class Player:IPlayer {
         string cardDrawnString = "";
         cardDrawnString = $"\nКарты игрока {Name}: \n\n";
         if(cards.Count>6){
-            for(int i = 0;i<6;i++){
+            for(int i = 0;i<cards.Count;i++){
+                if(cards.Count%6>0){
+                    if(i!=0&&i%6==0){
+                        cardDrawnString+="\n\n";
+                    }
+                }
                 Card tempCard = cards[i];
                 cardDrawnString+=tempCard.ToString()+"\t\t";
             }
-            cardDrawnString+="\n\n";
-            for(int i=6;i<cards.Count;i++){
-                Card tempCard = cards[i];
-                cardDrawnString+=tempCard.ToString()+"\t\t";
-            }
+            // for(int i=6;i<cards.Count;i++){
+            //     Card tempCard = cards[i];
+            //     cardDrawnString+=tempCard.ToString()+"\t\t";
+            // }
         }
         else{
             for(int i = 0;i<cards.Count;i++){
