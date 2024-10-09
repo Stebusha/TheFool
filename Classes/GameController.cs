@@ -125,7 +125,7 @@ namespace TheFool
             gameTable.ClearTable();
             Console.WriteLine("\nКонец хода");
             Console.ReadLine();
-            //Console.Clear();            
+            Console.Clear();            
         }
         
         //launch game, set start info, set trump, player's turns, check the winning condition

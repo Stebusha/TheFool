@@ -201,10 +201,6 @@ public class Player:IPlayer {
                 Card tempCard = cards[i];
                 cardDrawnString+=tempCard.ToString()+"\t\t";
             }
-            // for(int i=6;i<cards.Count;i++){
-            //     Card tempCard = cards[i];
-            //     cardDrawnString+=tempCard.ToString()+"\t\t";
-            // }
         }
         else{
             for(int i = 0;i<cards.Count;i++){
