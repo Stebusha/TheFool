@@ -185,7 +185,7 @@ public class Player:IPlayer {
         playerHand.Sort();
         Console.WriteLine("\nВы взяли карты :\n" +ToString(playerHand.cards));
     }
-    
+
     //output cards for console
     public string ToString(List<Card> cards)
     {

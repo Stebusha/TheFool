@@ -141,6 +141,10 @@ public class AIPlayer:IPlayer{
         } 
     }
     
+    //throw card for next and previous player
+    public void ThrowCard(){
+
+    }
     //output cards for console
     public string ToString(List<Card> cards)
     {
