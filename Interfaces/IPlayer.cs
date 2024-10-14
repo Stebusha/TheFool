@@ -12,7 +12,7 @@ public interface IPlayer{
     //return cards for attack
     public List<Card> GetCardsForAttack(Table gameTable);
     //attack
-    public void Attack(Table gameTable);
+    public Card Attack(Table gameTable);
     //defend
     public void Defend(Card attackingCard,Table gameTable);
     //take all cards from game table

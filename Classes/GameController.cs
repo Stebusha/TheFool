@@ -38,16 +38,16 @@ namespace TheFool
                             break;       
                         }
                         if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
-                            attackingCard = players[attacking].GetCardsForAttack(gameTable).ElementAt(0);
-                            players[attacking].Attack(gameTable);
+                            attackingCard = players[attacking].Attack(gameTable);
                             players[defending].Defend(attackingCard,gameTable);
-                            if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
+                            //if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
                                 if(!players[defending].Taken&&players[defending].GetCards().Count!=0){
                                     if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
                                         i++;
-                                        attackingCard = players[nextAttacking].GetCardsForAttack(gameTable).ElementAt(0);
-                                        players[nextAttacking].Attack(gameTable);
-                                        players[defending].Defend(attackingCard,gameTable);
+                                        attackingCard = players[nextAttacking].Attack(gameTable);
+                                        if(attackingCard!=null){
+                                            players[defending].Defend(attackingCard,gameTable);
+                                        }
                                     }
                                 }
                                 else{
@@ -55,7 +55,7 @@ namespace TheFool
                                     FirtsTurn=false;
                                     break;
                                 }
-                            } 
+                            //} 
                         }
                         else{
                             TurnFinished = true;
@@ -77,14 +77,12 @@ namespace TheFool
                         }
                         if(players[defending].GetCards().Count!=0){
                             if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
-                                attackingCard = players[attacking].GetCardsForAttack(gameTable).ElementAt(0);
-                                players[attacking].Attack(gameTable);
+                                attackingCard = players[attacking].Attack(gameTable);
                                 players[defending].Defend(attackingCard,gameTable);
                                 if(!players[defending].Taken&&players[defending].GetCards().Count!=0){
                                     if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
                                         i++;
-                                        attackingCard = players[nextAttacking].GetCardsForAttack(gameTable).ElementAt(0);
-                                        players[nextAttacking].Attack(gameTable);
+                                        attackingCard = players[nextAttacking].Attack(gameTable);
                                         players[defending].Defend(attackingCard,gameTable);
                                     }
                                 }
@@ -97,8 +95,7 @@ namespace TheFool
                                 if(!players[defending].Taken){
                                     if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
                                         i++;
-                                        attackingCard = players[nextAttacking].GetCardsForAttack(gameTable).ElementAt(0);
-                                        players[nextAttacking].Attack(gameTable);
+                                        attackingCard = players[nextAttacking].Attack(gameTable);
                                         players[defending].Defend(attackingCard,gameTable);
                                     }
                                 }
@@ -107,7 +104,7 @@ namespace TheFool
                                     break;
                                 }
                             }
-                            else if(gameTable.Length()!=12||players[defending].GetCards().Count!=0){
+                            else if(gameTable.Length()==12/*||players[defending].GetCards().Count!=0*/){
                                 TurnFinished = true;
                                 break;
                             }
@@ -258,9 +255,9 @@ namespace TheFool
                     turns++;   
                 }
                 else{
-                    turns+=2;
                     players[(turns+1)%players.Count].Taken=false;
-                    players[turns%players.Count].Taken=false;
+                    turns+=2;
+                    //players[turns%players.Count].Taken=false;
                 }
                 RefreshTurnNumbers(ref players,turns);
                 Win();

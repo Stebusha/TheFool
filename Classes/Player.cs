@@ -75,7 +75,7 @@ public class Player:IPlayer {
     }
     
     //attack chosen card
-    public void Attack(Table gameTable){
+    public Card Attack(Table gameTable){
         bool isAttacking = CanBeAttacking(playerHand.cards,gameTable);
         if(isAttacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
@@ -93,6 +93,7 @@ public class Player:IPlayer {
                             gameTable.AddCardToTable(attackingCard);
                             playerHand.RemoveCardFromHand(attackingCard);
                             attackingCards.Remove(attackingCard);
+                            return attackingCard;
                         } 
                         else{
                             Console.WriteLine("Нет такого номера. Введите порядковый номер повторно: ");
@@ -103,6 +104,10 @@ public class Player:IPlayer {
                     }
                 }       
             }
+            return null;
+        }
+        else{
+            return null;
         }
     }
     

@@ -72,19 +72,27 @@ public class AIPlayer:IPlayer{
     }
     
     //attack card based on decision
-    public void Attack(Table gameTable){
+    public Card Attack(Table gameTable){
         bool Attacking = CanBeAttacking(playerHand.cards,gameTable);
+        Card attackingCard = new Card();
         if(Attacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards.Count!=0){
                 int index = MakeDecision();
-                Card attackingCard = attackingCards[index];
+                attackingCard = attackingCards[index];
                 Console.WriteLine($"\n{Name} походил картой: "+ attackingCard.ToString());
                 gameTable.AddCardToTable(attackingCard);
                 //fixed
                 //first card delete before defend, comparison with next card -> bug defend 
                 playerHand.RemoveCardFromHand(attackingCard);
+                return attackingCard;
+            }
+            else{
+                return attackingCard;
             }    
+        }
+        else{
+            return attackingCard;
         }
     }
     
