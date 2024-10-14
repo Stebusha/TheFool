@@ -77,6 +77,7 @@ public class Player:IPlayer {
     //attack chosen card
     public Card Attack(Table gameTable){
         bool isAttacking = CanBeAttacking(playerHand.cards,gameTable);
+        Card attackingCard = new Card();
         if(isAttacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards.Count!=0){
@@ -88,7 +89,7 @@ public class Player:IPlayer {
                     if(int.TryParse(number, out var index)){
                         if((index-1)>=0&&(index-1)<attackingCards.Count){
                             settingNumber=true;
-                            Card attackingCard = attackingCards[index-1];
+                            attackingCard = attackingCards[index-1];
                             Console.WriteLine($"\nВы походили картой: {attackingCard}");
                             gameTable.AddCardToTable(attackingCard);
                             playerHand.RemoveCardFromHand(attackingCard);
@@ -104,10 +105,10 @@ public class Player:IPlayer {
                     }
                 }       
             }
-            return null;
+            return attackingCard;
         }
         else{
-            return null;
+            return attackingCard;
         }
     }
     

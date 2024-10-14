@@ -40,22 +40,18 @@ namespace TheFool
                         if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
                             attackingCard = players[attacking].Attack(gameTable);
                             players[defending].Defend(attackingCard,gameTable);
-                            //if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
-                                if(!players[defending].Taken&&players[defending].GetCards().Count!=0){
-                                    if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
-                                        i++;
-                                        attackingCard = players[nextAttacking].Attack(gameTable);
-                                        if(attackingCard!=null){
-                                            players[defending].Defend(attackingCard,gameTable);
-                                        }
-                                    }
+                            if(!players[defending].Taken&&players[defending].GetCards().Count!=0){
+                                if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0&&i!=4){
+                                    i++;
+                                    attackingCard = players[nextAttacking].Attack(gameTable);
+                                    players[defending].Defend(attackingCard,gameTable);
                                 }
-                                else{
-                                    TurnFinished = true;
-                                    FirtsTurn=false;
-                                    break;
-                                }
-                            //} 
+                            }
+                            else{
+                                TurnFinished = true;
+                                FirtsTurn=false;
+                                break;
+                            }
                         }
                         else{
                             TurnFinished = true;
@@ -67,66 +63,66 @@ namespace TheFool
                         TurnFinished = true;
                         FirtsTurn=false;
                     }
+                    Console.WriteLine("\nКонец хода");
                 }
                 else{
+                    if(players.Count==1){
+                        break;
+                    }
                     Console.WriteLine($"\nНачало хода: ");
                     for(int i=0;i<MAX_CARDS_TO_ATTACK;i++){
-                        if(players[defending].Taken){
+                        if(players[defending].Taken||players[defending].GetCards().Count==0){
                             TurnFinished=true;
                             break;       
                         }
-                        if(players[defending].GetCards().Count!=0){
-                            if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
-                                attackingCard = players[attacking].Attack(gameTable);
-                                players[defending].Defend(attackingCard,gameTable);
-                                if(!players[defending].Taken&&players[defending].GetCards().Count!=0){
-                                    if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
-                                        i++;
-                                        attackingCard = players[nextAttacking].Attack(gameTable);
-                                        players[defending].Defend(attackingCard,gameTable);
-                                    }
-                                }
-                                else{
-                                    TurnFinished=true;
-                                    break;
+                        if(players[attacking].GetCardsForAttack(gameTable).Count!=0){
+                            attackingCard = players[attacking].Attack(gameTable);
+                            players[defending].Defend(attackingCard,gameTable);
+                            if(!players[defending].Taken&&players[defending].GetCards().Count!=0&&i!=5){
+                                if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
+                                    i++;
+                                    attackingCard = players[nextAttacking].Attack(gameTable);
+                                    players[defending].Defend(attackingCard,gameTable);
                                 }
                             }
-                            else if(gameTable.Length()!=0){
-                                if(!players[defending].Taken){
-                                    if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
-                                        i++;
-                                        attackingCard = players[nextAttacking].Attack(gameTable);
-                                        players[defending].Defend(attackingCard,gameTable);
-                                    }
-                                }
-                                else{
-                                    TurnFinished=true;
-                                    break;
-                                }
-                            }
-                            else if(gameTable.Length()==12/*||players[defending].GetCards().Count!=0*/){
-                                TurnFinished = true;
+                            else{
+                                TurnFinished=true;
                                 break;
                             }
                         }
-                        else{                      
+                        else if(gameTable.Length()!=0&&i!=6){
+                            if(!players[defending].Taken){
+                                if(players.Count>2&&players[nextAttacking].GetCardsForAttack(gameTable).Count!=0){
+                                    i++;
+                                    attackingCard = players[nextAttacking].Attack(gameTable);
+                                    players[defending].Defend(attackingCard,gameTable);
+                                }
+                            }
+                            else{
+                                TurnFinished=true;
+                                break;
+                            }
+                        }
+                        else if(gameTable.Length()==12){
                             TurnFinished = true;
                             break;
                         }
                         if(!TurnFinished){
                             TurnFinished = true;
                         }
-                    }   
+                    } 
+                    Console.WriteLine("\nКонец хода");
                 }   
             }
             gameTable.ClearTable();
-            Console.WriteLine("\nКонец хода");
             Console.ReadLine();
             Console.Clear();            
         }
         
         //launch game, set start info, set trump, player's turns, check the winning condition
         public void Game(int playerCount,int AIPlayerCount, in bool repeat){
+            PlayerCount=playerCount;
+            BotPlayerCount=AIPlayerCount;
             deck = new Deck();
             FirtsTurn = true;
             Finished = false;
@@ -148,7 +144,7 @@ namespace TheFool
                 }
                 else if(playerCount+AIPlayerCount==2&&playerCount==1){
                     Player player = new Player();
-                    if(scoreTable.IsNameExist(player.Name)){
+                    if(scoreTable.IsNameExistInScores(player.Name)){
                         Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
                         if(Console.ReadLine().ToLower()=="да"){
                             player.Name = Console.ReadLine();
@@ -166,7 +162,7 @@ namespace TheFool
                 else{
                     for(int i = 0;i<playerCount; i++){
                         Player player = new Player();
-                        if(scoreTable.IsNameExist(player.Name)){
+                        if(scoreTable.IsNameExistInScores(player.Name)){
                             Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
                             if(Console.ReadLine().ToLower()=="да"){
                                 player.Name = Console.ReadLine();
@@ -255,9 +251,7 @@ namespace TheFool
                     turns++;   
                 }
                 else{
-                    players[(turns+1)%players.Count].Taken=false;
                     turns+=2;
-                    //players[turns%players.Count].Taken=false;
                 }
                 RefreshTurnNumbers(ref players,turns);
                 Win();
@@ -314,7 +308,7 @@ namespace TheFool
                     Console.WriteLine($"Колода закончилась. Конец партии. Ничья.");
                     scoreTable.DisplayScores();
                 }
-                else if(players.Count==2){
+                else if(BotPlayerCount+PlayerCount==2){
                     if (players[1].GetCards().Count==0){
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}."); 
@@ -350,8 +344,8 @@ namespace TheFool
                         int score = 1;
                         players[0].IsFool = true;
                         fools[players[0].Name] = true;
-                        scoreTable.AddScore(players[0].Name,score);
-                        scoreTable.DisplayScores();
+                        scoreTable.AddFool(players[0].Name,score);
+                        scoreTable.DisplayFools();
                     }
                 }   
             }

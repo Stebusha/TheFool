@@ -12,14 +12,14 @@ class Program
             Console.WriteLine("Введите количество ботов");
             string aiplayers = Console.ReadLine();
             if(int.TryParse(players, out var playerCount)&&int.TryParse(aiplayers, out var AIplayerCount)){
-                if(playerCount+AIplayerCount>1&&playerCount+AIplayerCount<=2){
+                if(playerCount+AIplayerCount>1&&playerCount+AIplayerCount<=4){
                     game.Game(playerCount,AIplayerCount,false);
-                    game.PlayerCount=playerCount;
-                    game.BotPlayerCount=AIplayerCount;
+                    
                     // repeatGame = false;
                 }
                 else{
                     Console.WriteLine("Сумаррное количество игроков не равно 2.");
+                    repeatGame=true;
                 }
             }
             else{
