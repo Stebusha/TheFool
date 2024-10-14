@@ -71,7 +71,7 @@ namespace TheFool
                     }
                     Console.WriteLine($"\nНачало хода: ");
                     for(int i=0;i<MAX_CARDS_TO_ATTACK;i++){
-                        if(players[defending].Taken||players[defending].GetCards().Count==0){
+                        if(players[defending].Taken||players[defending].GetCards().Count==0||gameTable.Length()==12){
                             TurnFinished=true;
                             break;       
                         }
@@ -103,10 +103,10 @@ namespace TheFool
                                 break;
                             }
                         }
-                        else if(gameTable.Length()==12){
-                            TurnFinished = true;
-                            break;
-                        }
+                        // else if(gameTable.Length()==12){
+                        //     TurnFinished = true;
+                        //     break;
+                        // }
                         if(!TurnFinished){
                             TurnFinished = true;
                         }
