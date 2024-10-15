@@ -6,15 +6,12 @@ public class Card{
     public RankType Rank{get;set;}       
     public Card(){}
     public Card (SuitType _suit, RankType _rank){
-            Suit = _suit;
-            Rank = _rank;
+        Suit = _suit;
+        Rank = _rank;
     }
     
     //card output
-    public override string ToString()
-    {
-        return $"{Rank} of {Suit}";
-    }
+    public override string ToString() => $"{Rank} of {Suit}";
     
     //ovveride operators
     public static bool operator ==(Card card1, Card card2){

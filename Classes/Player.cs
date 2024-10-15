@@ -20,10 +20,7 @@ public class Player:IPlayer {
     public bool IsFool {get;set;}
 
     //return cards in hand
-    public List<Card> GetCards(){
-        return playerHand.cards;
-    }
-    
+    public List<Card> GetCards()=> playerHand.cards;
     //draw cards from deck
     public void RefillHand(Deck deck){   
         if(playerHand.cards.Count==0){

@@ -7,9 +7,7 @@ namespace TheFool
         public List<Card> cards = new List<Card>();
         
         //return card by index
-        public Card GetCard(int index){
-            return cards.ElementAt(index);
-        }
+        public Card GetCard(int index) => cards.ElementAt(index);
         
         //remove card from hand
         public void RemoveCardFromHand(Card card){

@@ -7,35 +7,23 @@ namespace TheFool
         private List<Card> onTable = new List<Card>();
        
         //return card on table by index
-        public Card GetCard(int index){
-            return onTable[index];
-        }       
+        public Card GetCard(int index) => onTable[index];   
         
         //return length of card in game
-        public int Length(){
-            return onTable.Count;
-        }
+        public int Length() => onTable.Count;
         
         //return cards from table
-        public List<Card> TakeCardsFromTable(){
-            return  onTable;
-        }
+        public List<Card> TakeCardsFromTable() => onTable;
        
         //add card on table
-        public void AddCardToTable(Card card){
-            onTable.Add(card);
-        }
-        
+        public void AddCardToTable(Card card) => onTable.Add(card);
+
         //remove card from table
-        public void RemoveCardFromTable(Card card){
-            onTable.Remove(card);
-        }
+        public void RemoveCardFromTable(Card card) => onTable.Remove(card);
         
         //clear table
-        public void ClearTable(){
-            onTable.Clear();
-        }
-        
+        public void ClearTable() => onTable.Clear();
+
         //output for console
         public string ToString(List<Card> onTable){
             string onTableString = "";
@@ -45,7 +33,6 @@ namespace TheFool
                 onTableString+=tempCard.ToString();
             }
             return onTableString;
-
         }
     }
 }

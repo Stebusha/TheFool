@@ -16,9 +16,7 @@ public class AIPlayer:IPlayer{
     }
     
     //return cards in hand
-    public List<Card> GetCards(){
-        return playerHand.cards;
-    }
+    public List<Card> GetCards()=>playerHand.cards;
 
     //draw cards from deck
     public void RefillHand(Deck deck){
@@ -94,8 +92,7 @@ public class AIPlayer:IPlayer{
         else{
             return attackingCard;
         }
-    }
-    
+    } 
      //check attacking card can be beaten
     private bool CanBeBeaten(Card attackingCard,Table gameTable){
         if(gameTable.Length()==0){
@@ -109,8 +106,7 @@ public class AIPlayer:IPlayer{
             }
             return false;
         }  
-    }
-    
+    }   
     //return  card to defend based on decision
     private Card GetCardToDefend(Card attackingCard){
         Card cardToDefend = new Card();
@@ -122,7 +118,6 @@ public class AIPlayer:IPlayer{
         }
         return cardToDefend;
     }
-    
     //defend
     public void Defend(Card attackingCard, Table gameTable){
         bool beaten = CanBeBeaten(attackingCard,gameTable);
@@ -147,11 +142,6 @@ public class AIPlayer:IPlayer{
         if(playerHand.cards.Count!=0){
             Console.WriteLine($"\n{Name} взял карты");
         } 
-    }
-    
-    //throw card for next and previous player
-    public void ThrowCard(){
-
     }
     //output cards for console
     public string ToString(List<Card> cards)
@@ -187,8 +177,6 @@ public class AIPlayer:IPlayer{
 
     //made decision based on handvalue
     //return min card
-    protected virtual int MakeDecision(){
-        return 0;
-    }
+    protected virtual int MakeDecision()=>0;
 
 }

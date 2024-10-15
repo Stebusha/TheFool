@@ -12,9 +12,8 @@ namespace TheFool
         public int CardsAmount{get; set;}
         
         //return trump suit
-        public SuitType GetTrumpSuit() {
-            return trumpSuit;
-        }
+        public SuitType GetTrumpSuit() => trumpSuit;
+
         public Deck(){
             CardsAmount = 36;
             cards = new List<Card>(CardsAmount);
