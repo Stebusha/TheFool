@@ -177,6 +177,6 @@ public class AIPlayer:IPlayer{
 
     //made decision based on handvalue
     //return min card
-    protected virtual int MakeDecision()=>0;
+    protected virtual int MakeDecision() => 0;
 
 }
