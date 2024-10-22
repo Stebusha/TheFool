@@ -79,7 +79,7 @@ public class Player:IPlayer {
         if(isAttacking){
             List<Card> attackingCards = GetCardsForAttack(gameTable);
             if(attackingCards.Count!=0){
-                Console.WriteLine(ToString(attackingCards));
+                ToStringFor(playerHand.cards,attackingCards);
                 Console.WriteLine("\nВыберите порядковый номер карты, которой хотите походить: ");
                 bool settingNumber = false;
                 while(!settingNumber){
@@ -143,7 +143,7 @@ public class Player:IPlayer {
         Card cardToDefend = new Card();
         List<Card> defendingCards = GetCardsforDefense(attackingCard,gameTable);
         if(defendingCards.Count!=0){
-            Console.WriteLine(ToString(defendingCards));
+            ToStringFor(playerHand.cards,defendingCards);
             Console.WriteLine("\nВыберите порядковый номер карты, которой хотите отбиться: ");
             bool settingNumber = false;
             while(!settingNumber){
@@ -161,7 +161,6 @@ public class Player:IPlayer {
                     Console.WriteLine("Некорректный ввод .Введите порядковый номер повторно: ");
                 }
             }        
-            
         }
         return cardToDefend;
     }
@@ -176,7 +175,9 @@ public class Player:IPlayer {
             playerHand.RemoveCardFromHand(defendingCard);
         }
         else{
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\nНечем отбиться");
+            Console.ResetColor();
             TakeAllCards(gameTable);
         }
     }
@@ -203,15 +204,64 @@ public class Player:IPlayer {
                     }
                 }
                 Card tempCard = cards[i];
-                cardDrawnString+=tempCard.ToString()+"\t";
+                cardDrawnString+=$"[{i+1}] - {tempCard}\t";
             }
         }
         else{
             for(int i = 0;i<cards.Count;i++){
                 Card tempCard = cards[i];
-                cardDrawnString+=tempCard.ToString()+"\t";
+                cardDrawnString+=$"[{i+1}] - {tempCard}\t";
             }
         } 
         return cardDrawnString;
+    }
+
+    public void ToStringFor(List<Card> cards, List<Card> forSomethingCards){
+        Console.WriteLine($"\nКарты игрока {Name}: \n\n");
+        if(cards.Count>6){
+            for(int i = 0;i<cards.Count;i++){
+                if(cards.Count%6>0){
+                    if(i!=0&&i%6==0){
+                        Console.Write("\n\n");
+                    }
+                }
+                Card tempCard = cards[i];
+                int counter=0;
+                bool InConsole = false;
+                foreach(var card in forSomethingCards){
+                    counter++;
+                    if(card==tempCard){
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"[{counter}] - {tempCard}\t");
+                        Console.ResetColor();
+                        InConsole = true;
+                    }
+                }
+                if(!InConsole){
+                    Console.Write($"{tempCard}\t");
+                }
+                
+            }
+        }
+        else{
+            for(int i = 0;i<cards.Count;i++){
+                Card tempCard = cards[i];
+                int counter=0;
+                bool InConsole = false;
+                foreach(var card in forSomethingCards){
+                    counter++;
+                    if(card==tempCard){
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"[{counter}] - {tempCard}\t");
+                        InConsole = true;
+                        Console.ResetColor();
+                    }
+                }
+                if(!InConsole){
+                   Console.Write($"{tempCard}\t");
+                }
+            }
+        } 
+        Console.WriteLine();
     }
 }

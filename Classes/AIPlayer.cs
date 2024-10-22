@@ -5,13 +5,11 @@ namespace TheFool;
 public class AIPlayer:IPlayer{
     PlayerHand playerHand = new PlayerHand();
     // private float handValue = -1f;
-    public string Name{get; set;}
+    public string Name{get; set;} = "Бот";
     public int TurnNumber{get;set;}
     public bool Taken{get;set;}
     public bool IsFool {get;set;}
-    public AIPlayer(){
-        Name = "Бот";
-    }
+    public AIPlayer(){}
     public AIPlayer(string _name, bool _fool){
         Name = _name;
         IsFool = _fool;
@@ -130,7 +128,9 @@ public class AIPlayer:IPlayer{
             playerHand.RemoveCardFromHand(defendingCard);
         }
         else{
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\nНечем отбиться");
+            Console.ResetColor();
             TakeAllCards(gameTable);
         }
     }

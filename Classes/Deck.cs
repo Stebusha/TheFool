@@ -5,32 +5,10 @@ using System.Collections.Generic;
 namespace TheFool
 {
     public class Deck{
-
         private const int MAX_CARD_AMOUNT = 36;
         private List<Card> cards;
         public static SuitType trumpSuit=SuitType.Clubs;
         public int CardsAmount{get;private set;}
-        
-        //return trump suit
-        public SuitType GetTrumpSuit() => trumpSuit;
-        public string GetTrumpSuitName(){
-        string suitName = string.Empty;
-        switch(trumpSuit){
-            case SuitType.Clubs:
-                suitName = "♣";
-                break;
-            case SuitType.Hearts:
-                suitName = "♥";
-                break;
-            case SuitType.Spades:
-                suitName = "♠";
-                break;
-            case SuitType.Diams:
-                suitName = "♦";
-                break;
-        }
-        return  suitName;
-    }
         public Deck(){
             CardsAmount = MAX_CARD_AMOUNT;
             cards = new List<Card>(CardsAmount);
@@ -41,13 +19,32 @@ namespace TheFool
                 }
             }
         }  
+        //return trump suit
+        public SuitType GetTrumpSuit() => trumpSuit;
+        public string GetTrumpSuitName(){
+            string suitName = string.Empty;
+            switch(trumpSuit){
+                case SuitType.Clubs:
+                    suitName = "♣";
+                    break;
+                case SuitType.Hearts:
+                    suitName = "♥";
+                    break;
+                case SuitType.Spades:
+                    suitName = "♠";
+                    break;
+                case SuitType.Diams:
+                    suitName = "♦";
+                    break;
+            }
+            return  suitName;
+        }
         
         //shuffle cards on the deck
         public void Shuffle(){
             Random _random = new Random();
             cards.Sort((a,b) => _random.Next(-2,2));
         }
-        
         //return cards of the deck
         public List<Card> DrawCards(int count){
             List<Card> drawnCards = new List<Card>();
@@ -66,7 +63,6 @@ namespace TheFool
             CardsAmount = cards.Count;
             return drawnCards;
         }
-        
         //set trump - first card of deck, moves trump to the end of the deck
         public void Trump(){
             Card trumpCard;
