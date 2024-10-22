@@ -9,7 +9,9 @@ public class AIPlayer:IPlayer{
     public int TurnNumber{get;set;}
     public bool Taken{get;set;}
     public bool IsFool {get;set;}
-    public AIPlayer(){}
+    public AIPlayer(){
+        Name = "Бот";
+    }
     public AIPlayer(string _name, bool _fool){
         Name = _name;
         IsFool = _fool;

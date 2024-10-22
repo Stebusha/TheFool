@@ -16,8 +16,8 @@ namespace TheFool
             if(File.Exists(path)){
                 using(StreamReader sr = new StreamReader(path))
                 {
-                    string line;
-                    while((line = sr.ReadLine())!=null){
+                    string? line;
+                    while ((line = sr.ReadLine())!=null){
                         string[] parts = line.Split(',');
                         dataDictionary.Add(parts[0],int.Parse(parts[1]));
                     }
@@ -59,52 +59,63 @@ namespace TheFool
         }
         
         //check exist name in score table
-        public bool IsNameExistInScores(string name){
-            if(scores.ContainsKey(name)){
-                return true;
+        public bool IsNameExistInScores(string? name){
+            if(name!=null){
+                if(scores.ContainsKey(name)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            else{
-                return false;
-            }
+            return false;
         }
         //check exist name in fool table
-        public bool IsNameExistInFools(string name){
-            if(fools.ContainsKey(name)){
-                return true;
+        public bool IsNameExistInFools(string? name){
+            if(name!=null){
+                if(fools.ContainsKey(name)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            else{
-                return false;
-            }
+            return false;
         }
         
         //add winner to score table, if name exist - update score of existing winner
-        public void AddScore(string name, int score){
-            if(IsNameExistInScores(name)){
-                int value;
-                if(scores.TryGetValue(name, out value)){
-                    value++;
-                    scores[name]=value;
+        public void AddScore(string? name, int score){
+            if(name!=null){
+                if(IsNameExistInScores(name)){
+                    int value;
+                    if(scores.TryGetValue(name, out value)){
+                        value++;
+                        scores[name]=value;
+                    }
                 }
+                else{
+                    scores.Add(name,score);
+                }
+                SaveDataToFile(pathScores,scores);
             }
-            else{
-                scores.Add(name,score);
-            }
-            SaveDataToFile(pathScores,scores);
+            
         }
 
         //add fool to fools table, if name exist - update score of existing fool
-        public void AddFool(string name, int score){
-            if(IsNameExistInFools(name)){
-                int value;
-                if(fools.TryGetValue(name, out value)){
-                    value++;
-                    fools[name]=value;
+        public void AddFool(string? name, int score){
+            if(name!=null){
+                if(IsNameExistInFools(name)){
+                    int value;
+                    if(fools.TryGetValue(name, out value)){
+                        value++;
+                        fools[name]=value;
+                    }
                 }
+                else{
+                    fools.Add(name,score);
+                }
+                SaveDataToFile(pathFools,fools);
             }
-            else{
-                fools.Add(name,score);
-            }
-            SaveDataToFile(pathFools,fools);
         }
     }
 }

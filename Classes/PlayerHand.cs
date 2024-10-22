@@ -40,9 +40,11 @@ namespace TheFool
             //    Console.WriteLine(card);   
             //}
             //Console.WriteLine();
-            trumpCards = trumpCards.OrderBy(t=>t.Rank).ToList();
-            foreach (var trump in trumpCards){
-                cards.Add(trump);
+            if(trumpCards!=null){
+                trumpCards = trumpCards.OrderBy(t=>t.Rank).ToList();
+                foreach (var trump in trumpCards){
+                    cards.Add(trump);
+                }
             }
             //Console.WriteLine("Sorted:");
             //foreach (var card in cards){

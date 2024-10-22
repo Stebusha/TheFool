@@ -5,6 +5,8 @@ using System.Collections.Generic;
 namespace TheFool
 {
     public class Deck{
+
+        private const int MAX_CARD_AMOUNT = 36;
         private List<Card> cards;
         public static SuitType trumpSuit=SuitType.Clubs;
         public int CardsAmount{get;private set;}
@@ -30,7 +32,7 @@ namespace TheFool
         return  suitName;
     }
         public Deck(){
-            CardsAmount = 36;
+            CardsAmount = MAX_CARD_AMOUNT;
             cards = new List<Card>(CardsAmount);
             foreach(var suit in  (SuitType[])Enum.GetValues(typeof(SuitType))){
                 foreach(var rank in (RankType[])Enum.GetValues(typeof(RankType))){

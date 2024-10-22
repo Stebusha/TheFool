@@ -4,21 +4,22 @@ using System.Collections.Generic;
 namespace TheFool;
 public class Player:IPlayer {
     PlayerHand playerHand = new PlayerHand();
-    public Player(){
-        Console.WriteLine("Введите имя: ");
-        Name = Console.ReadLine();
-
-    }
-
-    public Player(string _name, bool _fool) {
-        Name = _name;
-        IsFool = _fool;
-    }
     public int TurnNumber{get;set;}
     public bool Taken{get; set;}
     public string Name{get;set;}
     public bool IsFool {get;set;}
-
+    public Player(){
+        Console.WriteLine("Введите имя: ");
+        string? temp = Console.ReadLine();;
+        while(temp==null){
+            Console.WriteLine("Введите имя: ");
+        }
+        Name = temp;
+    }
+    public Player(string _name, bool _fool) {
+        Name = _name;
+        IsFool = _fool;
+    }
     //return cards in hand
     public List<Card> GetCards()=> playerHand.cards;
     //draw cards from deck
@@ -82,7 +83,7 @@ public class Player:IPlayer {
                 Console.WriteLine("\nВыберите порядковый номер карты, которой хотите походить: ");
                 bool settingNumber = false;
                 while(!settingNumber){
-                    string number = Console.ReadLine();
+                    string? number = Console.ReadLine();
                     if(int.TryParse(number, out var index)){
                         if((index-1)>=0&&(index-1)<attackingCards.Count){
                             settingNumber=true;
@@ -146,7 +147,7 @@ public class Player:IPlayer {
             Console.WriteLine("\nВыберите порядковый номер карты, которой хотите отбиться: ");
             bool settingNumber = false;
             while(!settingNumber){
-                string number = Console.ReadLine();
+                string? number = Console.ReadLine();
                 if(int.TryParse(number, out var index)){
                     if((index-1)>=0&&(index-1)<defendingCards.Count){
                         settingNumber=true;

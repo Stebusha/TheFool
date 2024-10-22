@@ -63,7 +63,7 @@ public class Card{
         }
         return  suitName;
     }
-    public override string ToString() => $"{GetRankName(Rank)} {GetSuitName(Suit)}";
+    public override string ToString() => $"{GetRankName(Rank)}{GetSuitName(Suit)}";
     
     //ovveride operators
     public static bool operator ==(Card card1, Card card2){
@@ -144,8 +144,13 @@ public class Card{
     }
 
         // override object.Equals
-    public override bool Equals(object card)
+    public override bool Equals(object? card)
     {
+        if (card is null)
+        {
+            throw new ArgumentNullException(nameof(card));
+        }
+
         return this == (Card)card;
     }
     

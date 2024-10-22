@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace TheFool
 {
@@ -135,49 +136,69 @@ namespace TheFool
                     aIPlayer.RefillHand(deck);
                     players.Add(aIPlayer);
                     players[0].Name = "Бот 1";
-                    fools.Add(players[0].Name, players[0].IsFool);
+                    fools.Add(players[0].Name??"Бот 1", players[0].IsFool);
                     AIPlayer aIPlayer1 = new AIPlayer();
                     aIPlayer1.RefillHand(deck);
                     players.Add(aIPlayer1);    
                     players[1].Name = "Бот 2";   
-                    fools.Add(players[1].Name, players[1].IsFool);        
+                    fools.Add(players[1].Name??"Бот 2", players[1].IsFool);        
                 }
                 else if(playerCount+AIPlayerCount==2&&playerCount==1){
                     Player player = new Player();
-                    if(scoreTable.IsNameExistInScores(player.Name)){
-                        Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
-                        if(Console.ReadLine().ToLower()=="да"){
-                            player.Name = Console.ReadLine();
-                        }
-                    }   
+                    if(player.Name!= null){
+                        if(scoreTable.IsNameExistInScores(player.Name)){
+                            Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
+                            string? answer = Console.ReadLine();
+                            if(answer!=null&&answer.ToLower()=="да"){
+                                string? tempName = Console.ReadLine();
+                                while(tempName==null){
+                                    Console.WriteLine("Введите другое имя:");
+                                    tempName = Console.ReadLine();
+                                }
+                                player.Name = tempName;
+                            }
+                        }   
+                    }
                     player.RefillHand(deck);
                     players.Add(player);
+                    if(player.Name!=null)
                     fools.Add(player.Name, player.IsFool);
                     AIPlayer aIPlayer1 = new AIPlayer();
                     aIPlayer1.RefillHand(deck);
                     players.Add(aIPlayer1);    
                     players[1].Name = "Бот 1";
-                    fools.Add(players[1].Name, players[1].IsFool);
+                    fools.Add(players[1].Name??"Бот 1", players[1].IsFool);
                 }
                 else{
                     for(int i = 0;i<playerCount; i++){
                         Player player = new Player();
-                        if(scoreTable.IsNameExistInScores(player.Name)){
-                            Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
-                            if(Console.ReadLine().ToLower()=="да"){
-                                player.Name = Console.ReadLine();
+                        if(player.Name!=null){
+                            if(scoreTable.IsNameExistInScores(player.Name)){
+                                Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)",player.Name);
+                                string? answer = Console.ReadLine();
+                                if(answer!=null&&answer.ToLower()=="да"){
+                                   string? tempName = Console.ReadLine();
+                                    while(tempName==null){
+                                        Console.WriteLine("Введите другое имя:");
+                                        tempName = Console.ReadLine();
+                                    }
+                                    player.Name = tempName;
+                                }
                             }
                         }
                         player.RefillHand(deck);
                         players.Add(player);
-                        fools.Add(player.Name, player.IsFool);
+                        if(player.Name!=null){
+                            fools.Add(player.Name, player.IsFool);
+                        }
+                        
                     }
                     for(int i = playerCount;i<playerCount+AIPlayerCount; i++){
                         AIPlayer aIPlayer = new AIPlayer();
                         aIPlayer.RefillHand(deck);
                         players.Add(aIPlayer);
                         players[i].Name = $"Бот {i+1}";
-                        fools.Add(players[i].Name, players[i].IsFool);
+                        fools.Add(players[i].Name??$"Бот {i+1}", players[i].IsFool);
                     }   
                 }
             }
@@ -228,7 +249,8 @@ namespace TheFool
             }
             foreach(var p in players){
                 p.IsFool=false;
-                fools[p.Name]=false;
+                if(fools.ContainsKey(p.Name))
+                    fools[p.Name]=false;
             }
             int turns = 0;
             while(!Finished){
@@ -313,7 +335,11 @@ namespace TheFool
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}."); 
                     players[0].IsFool = true;
-                    fools[players[0].Name] = true;
+                    if(players[0].Name!=null){
+                        if(fools.ContainsKey(players[0].Name)){
+                            fools[players[0].Name] = players[0].IsFool;
+                        }   
+                    }
                     int score = 1;
                     scoreTable.AddScore(players[1].Name,score);
                     scoreTable.DisplayScores();
@@ -322,7 +348,7 @@ namespace TheFool
                         Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[0].Name}.");
                         Finished = true;
                         players[1].IsFool = true;
-                        fools[players[1].Name] = true;
+                        fools[players[1].Name] = players[1].IsFool;
                         int score = 1;
                         scoreTable.AddScore(players[0].Name,score);
                         scoreTable.DisplayScores();
@@ -343,7 +369,7 @@ namespace TheFool
                         Finished = true;
                         int score = 1;
                         players[0].IsFool = true;
-                        fools[players[0].Name] = true;
+                        fools[players[0].Name] = players[0].IsFool;
                         scoreTable.AddFool(players[0].Name,score);
                         scoreTable.DisplayFools();
                     }
