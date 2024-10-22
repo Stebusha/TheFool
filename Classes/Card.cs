@@ -11,7 +11,59 @@ public class Card{
     }
     
     //card output
-    public override string ToString() => $"{Rank} of {Suit}";
+
+    private string GetRankName(RankType rank){
+        string rankName = string.Empty;
+        switch(rank){
+            case RankType.Six:
+                rankName = "6";
+                break;
+            case RankType.Seven:
+                rankName = "7";
+                break;
+            case RankType.Eight:
+                rankName = "8";
+                break;
+            case RankType.Nine:
+                rankName = "9";
+                break;
+            case RankType.Ten:
+                rankName = "10";
+                break;
+            case RankType.Jack:
+                rankName = "J";
+                break;
+            case RankType.Queen:
+                rankName = "Q";
+                break;
+            case RankType.King:
+                rankName = "K";
+                break;
+            case RankType.Ace:
+                rankName = "A";
+                break;
+        }
+        return rankName;
+    }
+    private string GetSuitName(SuitType suit){
+        string suitName = string.Empty;
+        switch(suit){
+            case SuitType.Clubs:
+                suitName = "♣";
+                break;
+            case SuitType.Hearts:
+                suitName = "♥";
+                break;
+            case SuitType.Spades:
+                suitName = "♠";
+                break;
+            case SuitType.Diams:
+                suitName = "♦";
+                break;
+        }
+        return  suitName;
+    }
+    public override string ToString() => $"{GetRankName(Rank)} {GetSuitName(Suit)}";
     
     //ovveride operators
     public static bool operator ==(Card card1, Card card2){

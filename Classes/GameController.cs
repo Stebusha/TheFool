@@ -30,7 +30,7 @@ namespace TheFool
             while(!TurnFinished){
                 if(FirtsTurn){
                     Console.WriteLine("\nНачало партии\n");
-                    Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
+                    Console.WriteLine($"Козырная масть - {deck.GetTrumpSuitName()}");
                     for(int i=0;i<MAX_CARDS_TO_ATTACK-1;i++){
                         if(players[defending].Taken){
                             TurnFinished=true;
@@ -233,7 +233,7 @@ namespace TheFool
             int turns = 0;
             while(!Finished){
                 // int nextTurn=1;
-                Console.WriteLine($"Козырная масть - {Deck.trumpSuit}");
+                Console.WriteLine($"Козырная масть - {deck.GetTrumpSuitName()}");
                 Console.WriteLine($"Карт в колоде: {deck.CardsAmount}");
                 foreach(var p in players){
                     Console.WriteLine($"Количество карт игрока {p.Name} : {p.GetCards().Count}");

@@ -11,7 +11,24 @@ namespace TheFool
         
         //return trump suit
         public SuitType GetTrumpSuit() => trumpSuit;
-
+        public string GetTrumpSuitName(){
+        string suitName = string.Empty;
+        switch(trumpSuit){
+            case SuitType.Clubs:
+                suitName = "♣";
+                break;
+            case SuitType.Hearts:
+                suitName = "♥";
+                break;
+            case SuitType.Spades:
+                suitName = "♠";
+                break;
+            case SuitType.Diams:
+                suitName = "♦";
+                break;
+        }
+        return  suitName;
+    }
         public Deck(){
             CardsAmount = 36;
             cards = new List<Card>(CardsAmount);

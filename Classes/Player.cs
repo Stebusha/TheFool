@@ -202,13 +202,13 @@ public class Player:IPlayer {
                     }
                 }
                 Card tempCard = cards[i];
-                cardDrawnString+=tempCard.ToString()+"\t\t";
+                cardDrawnString+=tempCard.ToString()+"\t";
             }
         }
         else{
             for(int i = 0;i<cards.Count;i++){
                 Card tempCard = cards[i];
-                cardDrawnString+=tempCard.ToString()+"\t\t";
+                cardDrawnString+=tempCard.ToString()+"\t";
             }
         } 
         return cardDrawnString;
