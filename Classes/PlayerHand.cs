@@ -20,47 +20,37 @@ namespace TheFool
         //sorted cards in hand by rank, trumps also sorted by rank in the end of hand
         public void Sort()
         {
+            //sort all cards in hand
             cards = cards.OrderBy(c => c.Rank).ToList();
 
             List<Card> trumpCards = new List<Card>();
 
+            //remember trump cards
             foreach (var card in cards)
             {
-                if (card.Suit == Deck.trumpSuit)
+                if (card.Suit == Deck.s_trumpSuit)
                 {
                     trumpCards.Add(card);
                 }
             }
-            //Console.WriteLine();
-            //Console.WriteLine("Trumps:");
-            //foreach (var trump in trumpCards){
-            //    Console.WriteLine(trump);
-            //}
+
             if (trumpCards != null)
             {
+                //remove trump cards from hands
                 foreach (var trump in trumpCards)
                 {
                     cards.Remove(trump);
                 }
 
-                //Console.WriteLine();
-                //Console.WriteLine("Without Trumps:");
-                //foreach (var card in cards){
-                //    Console.WriteLine(card);   
-                //}
-                //Console.WriteLine();
-
+                //sort trumps
                 trumpCards = trumpCards.OrderBy(t => t.Rank).ToList();
 
+                //add sorted trumps to hand
                 foreach (var trump in trumpCards)
                 {
                     cards.Add(trump);
                 }
             }
-            //Console.WriteLine("Sorted:");
-            //foreach (var card in cards){
-            //    Console.WriteLine(card);
-            //}  
         }
     }
 }

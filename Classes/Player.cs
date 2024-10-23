@@ -66,6 +66,7 @@ public class Player : IPlayer
                     }
                 }
             }
+
             return false;
         }
     }
@@ -173,6 +174,7 @@ public class Player : IPlayer
                     return true;
                 }
             }
+
             return false;
         }
     }
@@ -300,6 +302,7 @@ public class Player : IPlayer
         return cardDrawnString;
     }
 
+    //output cards to console for defend or attack
     public void ToStringFor(List<Card> cards, List<Card> forSomethingCards)
     {
         Console.WriteLine($"\nКарты игрока {Name}: \n");
@@ -368,6 +371,7 @@ public class Player : IPlayer
                 }
             }
         }
+
         Console.WriteLine();
     }
 }

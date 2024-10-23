@@ -52,7 +52,7 @@ class Program
                 {
                     File.Delete(path);
                 }
-                
+
                 Console.WriteLine("\nВыход");
                 IsGameRepeated = true;
                 Console.ReadLine();

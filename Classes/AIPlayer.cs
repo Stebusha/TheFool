@@ -53,6 +53,7 @@ public class AIPlayer : IPlayer
                     }
                 }
             }
+
             return false;
         }
     }
@@ -97,6 +98,7 @@ public class AIPlayer : IPlayer
         if (Attacking)
         {
             List<Card> attackingCards = GetCardsForAttack(gameTable);
+
             if (attackingCards.Count != 0)
             {
                 int index = MakeDecision();
@@ -136,6 +138,7 @@ public class AIPlayer : IPlayer
                     return true;
                 }
             }
+            
             return false;
         }
     }

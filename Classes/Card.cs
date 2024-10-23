@@ -13,8 +13,7 @@ public class Card
         Rank = _rank;
     }
 
-    //card output
-
+    //return rank string for card output based on RankType
     private string GetRankName(RankType rank)
     {
         string rankName = string.Empty;
@@ -53,6 +52,7 @@ public class Card
         return rankName;
     }
 
+    //return suit unicode char string for card output based on SuitType 
     private string GetSuitName(SuitType suit)
     {
         string suitName = string.Empty;
@@ -75,6 +75,8 @@ public class Card
 
         return suitName;
     }
+
+    //card output
     public override string ToString() => $"{GetRankName(Rank)}{GetSuitName(Suit)}";
 
     //ovveride operators
@@ -90,18 +92,22 @@ public class Card
 
     public static bool operator >(Card card1, Card card2)
     {
+        //same suit
         if (card1.Suit == card2.Suit)
         {
             return card1.Rank > card2.Rank;
         }
-        else if (card1.Suit == Deck.trumpSuit && card2.Suit != Deck.trumpSuit)
+        //first trump
+        else if (card1.Suit == Deck.s_trumpSuit && card2.Suit != Deck.s_trumpSuit)
         {
             return true;
         }
-        else if (card1.Suit != Deck.trumpSuit && card2.Suit == Deck.trumpSuit)
+        //second trump
+        else if (card1.Suit != Deck.s_trumpSuit && card2.Suit == Deck.s_trumpSuit)
         {
             return false;
         }
+        //all another cases
         else
         {
             return false;
@@ -110,18 +116,22 @@ public class Card
 
     public static bool operator <(Card card1, Card card2)
     {
+        //same suit
         if (card1.Suit == card2.Suit)
         {
             return card1.Rank < card2.Rank;
         }
-        else if (card1.Suit == Deck.trumpSuit && card2.Suit != Deck.trumpSuit)
+        //first trump
+        else if (card1.Suit == Deck.s_trumpSuit && card2.Suit != Deck.s_trumpSuit)
         {
             return false;
         }
-        else if (card1.Suit != Deck.trumpSuit && card2.Suit == Deck.trumpSuit)
+        //second trump
+        else if (card1.Suit != Deck.s_trumpSuit && card2.Suit == Deck.s_trumpSuit)
         {
             return true;
         }
+        //all another cases
         else
         {
             return false;
@@ -130,26 +140,32 @@ public class Card
 
     public static bool operator >=(Card card1, Card card2)
     {
+        //same rank, suit
         if (card1.Suit == card2.Suit && card1.Rank == card2.Rank)
         {
             return true;
         }
-        else if (card1.Suit == Deck.trumpSuit && card2.Suit != Deck.trumpSuit)
+        //first trump
+        else if (card1.Suit == Deck.s_trumpSuit && card2.Suit != Deck.s_trumpSuit)
         {
             return true;
         }
-        else if (card2.Suit == Deck.trumpSuit && card1.Suit != Deck.trumpSuit)
+        //second trump
+        else if (card2.Suit == Deck.s_trumpSuit && card1.Suit != Deck.s_trumpSuit)
         {
             return false;
         }
+        //not the same suit, not trump
         else if (card1.Suit != card2.Suit)
         {
             return false;
         }
-        else if (card1.Suit == card2.Suit && card1.Suit == Deck.trumpSuit)
+        //same suit for trumps
+        else if (card1.Suit == card2.Suit && card1.Suit == Deck.s_trumpSuit)
         {
             return card1.Rank > card2.Rank;
         }
+        //all another cases
         else
         {
             return card1.Rank > card2.Rank;
@@ -158,26 +174,32 @@ public class Card
 
     public static bool operator <=(Card card1, Card card2)
     {
+        //same rank, suit
         if (card1.Suit == card2.Suit && card1.Rank == card2.Rank)
         {
             return true;
         }
-        else if (card1.Suit == Deck.trumpSuit && card2.Suit != Deck.trumpSuit)
+        //first trump
+        else if (card1.Suit == Deck.s_trumpSuit && card2.Suit != Deck.s_trumpSuit)
         {
             return false;
         }
-        else if (card2.Suit == Deck.trumpSuit && card1.Suit != Deck.trumpSuit)
+        //second trump
+        else if (card2.Suit == Deck.s_trumpSuit && card1.Suit != Deck.s_trumpSuit)
         {
             return true;
         }
+        //not the same suit
         else if (card1.Suit != card2.Suit)
         {
             return false;
         }
-        else if (card1.Suit == card2.Suit && card1.Suit == Deck.trumpSuit)
+        //same suit for trumps
+        else if (card1.Suit == card2.Suit && card1.Suit == Deck.s_trumpSuit)
         {
             return card1.Rank < card2.Rank;
         }
+        //all another cases
         else
         {
             return card1.Rank < card2.Rank;

@@ -11,6 +11,12 @@ namespace TheFool
         private string pathScores = "C:/Users/МиненковаНА/Projects/TheFool/Scores/scores.txt";
         private string pathFools = "C:/Users/МиненковаНА/Projects/TheFool/Scores/fools.txt";
 
+        public ScoreTable()
+        {
+            LoadDataFromFile(pathScores, ref scores);
+            LoadDataFromFile(pathFools, ref fools);
+        }
+        
         //load score table from files
         private void LoadDataFromFile(string path, ref Dictionary<string, int> dataDictionary)
         {
@@ -29,11 +35,6 @@ namespace TheFool
                     dataDictionary = dataDictionary.OrderByDescending(pair => pair.Value).ToDictionary();
                 }
             }
-        }
-        public ScoreTable()
-        {
-            LoadDataFromFile(pathScores, ref scores);
-            LoadDataFromFile(pathFools, ref fools);
         }
 
         //save data to file

@@ -28,6 +28,7 @@ namespace TheFool
             int defending = (turn + 1) % players.Count;
             int nextAttacking = (turn + 2) % players.Count;
 
+            //reset taken properties
             foreach (var p in players)
             {
                 p.Taken = false;
@@ -61,6 +62,7 @@ namespace TheFool
                             attackingCard = players[attacking].Attack(gameTable);
                             players[defending].Defend(attackingCard, gameTable);
 
+                            //logic for more than 2 players
                             if (!players[defending].Taken && players[defending].GetCards().Count != 0)
                             {
                                 if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0 && i != 4)
@@ -68,6 +70,12 @@ namespace TheFool
                                     i++;
                                     attackingCard = players[nextAttacking].Attack(gameTable);
                                     players[defending].Defend(attackingCard, gameTable);
+                                }
+                                else
+                                {
+                                    TurnFinished = true;
+                                    FirtsTurn = false;
+                                    break;
                                 }
                             }
                             else
@@ -122,6 +130,7 @@ namespace TheFool
                             attackingCard = players[attacking].Attack(gameTable);
                             players[defending].Defend(attackingCard, gameTable);
 
+                            //logic for more than 2 players
                             if (!players[defending].Taken && players[defending].GetCards().Count != 0 && i != 5)
                             {
                                 if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0)
@@ -129,6 +138,11 @@ namespace TheFool
                                     i++;
                                     attackingCard = players[nextAttacking].Attack(gameTable);
                                     players[defending].Defend(attackingCard, gameTable);
+                                }
+                                else
+                                {
+                                    TurnFinished = true;
+                                    break;
                                 }
                             }
                             else
@@ -139,6 +153,7 @@ namespace TheFool
                         }
                         else if (gameTable.Length() != 0 && i != 6)
                         {
+                            //logic for more than 2 players
                             if (!players[defending].Taken)
                             {
                                 if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0)
@@ -192,6 +207,7 @@ namespace TheFool
             {
                 players = new List<IPlayer>();
 
+                //logic for 2 bot players
                 if (playerCount + AIPlayerCount == 2 && playerCount == 0)
                 {
                     AIPlayer aIPlayer = new AIPlayer();
@@ -206,6 +222,8 @@ namespace TheFool
                     players[1].Name = "Бот 2";
                     fools.Add(players[1].Name ?? "Бот 2", players[1].IsFool);
                 }
+
+                //logic for 1 human and 1 bot players
                 else if (playerCount + AIPlayerCount == 2 && playerCount == 1)
                 {
                     Player player = new Player();
@@ -234,6 +252,7 @@ namespace TheFool
 
                     player.RefillHand(deck);
                     players.Add(player);
+
                     if (player.Name != null)
                         fools.Add(player.Name, player.IsFool);
 
@@ -243,8 +262,11 @@ namespace TheFool
                     players[1].Name = "Бот 1";
                     fools.Add(players[1].Name ?? "Бот 1", players[1].IsFool);
                 }
+
+                //logic for all remaining variables of type players
                 else
                 {
+                    //set humans 
                     for (int i = 0; i < playerCount; i++)
                     {
                         Player player = new Player();
@@ -280,6 +302,7 @@ namespace TheFool
                         }
                     }
 
+                    //set AIs
                     for (int i = playerCount; i < playerCount + AIPlayerCount; i++)
                     {
                         AIPlayer aIPlayer = new AIPlayer();
@@ -290,10 +313,13 @@ namespace TheFool
                     }
                 }
             }
+
+            //logic for reload game for same players 
             else
             {
                 players = new List<IPlayer>();
 
+                //reload 2 bot players
                 if (playerCount + AIPlayerCount == 2 && playerCount == 0)
                 {
                     foreach (var f in fools)
@@ -303,6 +329,8 @@ namespace TheFool
                         players.Add(aIPlayer);
                     }
                 }
+
+                // reload for all remaining variables of type players
                 else
                 {
                     foreach (var f in fools)
@@ -325,16 +353,19 @@ namespace TheFool
 
             List<Card> firstTrumps = new List<Card>();
 
+            //remember first trump of each player
             foreach (var p in players)
             {
                 firstTrumps.Add(GetFirstTrump(p.GetCards()));
             }
 
+            //set first turns player
             int first = firstTurnNumbers(firstTrumps);
             Console.WriteLine($"\nПервым ходит игрок {players[first].Name}\n");
 
             players[first].TurnNumber = 1;
 
+            //set turn numbers for 2 players
             if (players.Count == 2)
             {
                 foreach (var p in players)
@@ -346,11 +377,14 @@ namespace TheFool
                     }
                 }
             }
+
+            //set turn numbers for more than 2 players
             else
             {
                 SetStartTurnNumbers(ref players, first);
             }
 
+            //reset fool properties
             foreach (var p in players)
             {
                 p.IsFool = false;
@@ -378,6 +412,7 @@ namespace TheFool
                     players[turns % players.Count].RefillHand(deck);
                     players[(turns + 1) % players.Count].RefillHand(deck);
 
+                    //for more than 2 players
                     if (players.Count > 2)
                     {
                         players[(turns + 2) % players.Count].RefillHand(deck);
@@ -386,6 +421,7 @@ namespace TheFool
                     Console.WriteLine("Игроки взяли карты");
                 }
 
+                //set next turnes player
                 if (!players[(turns + 1) % players.Count].Taken)
                 {
                     turns++;
@@ -395,8 +431,13 @@ namespace TheFool
                     turns += 2;
                 }
 
+                //refresh turn numbers based on turns
                 RefreshTurnNumbers(ref players, turns);
+
+                //check winner condition
                 Win();
+
+                //reset turns
                 turns = 0;
             }
         }
@@ -408,7 +449,7 @@ namespace TheFool
 
             foreach (var c in cards)
             {
-                if (c.Suit == Deck.trumpSuit)
+                if (c.Suit == Deck.s_trumpSuit)
                 {
                     firstTrumpCard = c;
                     break;
@@ -455,6 +496,7 @@ namespace TheFool
             {
                 int lefts = 0;
 
+                //check lefts players
                 foreach (var player in players)
                 {
                     if (player.GetCards().Count == 0)
@@ -463,12 +505,15 @@ namespace TheFool
                     }
                 }
 
+                //check draw condition
                 if (lefts == players.Count)
                 {
                     Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Ничья.");
                     scoreTable.DisplayScores();
                 }
+
+                //logic for 2 players
                 else if (BotPlayerCount + PlayerCount == 2)
                 {
                     if (players[1].GetCards().Count == 0)
@@ -502,6 +547,8 @@ namespace TheFool
                         scoreTable.DisplayScores();
                     }
                 }
+
+                //logic for more than 2 players
                 else
                 {
                     if (players.Count > 1)
@@ -540,6 +587,7 @@ namespace TheFool
             for (int i = first + 1; i < players.Count; i++)
             {
                 counter++;
+
                 if (players[i].TurnNumber == 0)
                 {
                     players[i].TurnNumber = players[first].TurnNumber + counter;
@@ -549,6 +597,7 @@ namespace TheFool
             for (int i = 0; i < first; i++)
             {
                 counter++;
+
                 if (players[i].TurnNumber == 0)
                 {
                     players[i].TurnNumber = players[first].TurnNumber + counter;

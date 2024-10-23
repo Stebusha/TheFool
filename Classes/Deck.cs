@@ -8,13 +8,14 @@ namespace TheFool
     {
         private const int MAX_CARD_AMOUNT = 36;
         private List<Card> cards;
-        public static SuitType trumpSuit = SuitType.Clubs;
+        public static SuitType s_trumpSuit = SuitType.Clubs;
         public int CardsAmount { get; private set; }
 
         public Deck()
         {
             CardsAmount = MAX_CARD_AMOUNT;
             cards = new List<Card>(CardsAmount);
+            
             foreach (var suit in (SuitType[])Enum.GetValues(typeof(SuitType)))
             {
                 foreach (var rank in (RankType[])Enum.GetValues(typeof(RankType)))
@@ -26,14 +27,14 @@ namespace TheFool
         }
 
         //return trump suit
-        public SuitType GetTrumpSuit() => trumpSuit;
+        public SuitType GetTrumpSuit() => s_trumpSuit;
 
         //return trump suit unicode char string
         public string GetTrumpSuitName()
         {
             string suitName = string.Empty;
 
-            switch (trumpSuit)
+            switch (s_trumpSuit)
             {
                 case SuitType.Clubs:
                     suitName = "♣";
@@ -93,7 +94,7 @@ namespace TheFool
             trumpCard = cards.First();
             cards.RemoveAt(0);
             cards.Add(trumpCard);
-            trumpSuit = trumpCard.Suit;
+            s_trumpSuit = trumpCard.Suit;
         }
     }
 }
