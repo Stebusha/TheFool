@@ -172,7 +172,7 @@ namespace TheFool
 
             gameTable.ClearTable();
             Console.ReadLine();
-            //Console.Clear();
+            Console.Clear();
         }
 
         //launch game, set start info, set trump, player's turns, check the winning condition
