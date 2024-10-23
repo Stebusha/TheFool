@@ -42,18 +42,18 @@ namespace TheFool
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK - 1; i++)
                     {
-                        if (players[defending].Taken)
-                        {
-                            TurnFinished = true;
-                            FirtsTurn = false;
-                            break;
-                        }
-
                         if (gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine(gameTable.ToString());
                             Console.ResetColor();
+                        }
+
+                        if (players[defending].Taken)
+                        {
+                            TurnFinished = true;
+                            FirtsTurn = false;
+                            break;
                         }
 
                         if (players[attacking].GetCardsForAttack(gameTable).Count != 0)
@@ -104,17 +104,17 @@ namespace TheFool
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK; i++)
                     {
-                        if (players[defending].Taken || players[defending].GetCards().Count == 0 || gameTable.Length() == 12)
-                        {
-                            TurnFinished = true;
-                            break;
-                        }
-
                         if (gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine(gameTable.ToString());
                             Console.ResetColor();
+                        }
+
+                        if (players[defending].Taken || players[defending].GetCards().Count == 0 || gameTable.Length() == 12)
+                        {
+                            TurnFinished = true;
+                            break;
                         }
 
                         if (players[attacking].GetCardsForAttack(gameTable).Count != 0)
@@ -147,6 +147,11 @@ namespace TheFool
                                     attackingCard = players[nextAttacking].Attack(gameTable);
                                     players[defending].Defend(attackingCard, gameTable);
                                 }
+                                else
+                                {
+                                    TurnFinished = true;
+                                    break;
+                                }
                             }
                             else
                             {
@@ -154,11 +159,11 @@ namespace TheFool
                                 break;
                             }
                         }
+                    }
 
-                        if (!TurnFinished)
-                        {
-                            TurnFinished = true;
-                        }
+                    if (!TurnFinished)
+                    {
+                        TurnFinished = true;
                     }
 
                     Console.WriteLine("\nКонец хода");
@@ -167,7 +172,7 @@ namespace TheFool
 
             gameTable.ClearTable();
             Console.ReadLine();
-            Console.Clear();
+            //Console.Clear();
         }
 
         //launch game, set start info, set trump, player's turns, check the winning condition
