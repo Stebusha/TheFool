@@ -54,21 +54,19 @@ public class Player : IPlayer
         {
             return true;
         }
-        else
+
+        foreach (var card in cards)
         {
-            foreach (var card in cards)
+            for (int i = 0; i < gameTable.Length(); i++)
             {
-                for (int i = 0; i < gameTable.Length(); i++)
+                if (card.Rank == gameTable.GetCard(i).Rank)
                 {
-                    if (card.Rank == gameTable.GetCard(i).Rank)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
-
-            return false;
         }
+
+        return false;
     }
 
     //return cards for attack
@@ -82,16 +80,14 @@ public class Player : IPlayer
             {
                 return playerHand.cards;
             }
-            else
+
+            foreach (var card in playerHand.cards)
             {
-                foreach (var card in playerHand.cards)
+                for (int i = 0; i < gameTable.Length(); i++)
                 {
-                    for (int i = 0; i < gameTable.Length(); i++)
+                    if (card.Rank == gameTable.GetCard(i).Rank)
                     {
-                        if (card.Rank == gameTable.GetCard(i).Rank)
-                        {
-                            cardsForAttack.Add(card);
-                        }
+                        cardsForAttack.Add(card);
                     }
                 }
             }
@@ -135,8 +131,6 @@ public class Player : IPlayer
                             gameTable.AddCardToTable(attackingCard);
                             playerHand.RemoveCardFromHand(attackingCard);
                             attackingCards.Remove(attackingCard);
-
-                            return attackingCard;
                         }
                         else
                         {
@@ -149,13 +143,9 @@ public class Player : IPlayer
                     }
                 }
             }
+        }
 
-            return attackingCard;
-        }
-        else
-        {
-            return attackingCard;
-        }
+        return attackingCard;
     }
 
     //check attacking card can be beaten
@@ -165,18 +155,17 @@ public class Player : IPlayer
         {
             return false;
         }
-        else
-        {
-            foreach (var card in playerHand.cards)
-            {
-                if (card > attackingCard)
-                {
-                    return true;
-                }
-            }
 
-            return false;
+        foreach (var card in playerHand.cards)
+        {
+            if (card > attackingCard)
+            {
+                return true;
+            }
         }
+
+        return false;
+
     }
 
     //return cards for defense from attacking card
@@ -265,7 +254,8 @@ public class Player : IPlayer
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
         playerHand.cards.AddRange(onTableCards);
         playerHand.Sort();
-        Console.WriteLine("\nВы взяли карты :\n" + ToString(playerHand.cards));
+
+        Console.WriteLine($"\nВы взяли карты :\n {ToString(playerHand.cards)}");
     }
 
     //output cards for console

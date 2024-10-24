@@ -17,7 +17,7 @@ public class AIPlayer : IPlayer
         Name = _name;
         IsFool = _fool;
     }
-    
+
     //return cards in hand
     public List<Card> GetCards() => _playerHand.cards;
 
@@ -43,21 +43,20 @@ public class AIPlayer : IPlayer
         {
             return true;
         }
-        else
+
+        foreach (var card in cards)
         {
-            foreach (var card in cards)
+            for (int i = 0; i < gameTable.Length(); i++)
             {
-                for (int i = 0; i < gameTable.Length(); i++)
+                if (card.Rank == gameTable.GetCard(i).Rank)
                 {
-                    if (card.Rank == gameTable.GetCard(i).Rank)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
-
-            return false;
         }
+
+        return false;
+
     }
 
     //return cards for attack
@@ -71,16 +70,14 @@ public class AIPlayer : IPlayer
             {
                 return _playerHand.cards;
             }
-            else
+
+            foreach (var card in _playerHand.cards)
             {
-                foreach (var card in _playerHand.cards)
+                for (int i = 0; i < gameTable.Length(); i++)
                 {
-                    for (int i = 0; i < gameTable.Length(); i++)
+                    if (card.Rank == gameTable.GetCard(i).Rank)
                     {
-                        if (card.Rank == gameTable.GetCard(i).Rank)
-                        {
-                            cardsForAttack.Add(card);
-                        }
+                        cardsForAttack.Add(card);
                     }
                 }
             }
@@ -105,23 +102,15 @@ public class AIPlayer : IPlayer
             {
                 int index = MakeDecision();
                 attackingCard = attackingCards[index];
-                Console.WriteLine($"\n{Name} походил картой: " + attackingCard.ToString());
+                Console.WriteLine($"\n{Name} походил картой: {attackingCard}");
                 gameTable.AddCardToTable(attackingCard);
                 //fixed
                 //first card delete before defend, comparison with next card -> bug defend 
                 _playerHand.RemoveCardFromHand(attackingCard);
+            }
+        }
 
-                return attackingCard;
-            }
-            else
-            {
-                return attackingCard;
-            }
-        }
-        else
-        {
-            return attackingCard;
-        }
+        return attackingCard;
     }
 
     //check attacking card can be beaten
@@ -131,18 +120,16 @@ public class AIPlayer : IPlayer
         {
             return false;
         }
-        else
+
+        foreach (var card in _playerHand.cards)
         {
-            foreach (var card in _playerHand.cards)
+            if (card > attackingCard)
             {
-                if (card > attackingCard)
-                {
-                    return true;
-                }
+                return true;
             }
-            
-            return false;
         }
+
+        return false;
     }
 
     //return  card to defend based on decision
@@ -170,7 +157,7 @@ public class AIPlayer : IPlayer
 
         if (beaten)
         {
-            Console.WriteLine($"{Name} отбился картой: " + defendingCard);
+            Console.WriteLine($"{Name} отбился картой: {defendingCard}");
             gameTable.AddCardToTable(defendingCard);
             _playerHand.RemoveCardFromHand(defendingCard);
         }
@@ -201,12 +188,12 @@ public class AIPlayer : IPlayer
     public string ToString(List<Card> cards)
     {
         string cardDrawnString = string.Empty;
-        cardDrawnString = "\nКарты игрока " + Name + "\n";
+        cardDrawnString = $"\nКарты игрока {Name}\n";
 
         for (int i = 0; i < cards.Count; i++)
         {
             Card tempCard = cards[i];
-            cardDrawnString += tempCard.ToString() + "\t";
+            cardDrawnString += $"{tempCard}\t";
         }
 
         return cardDrawnString;
