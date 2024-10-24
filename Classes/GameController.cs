@@ -43,6 +43,7 @@ namespace TheFool
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK - 1; i++)
                     {
+                        //output cards on table
                         if (_gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
@@ -50,22 +51,23 @@ namespace TheFool
                             Console.ResetColor();
                         }
 
-                        if (_players[defending].Taken)
+                        //Taken or no cards for attack
+                        if (_players[defending].Taken || _players[attacking].GetCardsForAttack(_gameTable).Count == 0)
                         {
                             _TurnFinished = true;
                             _FirtsTurn = false;
                             break;
                         }
 
-                        if (_players[attacking].GetCardsForAttack(_gameTable).Count != 0)
-                        {
-                            attackingCard = _players[attacking].Attack(_gameTable);
-                            _players[defending].Defend(attackingCard, _gameTable);
+                        attackingCard = _players[attacking].Attack(_gameTable);
+                        _players[defending].Defend(attackingCard, _gameTable);
 
-                            //logic for more than 2 players
+                        //logic for more than 2 players
+                        if (_players.Count > 2)
+                        {
                             if (!_players[defending].Taken && _players[defending].GetCards().Count != 0)
                             {
-                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0 && i != 4)
+                                if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0 && i != 4)
                                 {
                                     i++;
                                     attackingCard = _players[nextAttacking].Attack(_gameTable);
@@ -79,12 +81,6 @@ namespace TheFool
                                 break;
                             }
                         }
-                        else
-                        {
-                            _TurnFinished = true;
-                            _FirtsTurn = false;
-                            break;
-                        }
                     }
 
                     if (!_TurnFinished)
@@ -97,6 +93,7 @@ namespace TheFool
                 }
                 else
                 {
+                    //logic for more than 2 players
                     if (_players.Count == 1)
                     {
                         break;
@@ -106,6 +103,7 @@ namespace TheFool
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK; i++)
                     {
+                        //output cards on table
                         if (_gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
@@ -113,43 +111,52 @@ namespace TheFool
                             Console.ResetColor();
                         }
 
-                        if (_players[defending].Taken || _players[defending].GetCards().Count == 0 || _gameTable.Length() == 12)
+                        //Taken, no cards to Defend, max card on table, no cards for attack
+                        if (_players[defending].Taken
+                                || _players[defending].GetCards().Count == 0
+                                || _gameTable.Length() == 12
+                                || _players[attacking].GetCardsForAttack(_gameTable).Count == 0)
                         {
                             _TurnFinished = true;
                             break;
                         }
 
-                        if (_players[attacking].GetCardsForAttack(_gameTable).Count != 0)
-                        {
-                            attackingCard = _players[attacking].Attack(_gameTable);
-                            _players[defending].Defend(attackingCard, _gameTable);
+                        attackingCard = _players[attacking].Attack(_gameTable);
+                        _players[defending].Defend(attackingCard, _gameTable);
 
-                            //logic for more than 2 players
+                        //logic for more than 2 players
+                        if (_players.Count > 2)
+                        {
                             if (!_players[defending].Taken && _players[defending].GetCards().Count != 0 && i != 5)
                             {
-                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
+                                if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
                                 {
                                     i++;
                                     attackingCard = _players[nextAttacking].Attack(_gameTable);
                                     _players[defending].Defend(attackingCard, _gameTable);
                                 }
-                            }
-                            else
-                            {
-                                _TurnFinished = true;
-                                break;
-                            }
-                        }
-                        else if (_gameTable.Length() != 0 && i != 6)
-                        {
-                            //logic for more than 2 players
-                            if (!_players[defending].Taken)
-                            {
-                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
+                                else
                                 {
-                                    i++;
-                                    attackingCard = _players[nextAttacking].Attack(_gameTable);
-                                    _players[defending].Defend(attackingCard, _gameTable);
+                                    _TurnFinished = true;
+                                    break;
+                                }
+                            }
+                            else if (_gameTable.Length() != 0 && i != 6)
+                            {
+                                //logic for more than 2 players
+                                if (!_players[defending].Taken)
+                                {
+                                    if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
+                                    {
+                                        i++;
+                                        attackingCard = _players[nextAttacking].Attack(_gameTable);
+                                        _players[defending].Defend(attackingCard, _gameTable);
+                                    }
+                                    else
+                                    {
+                                        _TurnFinished = true;
+                                        break;
+                                    }
                                 }
                                 else
                                 {
