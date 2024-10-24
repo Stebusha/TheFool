@@ -1,5 +1,4 @@
 namespace TheFool;
-
 public enum RankType
 {
     Six = 0,

@@ -7,103 +7,97 @@ namespace TheFool
     public class GameController
     {
         private const int MAX_CARDS_TO_ATTACK = 6;
-        private List<IPlayer> players = new List<IPlayer>();
-        private ScoreTable scoreTable = new ScoreTable();
-        private Table gameTable = new Table();
-        private Deck deck = new Deck();
-        private Dictionary<string, bool> fools = new Dictionary<string, bool>();
-        private bool Finished { get; set; }
-        private bool TurnFinished { get; set; }
-        private bool FirtsTurn { get; set; }
+        private List<IPlayer> _players = new List<IPlayer>();
+        private ScoreTable _scoreTable = new ScoreTable();
+        private Table _gameTable = new Table();
+        private Deck _deck = new Deck();
+        private Dictionary<string, bool> _fools = new Dictionary<string, bool>();
+        private bool _Finished { get; set; }
+        private bool _TurnFinished { get; set; }
+        private bool _FirtsTurn { get; set; }
         public int PlayerCount { get; set; }
         public int BotPlayerCount { get; set; }
 
         //turn logic
         private void Turn(int turn)
         {
-            TurnFinished = false;
+            _TurnFinished = false;
             Card attackingCard = new Card();
 
-            int attacking = turn % players.Count;
-            int defending = (turn + 1) % players.Count;
-            int nextAttacking = (turn + 2) % players.Count;
+            int attacking = turn % _players.Count;
+            int defending = (turn + 1) % _players.Count;
+            int nextAttacking = (turn + 2) % _players.Count;
 
             //reset taken properties
-            foreach (var p in players)
+            foreach (var p in _players)
             {
                 p.Taken = false;
             }
 
-            while (!TurnFinished)
+            while (!_TurnFinished)
             {
-                if (FirtsTurn)
+                if (_FirtsTurn)
                 {
                     Console.WriteLine("\nНачало партии\n");
-                    Console.WriteLine($"Козырная масть - {deck.GetTrumpSuitName()}");
+                    Console.WriteLine($"Козырная масть - {_deck.GetTrumpSuitName()}");
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK - 1; i++)
                     {
-                        if (gameTable.Length() != 0)
+                        if (_gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.WriteLine(gameTable.ToString());
+                            Console.WriteLine(_gameTable.ToString());
                             Console.ResetColor();
                         }
 
-                        if (players[defending].Taken)
+                        if (_players[defending].Taken)
                         {
-                            TurnFinished = true;
-                            FirtsTurn = false;
+                            _TurnFinished = true;
+                            _FirtsTurn = false;
                             break;
                         }
 
-                        if (players[attacking].GetCardsForAttack(gameTable).Count != 0)
+                        if (_players[attacking].GetCardsForAttack(_gameTable).Count != 0)
                         {
-                            attackingCard = players[attacking].Attack(gameTable);
-                            players[defending].Defend(attackingCard, gameTable);
+                            attackingCard = _players[attacking].Attack(_gameTable);
+                            _players[defending].Defend(attackingCard, _gameTable);
 
                             //logic for more than 2 players
-                            if (!players[defending].Taken && players[defending].GetCards().Count != 0)
+                            if (!_players[defending].Taken && _players[defending].GetCards().Count != 0)
                             {
-                                if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0 && i != 4)
+                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0 && i != 4)
                                 {
                                     i++;
-                                    attackingCard = players[nextAttacking].Attack(gameTable);
-                                    players[defending].Defend(attackingCard, gameTable);
-                                }
-                                else
-                                {
-                                    TurnFinished = true;
-                                    FirtsTurn = false;
-                                    break;
+                                    attackingCard = _players[nextAttacking].Attack(_gameTable);
+                                    _players[defending].Defend(attackingCard, _gameTable);
                                 }
                             }
                             else
                             {
-                                TurnFinished = true;
-                                FirtsTurn = false;
+                                _TurnFinished = true;
+                                _FirtsTurn = false;
                                 break;
                             }
                         }
                         else
                         {
-                            TurnFinished = true;
-                            FirtsTurn = false;
+                            _TurnFinished = true;
+                            _FirtsTurn = false;
                             break;
                         }
                     }
 
-                    if (!TurnFinished)
+                    if (!_TurnFinished)
                     {
-                        TurnFinished = true;
-                        FirtsTurn = false;
+                        _TurnFinished = true;
+                        _FirtsTurn = false;
                     }
 
                     Console.WriteLine("\nКонец хода");
                 }
                 else
                 {
-                    if (players.Count == 1)
+                    if (_players.Count == 1)
                     {
                         break;
                     }
@@ -112,80 +106,75 @@ namespace TheFool
 
                     for (int i = 0; i < MAX_CARDS_TO_ATTACK; i++)
                     {
-                        if (gameTable.Length() != 0)
+                        if (_gameTable.Length() != 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.WriteLine(gameTable.ToString());
+                            Console.WriteLine(_gameTable.ToString());
                             Console.ResetColor();
                         }
 
-                        if (players[defending].Taken || players[defending].GetCards().Count == 0 || gameTable.Length() == 12)
+                        if (_players[defending].Taken || _players[defending].GetCards().Count == 0 || _gameTable.Length() == 12)
                         {
-                            TurnFinished = true;
+                            _TurnFinished = true;
                             break;
                         }
 
-                        if (players[attacking].GetCardsForAttack(gameTable).Count != 0)
+                        if (_players[attacking].GetCardsForAttack(_gameTable).Count != 0)
                         {
-                            attackingCard = players[attacking].Attack(gameTable);
-                            players[defending].Defend(attackingCard, gameTable);
+                            attackingCard = _players[attacking].Attack(_gameTable);
+                            _players[defending].Defend(attackingCard, _gameTable);
 
                             //logic for more than 2 players
-                            if (!players[defending].Taken && players[defending].GetCards().Count != 0 && i != 5)
+                            if (!_players[defending].Taken && _players[defending].GetCards().Count != 0 && i != 5)
                             {
-                                if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0)
+                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
                                 {
                                     i++;
-                                    attackingCard = players[nextAttacking].Attack(gameTable);
-                                    players[defending].Defend(attackingCard, gameTable);
-                                }
-                                else
-                                {
-                                    TurnFinished = true;
-                                    break;
+                                    attackingCard = _players[nextAttacking].Attack(_gameTable);
+                                    _players[defending].Defend(attackingCard, _gameTable);
                                 }
                             }
                             else
                             {
-                                TurnFinished = true;
+                                _TurnFinished = true;
                                 break;
                             }
                         }
-                        else if (gameTable.Length() != 0 && i != 6)
+                        else if (_gameTable.Length() != 0 && i != 6)
                         {
                             //logic for more than 2 players
-                            if (!players[defending].Taken)
+                            if (!_players[defending].Taken)
                             {
-                                if (players.Count > 2 && players[nextAttacking].GetCardsForAttack(gameTable).Count != 0)
+                                if (_players.Count > 2 && _players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
                                 {
                                     i++;
-                                    attackingCard = players[nextAttacking].Attack(gameTable);
-                                    players[defending].Defend(attackingCard, gameTable);
+                                    attackingCard = _players[nextAttacking].Attack(_gameTable);
+                                    _players[defending].Defend(attackingCard, _gameTable);
                                 }
                                 else
                                 {
-                                    TurnFinished = true;
+                                    _TurnFinished = true;
                                     break;
                                 }
                             }
                             else
                             {
-                                TurnFinished = true;
+                                _TurnFinished = true;
                                 break;
                             }
                         }
                     }
 
-                    if (!TurnFinished)
+                    if (!_TurnFinished)
                     {
-                        TurnFinished = true;
+                        _TurnFinished = true;
                     }
 
                     Console.WriteLine("\nКонец хода");
                 }
             }
 
-            gameTable.ClearTable();
+            _gameTable.ClearTable();
             Console.ReadLine();
             Console.Clear();
         }
@@ -196,31 +185,31 @@ namespace TheFool
             PlayerCount = playerCount;
             BotPlayerCount = AIPlayerCount;
 
-            deck = new Deck();
-            FirtsTurn = true;
-            Finished = false;
+            _deck = new Deck();
+            _FirtsTurn = true;
+            _Finished = false;
 
-            deck.Shuffle();
-            deck.Trump();
+            _deck.Shuffle();
+            _deck.Trump();
 
             if (!repeat)
             {
-                players = new List<IPlayer>();
+                _players = new List<IPlayer>();
 
                 //logic for 2 bot players
                 if (playerCount + AIPlayerCount == 2 && playerCount == 0)
                 {
                     AIPlayer aIPlayer = new AIPlayer();
-                    aIPlayer.RefillHand(deck);
-                    players.Add(aIPlayer);
-                    players[0].Name = "Бот 1";
-                    fools.Add(players[0].Name ?? "Бот 1", players[0].IsFool);
+                    aIPlayer.RefillHand(_deck);
+                    _players.Add(aIPlayer);
+                    _players[0].Name = "Бот 1";
+                    _fools.Add(_players[0].Name ?? "Бот 1", _players[0].IsFool);
 
                     AIPlayer aIPlayer1 = new AIPlayer();
-                    aIPlayer1.RefillHand(deck);
-                    players.Add(aIPlayer1);
-                    players[1].Name = "Бот 2";
-                    fools.Add(players[1].Name ?? "Бот 2", players[1].IsFool);
+                    aIPlayer1.RefillHand(_deck);
+                    _players.Add(aIPlayer1);
+                    _players[1].Name = "Бот 2";
+                    _fools.Add(_players[1].Name ?? "Бот 2", _players[1].IsFool);
                 }
 
                 //logic for 1 human and 1 bot players
@@ -230,7 +219,7 @@ namespace TheFool
 
                     if (player.Name != null)
                     {
-                        if (scoreTable.IsNameExistInScores(player.Name))
+                        if (_scoreTable.IsNameExistInScores(player.Name))
                         {
                             Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)", player.Name);
                             string? answer = Console.ReadLine();
@@ -250,17 +239,17 @@ namespace TheFool
                         }
                     }
 
-                    player.RefillHand(deck);
-                    players.Add(player);
+                    player.RefillHand(_deck);
+                    _players.Add(player);
 
                     if (player.Name != null)
-                        fools.Add(player.Name, player.IsFool);
+                        _fools.Add(player.Name, player.IsFool);
 
                     AIPlayer aIPlayer1 = new AIPlayer();
-                    aIPlayer1.RefillHand(deck);
-                    players.Add(aIPlayer1);
-                    players[1].Name = "Бот 1";
-                    fools.Add(players[1].Name ?? "Бот 1", players[1].IsFool);
+                    aIPlayer1.RefillHand(_deck);
+                    _players.Add(aIPlayer1);
+                    _players[1].Name = "Бот 1";
+                    _fools.Add(_players[1].Name ?? "Бот 1", _players[1].IsFool);
                 }
 
                 //logic for all remaining variables of type players
@@ -273,7 +262,7 @@ namespace TheFool
 
                         if (player.Name != null)
                         {
-                            if (scoreTable.IsNameExistInScores(player.Name))
+                            if (_scoreTable.IsNameExistInScores(player.Name))
                             {
                                 Console.WriteLine("Имя {0} уже существует, выбрать другое? (да/нет)", player.Name);
                                 string? answer = Console.ReadLine();
@@ -293,12 +282,12 @@ namespace TheFool
                             }
                         }
 
-                        player.RefillHand(deck);
-                        players.Add(player);
+                        player.RefillHand(_deck);
+                        _players.Add(player);
 
                         if (player.Name != null)
                         {
-                            fools.Add(player.Name, player.IsFool);
+                            _fools.Add(player.Name, player.IsFool);
                         }
                     }
 
@@ -306,10 +295,10 @@ namespace TheFool
                     for (int i = playerCount; i < playerCount + AIPlayerCount; i++)
                     {
                         AIPlayer aIPlayer = new AIPlayer();
-                        aIPlayer.RefillHand(deck);
-                        players.Add(aIPlayer);
-                        players[i].Name = $"Бот {i + 1}";
-                        fools.Add(players[i].Name ?? $"Бот {i + 1}", players[i].IsFool);
+                        aIPlayer.RefillHand(_deck);
+                        _players.Add(aIPlayer);
+                        _players[i].Name = $"Бот {i + 1}";
+                        _fools.Add(_players[i].Name ?? $"Бот {i + 1}", _players[i].IsFool);
                     }
                 }
             }
@@ -317,35 +306,35 @@ namespace TheFool
             //logic for reload game for same players 
             else
             {
-                players = new List<IPlayer>();
+                _players = new List<IPlayer>();
 
                 //reload 2 bot players
                 if (playerCount + AIPlayerCount == 2 && playerCount == 0)
                 {
-                    foreach (var f in fools)
+                    foreach (var f in _fools)
                     {
                         AIPlayer aIPlayer = new AIPlayer(f.Key, f.Value);
-                        aIPlayer.RefillHand(deck);
-                        players.Add(aIPlayer);
+                        aIPlayer.RefillHand(_deck);
+                        _players.Add(aIPlayer);
                     }
                 }
 
                 // reload for all remaining variables of type players
                 else
                 {
-                    foreach (var f in fools)
+                    foreach (var f in _fools)
                     {
                         if (f.Key.Contains("Бот"))
                         {
                             AIPlayer aIPlayer = new AIPlayer(f.Key, f.Value);
-                            aIPlayer.RefillHand(deck);
-                            players.Add(aIPlayer);
+                            aIPlayer.RefillHand(_deck);
+                            _players.Add(aIPlayer);
                         }
                         else
                         {
                             Player player = new Player(f.Key, f.Value);
-                            player.RefillHand(deck);
-                            players.Add(player);
+                            player.RefillHand(_deck);
+                            _players.Add(player);
                         }
                     }
                 }
@@ -354,21 +343,21 @@ namespace TheFool
             List<Card> firstTrumps = new List<Card>();
 
             //remember first trump of each player
-            foreach (var p in players)
+            foreach (var p in _players)
             {
                 firstTrumps.Add(GetFirstTrump(p.GetCards()));
             }
 
             //set first turns player
             int first = firstTurnNumbers(firstTrumps);
-            Console.WriteLine($"\nПервым ходит игрок {players[first].Name}\n");
+            Console.WriteLine($"\nПервым ходит игрок {_players[first].Name}\n");
 
-            players[first].TurnNumber = 1;
+            _players[first].TurnNumber = 1;
 
             //set turn numbers for 2 players
-            if (players.Count == 2)
+            if (_players.Count == 2)
             {
-                foreach (var p in players)
+                foreach (var p in _players)
                 {
                     if (p.TurnNumber == 0)
                     {
@@ -381,48 +370,48 @@ namespace TheFool
             //set turn numbers for more than 2 players
             else
             {
-                SetStartTurnNumbers(ref players, first);
+                SetStartTurnNumbers(ref _players, first);
             }
 
             //reset fool properties
-            foreach (var p in players)
+            foreach (var p in _players)
             {
                 p.IsFool = false;
 
-                if (fools.ContainsKey(p.Name))
-                    fools[p.Name] = false;
+                if (_fools.ContainsKey(p.Name))
+                    _fools[p.Name] = false;
             }
 
             int turns = 0;
 
-            while (!Finished)
+            while (!_Finished)
             {
-                Console.WriteLine($"Козырная масть - {deck.GetTrumpSuitName()}");
-                Console.WriteLine($"Карт в колоде: {deck.CardsAmount}");
+                Console.WriteLine($"Козырная масть - {_deck.GetTrumpSuitName()}");
+                Console.WriteLine($"Карт в колоде: {_deck.CardsAmount}");
 
-                foreach (var p in players)
+                foreach (var p in _players)
                 {
                     Console.WriteLine($"Количество карт игрока {p.Name} : {p.GetCards().Count}");
                 }
 
                 Turn(turns);
 
-                if (deck.CardsAmount != 0)
+                if (_deck.CardsAmount != 0)
                 {
-                    players[turns % players.Count].RefillHand(deck);
-                    players[(turns + 1) % players.Count].RefillHand(deck);
+                    _players[turns % _players.Count].RefillHand(_deck);
+                    _players[(turns + 1) % _players.Count].RefillHand(_deck);
 
                     //for more than 2 players
-                    if (players.Count > 2)
+                    if (_players.Count > 2)
                     {
-                        players[(turns + 2) % players.Count].RefillHand(deck);
+                        _players[(turns + 2) % _players.Count].RefillHand(_deck);
                     }
 
                     Console.WriteLine("Игроки взяли карты");
                 }
 
                 //set next turnes player
-                if (!players[(turns + 1) % players.Count].Taken)
+                if (!_players[(turns + 1) % _players.Count].Taken)
                 {
                     turns++;
                 }
@@ -432,7 +421,7 @@ namespace TheFool
                 }
 
                 //refresh turn numbers based on turns
-                RefreshTurnNumbers(ref players, turns);
+                RefreshTurnNumbers(ref _players, turns);
 
                 //check winner condition
                 Win();
@@ -464,15 +453,15 @@ namespace TheFool
         {
             int number = 0;
 
-            foreach (var player in players)
+            foreach (var player in _players)
             {
                 number++;
 
                 if (player.IsFool == true)
                 {
-                    return number % players.Count;
+                    return number % _players.Count;
                 }
-                else if (number == players.Count)
+                else if (number == _players.Count)
                 {
                     number = 0;
 
@@ -492,12 +481,12 @@ namespace TheFool
         //check the winner, update and display score table
         private void Win()
         {
-            if (deck.CardsAmount == 0)
+            if (_deck.CardsAmount == 0)
             {
                 int lefts = 0;
 
                 //check lefts players
-                foreach (var player in players)
+                foreach (var player in _players)
                 {
                     if (player.GetCards().Count == 0)
                     {
@@ -506,73 +495,73 @@ namespace TheFool
                 }
 
                 //check draw condition
-                if (lefts == players.Count)
+                if (lefts == _players.Count)
                 {
-                    Finished = true;
+                    _Finished = true;
                     Console.WriteLine($"Колода закончилась. Конец партии. Ничья.");
-                    scoreTable.DisplayScores();
+                    _scoreTable.DisplayScores();
                 }
 
                 //logic for 2 players
                 else if (BotPlayerCount + PlayerCount == 2)
                 {
-                    if (players[1].GetCards().Count == 0)
+                    if (_players[1].GetCards().Count == 0)
                     {
-                        Finished = true;
-                        Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[1].Name}.");
-                        players[0].IsFool = true;
+                        _Finished = true;
+                        Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {_players[1].Name}.");
+                        _players[0].IsFool = true;
 
-                        if (players[0].Name != null)
+                        if (_players[0].Name != null)
                         {
-                            if (fools.ContainsKey(players[0].Name))
+                            if (_fools.ContainsKey(_players[0].Name))
                             {
-                                fools[players[0].Name] = players[0].IsFool;
+                                _fools[_players[0].Name] = _players[0].IsFool;
                             }
                         }
 
                         int score = 1;
 
-                        scoreTable.AddScore(players[1].Name, score);
-                        scoreTable.DisplayScores();
+                        _scoreTable.AddScore(_players[1].Name, score);
+                        _scoreTable.DisplayScores();
                     }
-                    else if (players[0].GetCards().Count == 0)
+                    else if (_players[0].GetCards().Count == 0)
                     {
-                        Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {players[0].Name}.");
-                        Finished = true;
-                        players[1].IsFool = true;
-                        fools[players[1].Name] = players[1].IsFool;
+                        Console.WriteLine($"Колода закончилась. Конец партии. Победил игрок {_players[0].Name}.");
+                        _Finished = true;
+                        _players[1].IsFool = true;
+                        _fools[_players[1].Name] = _players[1].IsFool;
                         int score = 1;
 
-                        scoreTable.AddScore(players[0].Name, score);
-                        scoreTable.DisplayScores();
+                        _scoreTable.AddScore(_players[0].Name, score);
+                        _scoreTable.DisplayScores();
                     }
                 }
 
                 //logic for more than 2 players
                 else
                 {
-                    if (players.Count > 1)
+                    if (_players.Count > 1)
                     {
-                        for (int p = 0; p < players.Count; p++)
+                        for (int p = 0; p < _players.Count; p++)
                         {
-                            if (players[p].GetCards().Count == 0)
+                            if (_players[p].GetCards().Count == 0)
                             {
-                                Console.WriteLine($"Карты закончились. Игрок {players[p].Name} вышел.\n");
-                                players[p].IsFool = false;
-                                players.Remove(players[p]);
+                                Console.WriteLine($"Карты закончились. Игрок {_players[p].Name} вышел.\n");
+                                _players[p].IsFool = false;
+                                _players.Remove(_players[p]);
                             }
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"Колода закончилась. Конец партии. Проиграл игрок {players[0].Name}.");
-                        Finished = true;
+                        Console.WriteLine($"Колода закончилась. Конец партии. Проиграл игрок {_players[0].Name}.");
+                        _Finished = true;
                         int score = 1;
-                        players[0].IsFool = true;
-                        fools[players[0].Name] = players[0].IsFool;
+                        _players[0].IsFool = true;
+                        _fools[_players[0].Name] = _players[0].IsFool;
 
-                        scoreTable.AddFool(players[0].Name, score);
-                        scoreTable.DisplayFools();
+                        _scoreTable.AddFool(_players[0].Name, score);
+                        _scoreTable.DisplayFools();
                     }
                 }
             }

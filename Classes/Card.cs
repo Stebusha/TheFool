@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 
 namespace TheFool;
 public class Card
@@ -14,67 +15,29 @@ public class Card
     }
 
     //return rank string for card output based on RankType
-    private string GetRankName(RankType rank)
+    private string GetRankName(RankType rank) => rank switch
     {
-        string rankName = string.Empty;
-
-        switch (rank)
-        {
-            case RankType.Six:
-                rankName = "6";
-                break;
-            case RankType.Seven:
-                rankName = "7";
-                break;
-            case RankType.Eight:
-                rankName = "8";
-                break;
-            case RankType.Nine:
-                rankName = "9";
-                break;
-            case RankType.Ten:
-                rankName = "10";
-                break;
-            case RankType.Jack:
-                rankName = "J";
-                break;
-            case RankType.Queen:
-                rankName = "Q";
-                break;
-            case RankType.King:
-                rankName = "K";
-                break;
-            case RankType.Ace:
-                rankName = "A";
-                break;
-        }
-
-        return rankName;
-    }
+        RankType.Six => "6",
+        RankType.Seven => "7",
+        RankType.Eight => "8",
+        RankType.Nine => "9",
+        RankType.Ten => "10",
+        RankType.Jack => "J",
+        RankType.Queen => "Q",
+        RankType.King => "K",
+        RankType.Ace => "A",
+        _ => "Rank Not Found"
+    };
 
     //return suit unicode char string for card output based on SuitType 
-    private string GetSuitName(SuitType suit)
+    private string GetSuitName(SuitType suit) => suit switch
     {
-        string suitName = string.Empty;
-
-        switch (suit)
-        {
-            case SuitType.Clubs:
-                suitName = "♣";
-                break;
-            case SuitType.Hearts:
-                suitName = "♥";
-                break;
-            case SuitType.Spades:
-                suitName = "♠";
-                break;
-            case SuitType.Diams:
-                suitName = "♦";
-                break;
-        }
-
-        return suitName;
-    }
+        SuitType.Clubs => "♣",
+        SuitType.Hearts => "♥",
+        SuitType.Spades => "♠",
+        SuitType.Diams => "♦",
+        _ => "Suit Not Found"
+    };
 
     //card output
     public override string ToString() => $"{GetRankName(Rank)}{GetSuitName(Suit)}";
@@ -209,18 +172,10 @@ public class Card
     // override object.Equals
     public override bool Equals(object? card)
     {
-        if (card is null)
-        {
-            throw new ArgumentNullException(nameof(card));
-        }
-
+        var c = card ?? throw new ArgumentNullException(nameof(card));
         return this == (Card)card;
     }
 
     // override object.GetHashCode
-    public override int GetHashCode()
-    {
-        return 9 * (int)Suit + (int)Rank;
-    }
-
+    public override int GetHashCode() => 9 * (int)Suit + (int)Rank;
 }

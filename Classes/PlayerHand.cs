@@ -1,56 +1,55 @@
 using System;
 using System.Collections.Generic;
 
-namespace TheFool
+namespace TheFool;
+public class PlayerHand
 {
-    public class PlayerHand
+    public List<Card> cards = new List<Card>();
+
+    //return card by index
+    public Card GetCard(int index) => cards.ElementAt(index);
+
+    //remove card from hand
+    public void RemoveCardFromHand(Card card)
     {
-        public List<Card> cards = new List<Card>();
+        cards.Remove(card);
+        Sort();
+    }
 
-        //return card by index
-        public Card GetCard(int index) => cards.ElementAt(index);
+    //sorted cards in hand by rank, trumps also sorted by rank in the end of hand
+    public void Sort()
+    {
+        //sort all cards in hand
+        cards = cards.OrderBy(c => c.Rank).ToList();
 
-        //remove card from hand
-        public void RemoveCardFromHand(Card card)
+        List<Card> trumpCards = new List<Card>();
+
+        //remember trump cards
+        foreach (var card in cards)
         {
-            cards.Remove(card);
-            Sort();
+            if (card.Suit == Deck.s_trumpSuit)
+            {
+                trumpCards.Add(card);
+            }
         }
 
-        //sorted cards in hand by rank, trumps also sorted by rank in the end of hand
-        public void Sort()
+        if (trumpCards != null)
         {
-            //sort all cards in hand
-            cards = cards.OrderBy(c => c.Rank).ToList();
-
-            List<Card> trumpCards = new List<Card>();
-
-            //remember trump cards
-            foreach (var card in cards)
+            //remove trump cards from hands
+            foreach (var trump in trumpCards)
             {
-                if (card.Suit == Deck.s_trumpSuit)
-                {
-                    trumpCards.Add(card);
-                }
+                cards.Remove(trump);
             }
 
-            if (trumpCards != null)
+            //sort trumps
+            trumpCards = trumpCards.OrderBy(t => t.Rank).ToList();
+
+            //add sorted trumps to hand
+            foreach (var trump in trumpCards)
             {
-                //remove trump cards from hands
-                foreach (var trump in trumpCards)
-                {
-                    cards.Remove(trump);
-                }
-
-                //sort trumps
-                trumpCards = trumpCards.OrderBy(t => t.Rank).ToList();
-
-                //add sorted trumps to hand
-                foreach (var trump in trumpCards)
-                {
-                    cards.Add(trump);
-                }
+                cards.Add(trump);
             }
         }
     }
 }
+

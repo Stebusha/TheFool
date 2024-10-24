@@ -5,32 +5,34 @@ namespace TheFool;
 public class AIPlayer : IPlayer
 {
     private const int REQUIRED_CARDS_COUNT = 6;
-    PlayerHand playerHand = new PlayerHand();
+    PlayerHand _playerHand = new PlayerHand();
     public string Name { get; set; } = "Бот";
     public int TurnNumber { get; set; }
     public bool Taken { get; set; }
     public bool IsFool { get; set; }
+
     public AIPlayer() { }
     public AIPlayer(string _name, bool _fool)
     {
         Name = _name;
         IsFool = _fool;
     }
+    
     //return cards in hand
-    public List<Card> GetCards() => playerHand.cards;
+    public List<Card> GetCards() => _playerHand.cards;
 
     //draw cards from deck
     public void RefillHand(Deck deck)
     {
-        if (playerHand.cards.Count == 0)
+        if (_playerHand.cards.Count == 0)
         {
-            playerHand.cards = deck.DrawCards(REQUIRED_CARDS_COUNT);
-            playerHand.Sort();
+            _playerHand.cards = deck.DrawCards(REQUIRED_CARDS_COUNT);
+            _playerHand.Sort();
         }
-        else if (playerHand.cards.Count < REQUIRED_CARDS_COUNT)
+        else if (_playerHand.cards.Count < REQUIRED_CARDS_COUNT)
         {
-            playerHand.cards.AddRange(deck.DrawCards(REQUIRED_CARDS_COUNT - playerHand.cards.Count));
-            playerHand.Sort();
+            _playerHand.cards.AddRange(deck.DrawCards(REQUIRED_CARDS_COUNT - _playerHand.cards.Count));
+            _playerHand.Sort();
         }
     }
 
@@ -63,15 +65,15 @@ public class AIPlayer : IPlayer
     {
         List<Card> cardsForAttack = new List<Card>();
 
-        if (CanBeAttacking(playerHand.cards, gameTable))
+        if (CanBeAttacking(_playerHand.cards, gameTable))
         {
             if (gameTable.Length() == 0)
             {
-                return playerHand.cards;
+                return _playerHand.cards;
             }
             else
             {
-                foreach (var card in playerHand.cards)
+                foreach (var card in _playerHand.cards)
                 {
                     for (int i = 0; i < gameTable.Length(); i++)
                     {
@@ -92,7 +94,7 @@ public class AIPlayer : IPlayer
     //attack card based on decision
     public Card Attack(Table gameTable)
     {
-        bool Attacking = CanBeAttacking(playerHand.cards, gameTable);
+        bool Attacking = CanBeAttacking(_playerHand.cards, gameTable);
         Card attackingCard = new Card();
 
         if (Attacking)
@@ -107,7 +109,7 @@ public class AIPlayer : IPlayer
                 gameTable.AddCardToTable(attackingCard);
                 //fixed
                 //first card delete before defend, comparison with next card -> bug defend 
-                playerHand.RemoveCardFromHand(attackingCard);
+                _playerHand.RemoveCardFromHand(attackingCard);
 
                 return attackingCard;
             }
@@ -131,7 +133,7 @@ public class AIPlayer : IPlayer
         }
         else
         {
-            foreach (var card in playerHand.cards)
+            foreach (var card in _playerHand.cards)
             {
                 if (card > attackingCard)
                 {
@@ -148,7 +150,7 @@ public class AIPlayer : IPlayer
     {
         Card cardToDefend = new Card();
 
-        foreach (var card in playerHand.cards)
+        foreach (var card in _playerHand.cards)
         {
             if (card > attackingCard)
             {
@@ -170,7 +172,7 @@ public class AIPlayer : IPlayer
         {
             Console.WriteLine($"{Name} отбился картой: " + defendingCard);
             gameTable.AddCardToTable(defendingCard);
-            playerHand.RemoveCardFromHand(defendingCard);
+            _playerHand.RemoveCardFromHand(defendingCard);
         }
         else
         {
@@ -186,10 +188,10 @@ public class AIPlayer : IPlayer
     {
         Taken = true;
         List<Card> onTableCards = gameTable.TakeCardsFromTable();
-        playerHand.cards.AddRange(onTableCards);
-        playerHand.Sort();
+        _playerHand.cards.AddRange(onTableCards);
+        _playerHand.Sort();
 
-        if (playerHand.cards.Count != 0)
+        if (_playerHand.cards.Count != 0)
         {
             Console.WriteLine($"\n{Name} взял карты");
         }
