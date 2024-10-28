@@ -39,7 +39,7 @@ public class GameController
                 for (int i = 0; i < MAX_CARDS_TO_ATTACK - 1; i++)
                 {
                     //output cards on table
-                    if (_gameTable.Length() != 0)
+                    if (_gameTable.Length() != 0 && !_players[defending].Taken)
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine(_gameTable.ToString());
@@ -99,7 +99,7 @@ public class GameController
                 for (int i = 0; i < MAX_CARDS_TO_ATTACK; i++)
                 {
                     //output cards on table
-                    if (_gameTable.Length() != 0)
+                    if (_gameTable.Length() != 0 && !_players[defending].Taken)
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine(_gameTable.ToString());
