@@ -60,21 +60,19 @@ public class GameController
                     //logic for more than 2 players
                     if (_players.Count > 2)
                     {
-                        if (!_players[defending].Taken && _players[defending].GetCards().Count != 0)
-                        {
-                            if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0 && i != 4)
-                            {
-                                i++;
-                                attackingCard = _players[nextAttacking].Attack(_gameTable);
-                                _players[defending].Defend(attackingCard, _gameTable);
-                            }
-                        }
-                        else
+                        if (_players[defending].Taken
+                                || _players[defending].GetCards().Count == 0
+                                || _players[nextAttacking].GetCardsForAttack(_gameTable).Count == 0
+                                || i == 4)
                         {
                             _TurnFinished = true;
                             _FirtsTurn = false;
                             break;
                         }
+
+                        i++;
+                        attackingCard = _players[nextAttacking].Attack(_gameTable);
+                        _players[defending].Defend(attackingCard, _gameTable);
                     }
                 }
 
@@ -122,48 +120,18 @@ public class GameController
                     //logic for more than 2 players
                     if (_players.Count > 2)
                     {
-                        if (!_players[defending].Taken && _players[defending].GetCards().Count != 0 && i != 5)
-                        {
-                            if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
-                            {
-                                i++;
-                                attackingCard = _players[nextAttacking].Attack(_gameTable);
-                                _players[defending].Defend(attackingCard, _gameTable);
-                            }
-                            else
-                            {
-                                _TurnFinished = true;
-                                break;
-                            }
-                        }
-                        else if (_gameTable.Length() != 0 && i != 6)
-                        {
-                            //logic for more than 2 players
-                            if (!_players[defending].Taken)
-                            {
-                                if (_players[nextAttacking].GetCardsForAttack(_gameTable).Count != 0)
-                                {
-                                    i++;
-                                    attackingCard = _players[nextAttacking].Attack(_gameTable);
-                                    _players[defending].Defend(attackingCard, _gameTable);
-                                }
-                                else
-                                {
-                                    _TurnFinished = true;
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                _TurnFinished = true;
-                                break;
-                            }
-                        }
-                        else
+                        if (_players[defending].Taken
+                                || _players[defending].GetCards().Count == 0
+                                || i == 5
+                                || _players[nextAttacking].GetCardsForAttack(_gameTable).Count == 0)
                         {
                             _TurnFinished = true;
                             break;
                         }
+
+                        i++;
+                        attackingCard = _players[nextAttacking].Attack(_gameTable);
+                        _players[defending].Defend(attackingCard, _gameTable);
                     }
                 }
 
